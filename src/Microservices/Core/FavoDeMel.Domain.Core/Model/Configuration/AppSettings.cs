@@ -22,7 +22,7 @@ namespace FavoDeMel.Domain.Core.Model.Configuration
 
             public static class ConnectionStrings
             {
-                public const string BANKING_CONNECTION_STRING = "BankingDbConnection";
+                public const string Catalogo_CONNECTION_STRING = "CatalogoDbConnection";
                 public const string TRANSFER_CONNECTION_STRING = "TransferDbConnection";
                 public const string DEFAULT_EVENT_STORE_CONNECTION_STRING = "EventStoreConnection";
                 public const string MEMORY_LIMIT = "MEMORY-LIMIT";
