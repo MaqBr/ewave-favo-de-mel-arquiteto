@@ -1,0 +1,36 @@
+version: '3.4'
+
+services:
+  favodemel.catalogo.api:
+    image: ${DOCKER_REGISTRY-}favodemelcatalogoapi
+    build:
+      context: .
+      dockerfile: src/Microservices/Catalogo/FavoDeMel.Catalogo.Api/Dockerfile
+
+  favodemel.sso:
+    image: ${DOCKER_REGISTRY-}favodemelsso
+    build:
+      context: .
+      dockerfile: src/Microservices/Identity/FavoDeMel.SSO/Dockerfile
+
+
+  favodemel.venda.api:
+    image: ${DOCKER_REGISTRY-}favodemelvendaapi
+    build:
+      context: .
+      dockerfile: src/Microservices/Venda/FavoDeMel.Venda.Api/Dockerfile
+
+
+  favodemel.webstatus:
+    image: ${DOCKER_REGISTRY-}favodemelwebstatus
+    build:
+      context: .
+      dockerfile: src/Microservices/WebStatus/FavoDeMel.WebStatus/Dockerfile
+
+
+  favodemel.presentation.mvc:
+    image: ${DOCKER_REGISTRY-}favodemelpresentationmvc
+    build:
+      context: .
+      dockerfile: src/Web/FavoDeMel.Presentation.MVC/Dockerfile
+

@@ -5,7 +5,7 @@
     <UserSecretsId>aspnet-MicroRabbit.Presentation.MVC-FA62B35E-818E-48C9-B7A1-30DBA31196B7</UserSecretsId>
     <DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-    <DockerfileContext>..\..</DockerfileContext>
+    <DockerfileContext>..\..\..</DockerfileContext>
   </PropertyGroup>
 
   <ItemGroup>
