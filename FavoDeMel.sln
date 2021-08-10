@@ -65,6 +65,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FavoDeMel.Venda.Data", "src
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FavoDeMel.Venda.Domain", "src\Microservices\Venda\FavoDeMel.Venda.Domain\FavoDeMel.Venda.Domain.csproj", "{C68090A8-A5EC-4EC2-98F1-17C4AD703BC2}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FavoDeMel.SSO", "src\Microservices\Identity\FavoDeMel.SSO\FavoDeMel.SSO.csproj", "{D1C95494-B363-4282-A4AB-9D80D7546526}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -139,6 +141,10 @@ Global
 		{C68090A8-A5EC-4EC2-98F1-17C4AD703BC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C68090A8-A5EC-4EC2-98F1-17C4AD703BC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C68090A8-A5EC-4EC2-98F1-17C4AD703BC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1C95494-B363-4282-A4AB-9D80D7546526}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1C95494-B363-4282-A4AB-9D80D7546526}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1C95494-B363-4282-A4AB-9D80D7546526}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1C95494-B363-4282-A4AB-9D80D7546526}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -172,6 +178,7 @@ Global
 		{9DC27BDA-2DC5-4CE3-AD20-304495097E3E} = {1D1F9C85-DF25-46F3-81FA-CCC161D3C2BA}
 		{FC582F62-1CA9-46A1-88E2-C6A812206B48} = {1D1F9C85-DF25-46F3-81FA-CCC161D3C2BA}
 		{C68090A8-A5EC-4EC2-98F1-17C4AD703BC2} = {1D1F9C85-DF25-46F3-81FA-CCC161D3C2BA}
+		{D1C95494-B363-4282-A4AB-9D80D7546526} = {9487B5BD-2F8B-413F-B4AE-0B043F3C7378}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3E8207A1-E0D2-445A-ABD0-B5D7FE922808}
