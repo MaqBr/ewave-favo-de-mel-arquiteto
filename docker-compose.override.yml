@@ -6,47 +6,109 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
     ports:
-      - "80"
-      - "443"
+      - "5101:80"
+      - "5102:443"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
-  favodemel.sso:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-    ports:
-      - "80"
-
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro 
 
   favodemel.venda.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
     ports:
-      - "80"
-      - "443"
+      - "5103:80"
+      - "5104:443"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
-
-  favodemel.webstatus:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
-    ports:
-      - "80"
-      - "443"
-    volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro 
 
   favodemel.presentation.mvc:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
     ports:
-      - "80"
-      - "443"
+      - "5007:80"
+      - "5006:443"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro 
+
+  favodemel.sso:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "5000:80"
+      - "5001:443"
+
+  favodemel.webstatus:
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: "https://+:443;http://+:80"
+    ports:
+      - "5011:80"
+      - "5012:443"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+
+  favodemel.healthcheck-ui:
+    environment:
+      - Logging__LogLevel__Default=Debug
+      - Logging__Loglevel__Microsoft=Warning
+      - Logging__LogLevel__HealthChecks=Debug
+      - ui_path=/
+      - ui_api_path=/api
+      - ui_webhooks_path=/webhooks
+      - HealthChecksUI__HealthChecks__0__Name=WebApp Status
+      - HealthChecksUI__HealthChecks__0__Uri=https://webstatus-api/healthz
+    ports:
+      - "5013:80"
+
+  favodemel.rabbitmq:
+    environment:
+        RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
+        RABBITMQ_DEFAULT_USER: "guest"
+        RABBITMQ_DEFAULT_PASS: "guest"
+        RABBITMQ_DEFAULT_VHOST: "/"
+    ports:
+        - "15672:15672"
+        - "5672:5672"
+
+  favodemel.sqlserver:
+    environment:
+      ACCEPT_EULA: 'Y'
+      SA_PASSWORD: "Numsey#2021"
+    volumes:
+      - mssql-data:/var/opt/mssql
+    ports:
+      - '11433:1433'    
+    expose:
+      - 1433
+
+  favodemel.elasticsearch:
+    environment:
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+    networks:
+      - elastic
+
+  favodemel.kibana:
+    environment: 
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+    ports:
+      - 5601:5601
+    networks:
+      - elastic
+
+networks:
+  elastic:
+    driver: bridge    
+
+volumes:
+  mssql-data:
+  elasticsearch-data:

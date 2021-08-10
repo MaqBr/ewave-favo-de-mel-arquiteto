@@ -6,7 +6,7 @@
     <ProjectGuid>36d61391-9d5a-4fad-9a0b-0ed625eb4d41</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://localhost:{ServicePort}</DockerServiceUrl>
-    <DockerServiceName>favodemel.catalogo.api</DockerServiceName>
+    <DockerServiceName>favodemel.presentation.mvc</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
     <None Include="docker-compose.override.yml">

@@ -3,34 +3,71 @@ version: '3.4'
 services:
   favodemel.catalogo.api:
     image: ${DOCKER_REGISTRY-}favodemelcatalogoapi
+    container_name: catalog-api
     build:
       context: .
       dockerfile: src/Microservices/Catalogo/FavoDeMel.Catalogo.Api/Dockerfile
-
-  favodemel.sso:
-    image: ${DOCKER_REGISTRY-}favodemelsso
-    build:
-      context: .
-      dockerfile: src/Microservices/Identity/FavoDeMel.SSO/Dockerfile
-
+    depends_on:
+      - favodemel.sqlserver
+      - favodemel.rabbitmq
 
   favodemel.venda.api:
     image: ${DOCKER_REGISTRY-}favodemelvendaapi
+    container_name: venda-api
     build:
       context: .
       dockerfile: src/Microservices/Venda/FavoDeMel.Venda.Api/Dockerfile
-
-
-  favodemel.webstatus:
-    image: ${DOCKER_REGISTRY-}favodemelwebstatus
-    build:
-      context: .
-      dockerfile: src/Microservices/WebStatus/FavoDeMel.WebStatus/Dockerfile
-
+    depends_on:
+      - favodemel.sqlserver
+      - favodemel.rabbitmq
 
   favodemel.presentation.mvc:
     image: ${DOCKER_REGISTRY-}favodemelpresentationmvc
+    container_name: webapp-mvc
     build:
       context: .
       dockerfile: src/Web/FavoDeMel.Presentation.MVC/Dockerfile
 
+  favodemel.sso:
+    image: ${DOCKER_REGISTRY-}favodemelsso
+    container_name: identity-sso
+    build:
+      context: .
+      dockerfile: src/Microservices/Identity/FavoDeMel.SSO/Dockerfile
+
+  favodemel.webstatus:
+    image: ${DOCKER_REGISTRY-}favodemelwebstatus
+    container_name: webstatus-api
+    build:
+      context: .
+      dockerfile: src/Microservices/WebStatus/FavoDeMel.WebStatus/Dockerfile
+    depends_on: 
+      - favodemel.sso
+      - favodemel.venda.api
+      - favodemel.catalogo.api
+      - favodemel.rabbitmq
+      - favodemel.presentation.mvc
+
+  favodemel.healthcheck-ui:
+    image: xabarilcoding/healthchecksui:latest
+    container_name: local-healthcheck-ui
+    depends_on: 
+      - favodemel.webstatus
+
+  favodemel.rabbitmq:
+    image: "rabbitmq:3.8-management"
+    container_name: local-rabbitmq
+
+  favodemel.sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: local-mssql
+
+  favodemel.elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.2
+    container_name: elasticsearch
+
+  favodemel.kibana:
+    image: docker.elastic.co/kibana/kibana:7.9.2
+    container_name: local-kibana
+    depends_on: 
+      - favodemel.elasticsearch
