@@ -2,7 +2,7 @@
 
 namespace FavoDeMel.Catalogo.Domain.Commands
 {
-    public abstract class TransferCommand : Command
+    public abstract class VendaCommand : Command
     {
         public int From { get; protected set; }
         public int To { get; protected set; }

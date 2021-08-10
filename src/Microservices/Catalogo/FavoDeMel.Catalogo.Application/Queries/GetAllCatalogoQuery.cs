@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace FavoDeMel.Catalogo.Application.Queries
 {
-    public class GetAllAccountQuery : IRequest<IEnumerable<AccountDTO>>
+    public class GetAllCatalogoQuery : IRequest<IEnumerable<CatalogoDTO>>
     {
 
     }

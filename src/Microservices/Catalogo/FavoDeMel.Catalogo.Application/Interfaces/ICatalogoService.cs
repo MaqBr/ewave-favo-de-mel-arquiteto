@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace FavoDeMel.Catalogo.Application.Interfaces
 {
-    public interface IAccountService
+    public interface ICatalogoService
     {
-        Task<IEnumerable<AccountDTO>> GetAccounts();
-        void Transfer(AccountTransfer accountTransfer);
+        Task<IEnumerable<CatalogoDTO>> GetAccounts();
+        void Venda(AccountVenda accountVenda);
     }
 }

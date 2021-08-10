@@ -7,19 +7,19 @@ using System.Threading.Tasks;
 
 namespace FavoDeMel.Catalogo.Domain.CommandHandlers
 {
-    public class TransferCommandHandler : IRequestHandler<CreateTransferCommand, bool>
+    public class VendaCommandHandler : IRequestHandler<CreateVendaCommand, bool>
     {
         private readonly IEventBus _bus;
 
-        public TransferCommandHandler(IEventBus bus)
+        public VendaCommandHandler(IEventBus bus)
         {
             _bus = bus;
         }
 
-        public Task<bool> Handle(CreateTransferCommand request, CancellationToken cancellationToken)
+        public Task<bool> Handle(CreateVendaCommand request, CancellationToken cancellationToken)
         {
             //publish event to RabbitMQ
-            _bus.Publish(new TransferCreatedEvent(request.From, request.To, request.Amount));
+            _bus.Publish(new VendaCreatedEvent(request.From, request.To, request.Amount));
 
             return Task.FromResult(true);
         }

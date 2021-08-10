@@ -16,12 +16,12 @@ namespace FavoDeMel.Catalogo.Data.Dapper.Finders
         {
         }
 
-        public async Task<IEnumerable<AccountDTO>> GetAll()
+        public async Task<IEnumerable<CatalogoDTO>> GetAll()
         {
             try
             {
                 using var cnn = ConnectionFactory.CreateManaged();
-                var data = await cnn.QueryAsync<AccountDTO>($"select * from Accounts");
+                var data = await cnn.QueryAsync<CatalogoDTO>($"select * from Accounts");
                 return data;
             }
             catch (Exception ex)

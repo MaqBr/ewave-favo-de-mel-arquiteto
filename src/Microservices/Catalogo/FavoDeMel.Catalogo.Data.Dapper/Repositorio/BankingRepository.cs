@@ -3,7 +3,7 @@ using System.Data;
 
 namespace FavoDeMel.Catalogo.Data.Dapper.Repositorio
 {
-    public class CatalogoRepository : RepositoryBase<AccountTransfer>
+    public class CatalogoRepository : RepositoryBase<AccountVenda>
     {
         public CatalogoRepository()
         { }

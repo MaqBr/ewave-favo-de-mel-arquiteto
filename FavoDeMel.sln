@@ -57,6 +57,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FavoDeMel.Catalogo.Function
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FavoDeMel.Infra.IoC", "src\Microservices\Infrastructure\FavoDeMel.Infra.IoC\FavoDeMel.Infra.IoC.csproj", "{00520047-5CE2-48D5-8300-3EFBA1637096}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FavoDeMel.Venda.Api", "src\Microservices\Venda\FavoDeMel.Venda.Api\FavoDeMel.Venda.Api.csproj", "{413E0162-90F6-478B-BEF7-CFA9EAAC48B5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FavoDeMel.Venda.Application", "src\Microservices\Venda\FavoDeMel.Venda.Application\FavoDeMel.Venda.Application.csproj", "{9DC27BDA-2DC5-4CE3-AD20-304495097E3E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FavoDeMel.Venda.Data", "src\Microservices\Venda\FavoDeMel.Venda.Data\FavoDeMel.Venda.Data.csproj", "{FC582F62-1CA9-46A1-88E2-C6A812206B48}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FavoDeMel.Venda.Domain", "src\Microservices\Venda\FavoDeMel.Venda.Domain\FavoDeMel.Venda.Domain.csproj", "{C68090A8-A5EC-4EC2-98F1-17C4AD703BC2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -115,6 +123,22 @@ Global
 		{00520047-5CE2-48D5-8300-3EFBA1637096}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{00520047-5CE2-48D5-8300-3EFBA1637096}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{00520047-5CE2-48D5-8300-3EFBA1637096}.Release|Any CPU.Build.0 = Release|Any CPU
+		{413E0162-90F6-478B-BEF7-CFA9EAAC48B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{413E0162-90F6-478B-BEF7-CFA9EAAC48B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{413E0162-90F6-478B-BEF7-CFA9EAAC48B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{413E0162-90F6-478B-BEF7-CFA9EAAC48B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DC27BDA-2DC5-4CE3-AD20-304495097E3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DC27BDA-2DC5-4CE3-AD20-304495097E3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DC27BDA-2DC5-4CE3-AD20-304495097E3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DC27BDA-2DC5-4CE3-AD20-304495097E3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC582F62-1CA9-46A1-88E2-C6A812206B48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC582F62-1CA9-46A1-88E2-C6A812206B48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC582F62-1CA9-46A1-88E2-C6A812206B48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC582F62-1CA9-46A1-88E2-C6A812206B48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C68090A8-A5EC-4EC2-98F1-17C4AD703BC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C68090A8-A5EC-4EC2-98F1-17C4AD703BC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C68090A8-A5EC-4EC2-98F1-17C4AD703BC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C68090A8-A5EC-4EC2-98F1-17C4AD703BC2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -144,6 +168,10 @@ Global
 		{965476DF-9F99-41FC-8026-15AC7D08BF29} = {ABD0A328-52F3-4989-AAE3-DF8ACBD31D7A}
 		{1F21B2C0-6EB8-4EA3-879D-70CBB8DFFD6A} = {ABD0A328-52F3-4989-AAE3-DF8ACBD31D7A}
 		{00520047-5CE2-48D5-8300-3EFBA1637096} = {76FC96D6-D5E0-479D-9451-A4542A174F6E}
+		{413E0162-90F6-478B-BEF7-CFA9EAAC48B5} = {1D1F9C85-DF25-46F3-81FA-CCC161D3C2BA}
+		{9DC27BDA-2DC5-4CE3-AD20-304495097E3E} = {1D1F9C85-DF25-46F3-81FA-CCC161D3C2BA}
+		{FC582F62-1CA9-46A1-88E2-C6A812206B48} = {1D1F9C85-DF25-46F3-81FA-CCC161D3C2BA}
+		{C68090A8-A5EC-4EC2-98F1-17C4AD703BC2} = {1D1F9C85-DF25-46F3-81FA-CCC161D3C2BA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3E8207A1-E0D2-445A-ABD0-B5D7FE922808}

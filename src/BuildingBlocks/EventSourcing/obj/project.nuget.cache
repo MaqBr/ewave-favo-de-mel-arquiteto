@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "MzPvqsiPg0UwuTTUxQKrPuj05UFAcjTRD86vxxHoNeKw370FVHRjX8k83a/nRvp1DnLW/HKFAjTZch8HI4PK8A==",
+  "dgSpecHash": "hD/SLzdl1ooOzhNYsZq1ttPCDso+Tekl/g4foOMqYEFY06GozU4j/gpq11a7v3NwkgOPBjiAAZWs5922W4omqg==",
   "success": true,
   "projectFilePath": "C:\\git\\ewave-favo-de-mel-arquiteto\\src\\BuildingBlocks\\EventSourcing\\EventSourcing.csproj",
   "expectedPackageFiles": [

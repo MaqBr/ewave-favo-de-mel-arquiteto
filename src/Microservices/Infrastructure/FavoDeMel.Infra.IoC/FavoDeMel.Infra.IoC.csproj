@@ -16,6 +16,9 @@
     <ProjectReference Include="..\..\Catalogo\FavoDeMel.Catalogo.Data.EF\FavoDeMel.Catalogo.Data.EF.csproj" />
     <ProjectReference Include="..\..\Catalogo\FavoDeMel.Catalogo.Domain\FavoDeMel.Catalogo.Domain.csproj" />
     <ProjectReference Include="..\..\Core\FavoDeMel.Domain.Core\FavoDeMel.Domain.Core.csproj" />
+    <ProjectReference Include="..\..\Venda\FavoDeMel.Venda.Application\FavoDeMel.Venda.Application.csproj" />
+    <ProjectReference Include="..\..\Venda\FavoDeMel.Venda.Data\FavoDeMel.Venda.Data.csproj" />
+    <ProjectReference Include="..\..\Venda\FavoDeMel.Venda.Domain\FavoDeMel.Venda.Domain.csproj" />
   </ItemGroup>
 
 </Project>

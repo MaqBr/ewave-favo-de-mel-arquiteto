@@ -10,6 +10,6 @@ namespace FavoDeMel.Catalogo.Application.Interfaces
 {
     public interface ICatalogoFinder
     {
-        Task<IEnumerable<AccountDTO>> GetAll();
+        Task<IEnumerable<CatalogoDTO>> GetAll();
     }
 }

@@ -8,16 +8,16 @@ using System.Threading.Tasks;
 
 namespace FavoDeMel.Catalogo.Application.Queries
 {
-    public class GetAllAccountQueryHandler : IRequestHandler<GetAllAccountQuery, IEnumerable<AccountDTO>>
+    public class GetAllCatalogoQueryHandler : IRequestHandler<GetAllCatalogoQuery, IEnumerable<CatalogoDTO>>
     {
         private readonly ICatalogoFinder _finder;
 
-        public GetAllAccountQueryHandler(ICatalogoFinder finder)
+        public GetAllCatalogoQueryHandler(ICatalogoFinder finder)
         {
             _finder = finder;
         }
 
-        public async Task<IEnumerable<AccountDTO>> Handle(GetAllAccountQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<CatalogoDTO>> Handle(GetAllCatalogoQuery request, CancellationToken cancellationToken)
         {
             return await _finder.GetAll();
         }

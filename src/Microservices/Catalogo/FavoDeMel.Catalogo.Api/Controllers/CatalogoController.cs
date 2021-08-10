@@ -12,10 +12,10 @@ namespace FavoDeMel.Catalogo.Api.Controllers
     [ApiController]
     public class CatalogoController : ControllerBase
     {
-        private readonly IAccountService _accountService;
+        private readonly ICatalogoService _accountService;
         private readonly ILogger<CatalogoController> _logger;
 
-        public CatalogoController(IAccountService accountService, ILogger<CatalogoController> logger)
+        public CatalogoController(ICatalogoService accountService, ILogger<CatalogoController> logger)
         {
             _accountService = accountService;
             _logger = logger;
@@ -40,17 +40,17 @@ namespace FavoDeMel.Catalogo.Api.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] AccountTransfer accountTransfer)
+        public IActionResult Post([FromBody] AccountVenda accountVenda)
         {
             try
             {
-                _logger.LogTrace("Executando o método post para transferência entre contas");
-                _accountService.Transfer(accountTransfer);
-                return Ok(accountTransfer);
+                _logger.LogTrace("Executando o método post para Vendaência entre contas");
+                _accountService.Venda(accountVenda);
+                return Ok(accountVenda);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Houve um erro ao enviar os dados {accountTransfer}", accountTransfer);
+                _logger.LogError(ex, "Houve um erro ao enviar os dados {accountVenda}", accountVenda);
                 throw new Exception($"Houve um erro ao enviar os dados: {ex.Message}");
             }
 

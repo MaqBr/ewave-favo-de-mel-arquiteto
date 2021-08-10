@@ -4,9 +4,9 @@ using System.Text;
 
 namespace FavoDeMel.Catalogo.Domain.Commands
 {
-    public class CreateTransferCommand : TransferCommand
+    public class CreateVendaCommand : VendaCommand
     {
-        public CreateTransferCommand(int from, int to, decimal amount)
+        public CreateVendaCommand(int from, int to, decimal amount)
         {
             From = from;
             To = to;

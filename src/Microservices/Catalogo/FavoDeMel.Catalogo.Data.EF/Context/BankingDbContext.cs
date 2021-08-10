@@ -14,7 +14,7 @@ namespace FavoDeMel.Catalogo.Data.EF.Context
         {
         }
 
-        public DbSet<Account> Accounts { get; set; }
+        public DbSet<Domain.Models.Catalogo> Accounts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

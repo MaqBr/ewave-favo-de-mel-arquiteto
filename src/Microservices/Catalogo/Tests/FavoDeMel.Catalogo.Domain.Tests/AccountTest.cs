@@ -11,7 +11,7 @@ namespace Catalogo.Unit.Tests
         {
             // Arrange & Act & Assert
             var ex = Assert.Throws<DomainException>(() =>
-                new Account(string.Empty, 10)
+                new FavoDeMel.Catalogo.Domain.Models.Catalogo(string.Empty, 10)
             );
 
             Assert.Equal("O campo AccountType não pode estar vazio", ex.Message);

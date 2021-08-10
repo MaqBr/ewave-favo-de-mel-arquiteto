@@ -7,16 +7,16 @@ using System.Text;
 
 namespace FavoDeMel.Catalogo.Data.EF.Repository
 {
-    public class AccountRepository : IAccountRepository
+    public class CatalogoRepository : ICatalogoRepository
     {
         private CatalogoDbContext _ctx;
 
-        public AccountRepository(CatalogoDbContext ctx)
+        public CatalogoRepository(CatalogoDbContext ctx)
         {
             _ctx = ctx;
         }
 
-        public IEnumerable<Account> GetAccounts()
+        public IEnumerable<Domain.Models.Catalogo> GetCatalogos()
         {
             return _ctx.Accounts;
         }

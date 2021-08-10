@@ -5,13 +5,13 @@ using System.Text;
 
 namespace FavoDeMel.Catalogo.Domain.Models
 {
-    public class Account : Entity, IAggregateRoot
+    public class Catalogo : Entity, IAggregateRoot
     {
         public string AccountType { get; private set; }
         public decimal AccountBalance { get; private set; }
 
-        protected Account() { }
-        public Account(string accountType, decimal accountBalance)
+        protected Catalogo() { }
+        public Catalogo(string accountType, decimal accountBalance)
         {
             AccountType = accountType;
             AccountBalance = accountBalance;

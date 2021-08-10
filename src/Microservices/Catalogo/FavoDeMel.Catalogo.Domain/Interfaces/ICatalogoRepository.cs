@@ -5,8 +5,8 @@ using System.Text;
 
 namespace FavoDeMel.Catalogo.Domain.Interfaces
 {
-    public interface IAccountRepository
+    public interface ICatalogoRepository
     {
-        IEnumerable<Account> GetAccounts();
+        IEnumerable<Models.Catalogo> GetCatalogos();
     }
 }

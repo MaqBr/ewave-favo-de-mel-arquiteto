@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "iH4QKjtJkMToffr/SQbdD4Pa5uSqSFtgOOqAg5mxrLZtZ4xL6fF/YH0dbsb9XWyUBQ+4shTE6DFs1JQIDL48ug==",
+  "dgSpecHash": "yeWBQZ0vtgNva7Aeyzz2iQVYyCWiBjaq9aWCUNKMD2mkfRd44lY2k2Dk7dWiyWIfLv+pYrICnhXWA4gIqBcKNA==",
   "success": true,
   "projectFilePath": "C:\\git\\ewave-favo-de-mel-arquiteto\\src\\BuildingBlocks\\EventBus\\EventBus.csproj",
   "expectedPackageFiles": [

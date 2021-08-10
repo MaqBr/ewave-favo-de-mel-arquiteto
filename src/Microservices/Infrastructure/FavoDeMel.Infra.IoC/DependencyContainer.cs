@@ -19,6 +19,11 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FavoDeMel.Venda.Domain.Interfaces;
+using FavoDeMel.Venda.Application.Interfaces;
+using FavoDeMel.Venda.Data.Repository;
+using FavoDeMel.Venda.Data.Context;
+using FavoDeMel.Venda.Application.Services;
 
 namespace FavoDeMel.Infra.IoC
 {
@@ -28,7 +33,7 @@ namespace FavoDeMel.Infra.IoC
         {
             // Mediator
             services.AddScoped<IMediatorHandler, MediatorHandler>();
-            services.AddTransient<IRequestHandler<CreateTransferCommand, bool>, TransferCommandHandler>();
+            services.AddTransient<IRequestHandler<CreateVendaCommand, bool>, VendaCommandHandler>();
 
 
             // Notifications
@@ -39,14 +44,14 @@ namespace FavoDeMel.Infra.IoC
             services.AddSingleton<IEventSourcingRepository, EventSourcingRepository>();
 
             //Application Services
-            services.AddTransient<IAccountService, AccountService>();
-            //services.AddTransient<ITransferService, TransferService>();
+            services.AddTransient<ICatalogoService, CatalogoService>();
+            services.AddTransient<IVendaService, VendaService>();
 
             //Data
-            services.AddTransient<IAccountRepository, AccountRepository>();
-            //services.AddTransient<ITransferRepository, TransferRepository>();
+            services.AddTransient<ICatalogoRepository, CatalogoRepository>();
+            services.AddTransient<IVendaRepository, VendaRepository>();
             services.AddScoped<CatalogoDbContext>();
-            //services.AddScoped<TransferDbContext>();
+            services.AddScoped<VendaDbContext>();
 
             //Finders
             services.AddTransient<IBackendConnectionFactory, BackendConnectionFactory>();
@@ -60,7 +65,7 @@ namespace FavoDeMel.Infra.IoC
             }
 
             //Queries Commands
-            services.AddTransient<IRequestHandler<GetAllAccountQuery, IEnumerable<AccountDTO>>, GetAllAccountQueryHandler>();
+            services.AddTransient<IRequestHandler<GetAllCatalogoQuery, IEnumerable<CatalogoDTO>>, GetAllCatalogoQueryHandler>();
 
         }
 

@@ -4,10 +4,10 @@ using System.Text;
 
 namespace FavoDeMel.Catalogo.Application.Models
 {
-    public class AccountTransfer
+    public class AccountVenda
     {
         public int FromAccount { get; set; }
         public int ToAccount { get; set; }
-        public decimal TransferAmount { get; set; }
+        public decimal VendaAmount { get; set; }
     }
 }

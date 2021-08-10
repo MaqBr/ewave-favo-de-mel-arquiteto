@@ -50,7 +50,7 @@ namespace Catalogo.FunctionalTests
 
         string BuildAccount()
         {
-            var account = new AccountDTO()
+            var account = new CatalogoDTO()
             {
                 AccountType = "Pessoa Física",
                 AccountBalance = 10
