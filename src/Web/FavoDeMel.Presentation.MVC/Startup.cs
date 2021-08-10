@@ -9,7 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
 
-namespace MicroRabbit.Presentation.MVC
+namespace FavoDeMel.Presentation.MVC
 {
     public class Startup
     {

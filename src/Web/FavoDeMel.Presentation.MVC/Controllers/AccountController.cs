@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MicroRabbit.Presentation.MVC.Controllers
+namespace FavoDeMel.Presentation.MVC.Controllers
 {
     [Route("conta")]
     public class AccountController : Controller

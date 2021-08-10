@@ -1,6 +1,6 @@
 using System;
 
-namespace MicroRabbit.Presentation.MVC.Models
+namespace FavoDeMel.Presentation.MVC.Models
 {
     public class ErrorViewModel
     {

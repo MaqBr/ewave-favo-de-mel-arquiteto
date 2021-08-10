@@ -1,4 +1,4 @@
-﻿using MicroRabbit.Presentation.MVC.Models;
+﻿using FavoDeMel.Presentation.MVC.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +9,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MicroRabbit.Presentation.MVC.Controllers
+namespace FavoDeMel.Presentation.MVC.Controllers
 {
     public class HomeController : Controller
     {

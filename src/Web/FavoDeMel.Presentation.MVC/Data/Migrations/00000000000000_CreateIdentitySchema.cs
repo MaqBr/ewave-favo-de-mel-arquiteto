@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 using System;
 
-namespace MicroRabbit.Presentation.MVC.Data.Migrations
+namespace FavoDeMel.Presentation.MVC.Data.Migrations
 {
     public partial class CreateIdentitySchema : Migration
     {

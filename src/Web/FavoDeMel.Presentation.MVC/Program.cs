@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MicroRabbit.Presentation.MVC
+namespace FavoDeMel.Presentation.MVC
 {
     public class Program
     {

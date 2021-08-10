@@ -71,6 +71,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebStatus", "WebStatus", "{
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FavoDeMel.WebStatus", "src\Microservices\WebStatus\FavoDeMel.WebStatus\FavoDeMel.WebStatus.csproj", "{FC40D95E-1291-4466-BA47-42036244ED68}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FavoDeMel.Presentation.MVC", "src\Web\FavoDeMel.Presentation.MVC\FavoDeMel.Presentation.MVC.csproj", "{CC698488-8835-4BBA-B10A-9291F3B2D16E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -153,6 +155,10 @@ Global
 		{FC40D95E-1291-4466-BA47-42036244ED68}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC40D95E-1291-4466-BA47-42036244ED68}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC40D95E-1291-4466-BA47-42036244ED68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC698488-8835-4BBA-B10A-9291F3B2D16E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC698488-8835-4BBA-B10A-9291F3B2D16E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC698488-8835-4BBA-B10A-9291F3B2D16E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC698488-8835-4BBA-B10A-9291F3B2D16E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -189,6 +195,7 @@ Global
 		{D1C95494-B363-4282-A4AB-9D80D7546526} = {9487B5BD-2F8B-413F-B4AE-0B043F3C7378}
 		{46D4A3C6-8F20-471F-AB15-01D57E6EF12F} = {7CEA71AD-8C8B-4FC0-A549-BD733AA70D3B}
 		{FC40D95E-1291-4466-BA47-42036244ED68} = {46D4A3C6-8F20-471F-AB15-01D57E6EF12F}
+		{CC698488-8835-4BBA-B10A-9291F3B2D16E} = {93142A69-9C0C-475C-B1BB-C79072E9AC48}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3E8207A1-E0D2-445A-ABD0-B5D7FE922808}

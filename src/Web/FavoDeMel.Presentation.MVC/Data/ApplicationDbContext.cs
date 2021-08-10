@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MicroRabbit.Presentation.MVC.Data
+namespace FavoDeMel.Presentation.MVC.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {
