@@ -41,7 +41,7 @@ namespace FavoDeMel.Presentation.MVC
                 .AddCookie("Cookies")
                 .AddOpenIdConnect("oidc", options =>
                 {
-                    options.Authority = "https://localhost:5007";
+                    options.Authority = "https://localhost:5001";
                     options.ClientId = "715000d0c10040258c1be259c09e3b91";
                     options.ClientSecret = "360ceac2e80545dca6083fef4f94d09f";
                     options.ResponseType = "code";
