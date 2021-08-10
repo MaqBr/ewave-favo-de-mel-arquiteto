@@ -1,0 +1,11 @@
+C:\git\FavoDeMel\src\Microservices\Core\FavoDeMel.Domain.Core\bin\Debug\net5.0\FavoDeMel.Domain.Core.deps.json
+C:\git\FavoDeMel\src\Microservices\Core\FavoDeMel.Domain.Core\bin\Debug\net5.0\FavoDeMel.Domain.Core.dll
+C:\git\FavoDeMel\src\Microservices\Core\FavoDeMel.Domain.Core\bin\Debug\net5.0\ref\FavoDeMel.Domain.Core.dll
+C:\git\FavoDeMel\src\Microservices\Core\FavoDeMel.Domain.Core\bin\Debug\net5.0\FavoDeMel.Domain.Core.pdb
+C:\git\FavoDeMel\src\Microservices\Core\FavoDeMel.Domain.Core\obj\Debug\net5.0\FavoDeMel.Domain.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\git\FavoDeMel\src\Microservices\Core\FavoDeMel.Domain.Core\obj\Debug\net5.0\FavoDeMel.Domain.Core.AssemblyInfoInputs.cache
+C:\git\FavoDeMel\src\Microservices\Core\FavoDeMel.Domain.Core\obj\Debug\net5.0\FavoDeMel.Domain.Core.AssemblyInfo.cs
+C:\git\FavoDeMel\src\Microservices\Core\FavoDeMel.Domain.Core\obj\Debug\net5.0\FavoDeMel.Domain.Core.csproj.CoreCompileInputs.cache
+C:\git\FavoDeMel\src\Microservices\Core\FavoDeMel.Domain.Core\obj\Debug\net5.0\FavoDeMel.Domain.Core.dll
+C:\git\FavoDeMel\src\Microservices\Core\FavoDeMel.Domain.Core\obj\Debug\net5.0\ref\FavoDeMel.Domain.Core.dll
+C:\git\FavoDeMel\src\Microservices\Core\FavoDeMel.Domain.Core\obj\Debug\net5.0\FavoDeMel.Domain.Core.pdb
