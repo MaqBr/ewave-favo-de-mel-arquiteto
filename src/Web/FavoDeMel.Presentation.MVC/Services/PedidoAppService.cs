@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using FavoDeMel.Domain.Core.Extensions;
 using FavoDeMel.Domain.Core.Model.Configuration;
 using FavoDeMel.Presentation.MVC.CatalogoViewModels.Venda.ViewModels;
+using FavoDeMel.Presentation.MVC.Models.DTO;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -58,6 +59,74 @@ namespace FavoDeMel.Presentation.MVC.Services
             });
 
             return pedidos;
+        }
+
+        public async Task AdicionarItemPedido(AdicionarItemPedidoDTO itemPedido)
+        {
+            var uri = API.Pedido.AdicionarItemPedido(_remoteServiceBaseUrl);
+
+            var pedidoContent = new StringContent(JsonSerializer.Serialize(itemPedido),
+                System.Text.Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PutAsync(uri, pedidoContent);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.InternalServerError)
+            {
+                throw new Exception("Error ao adicionar o item do pedido produto.");
+            }
+
+            response.EnsureSuccessStatusCode();
+        }
+
+        public async Task AtualizarItemPedido(AtualizarItemPedidoDTO itemPedido)
+        {
+            var uri = API.Pedido.AtualizarItemPedido(_remoteServiceBaseUrl);
+
+            var pedidoContent = new StringContent(JsonSerializer.Serialize(itemPedido),
+                System.Text.Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PutAsync(uri, pedidoContent);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.InternalServerError)
+            {
+                throw new Exception("Error ao atualizar o item do pedido produto.");
+            }
+
+            response.EnsureSuccessStatusCode();
+        }
+
+        public async Task RemoverItemPedido(RemoverItemPedidoDTO itemPedido)
+        {
+            var uri = API.Pedido.RemoverItemPedido(_remoteServiceBaseUrl);
+
+            var pedidoContent = new StringContent(JsonSerializer.Serialize(itemPedido),
+                System.Text.Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PutAsync(uri, pedidoContent);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.InternalServerError)
+            {
+                throw new Exception("Error ao remover o item do pedido produto.");
+            }
+
+            response.EnsureSuccessStatusCode();
+        }
+
+        public async Task IniciarPedido(IniciarPedidoDTO pedido)
+        {
+            var uri = API.Pedido.IniciarPedido(_remoteServiceBaseUrl);
+
+            var pedidoContent = new StringContent(JsonSerializer.Serialize(pedido),
+                System.Text.Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PutAsync(uri, pedidoContent);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.InternalServerError)
+            {
+                throw new Exception("Error ao iniciar o pedido produto.");
+            }
+
+            response.EnsureSuccessStatusCode();
         }
     }
 }

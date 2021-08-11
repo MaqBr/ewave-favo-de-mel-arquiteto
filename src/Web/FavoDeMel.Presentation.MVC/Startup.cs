@@ -1,4 +1,8 @@
+using FavoDeMel.Domain.Core.CommonMessages.Notifications;
+using FavoDeMel.Domain.Core.Communication.Mediator;
+using FavoDeMel.Domain.Core.Messages.CommonMessages.Notifications;
 using FavoDeMel.Presentation.MVC.Services;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -37,6 +41,10 @@ namespace FavoDeMel.Presentation.MVC
             {
                 options.LoginPath = new PathString("/conta/entrar");
             });
+
+            services.AddScoped<IMediatorHandler, MediatorHandler>();
+            services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

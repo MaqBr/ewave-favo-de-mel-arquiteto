@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FavoDeMel.Presentation.MVC.Models.DTO;
+using System;
 
 namespace WebMVC.Infrastructure
 {
@@ -6,6 +7,12 @@ namespace WebMVC.Infrastructure
     {
         public static class Pedido
         {
+
+            public static string IniciarPedido(string baseUri)
+            {
+                return $"{baseUri}/pedido/iniciar";
+            }
+
             public static string ObterCarrinhoCliente(string baseUri, Guid clienteId)
             {
                 return $"{baseUri}/pedido/meus-pedidos/{clienteId}";
@@ -15,6 +22,23 @@ namespace WebMVC.Infrastructure
             {
                 return $"{baseUri}/pedido/cliente/{clienteId}";
             }
+
+            public static string AdicionarItemPedido(string baseUri)
+            {
+                return $"{baseUri}/pedido/adicionarItemPedido";
+            }
+
+            public static string AtualizarItemPedido(string baseUri)
+            {
+                return $"{baseUri}/pedido/atualizarItemPedido";
+            }
+
+            public static string RemoverItemPedido(string baseUri)
+            {
+                return $"{baseUri}/pedido/removerItemPedido";
+            }
+
+            
         }
 
         public static class Produto
