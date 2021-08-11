@@ -13,6 +13,7 @@
   <ItemGroup>
     <Folder Include="Commands\" />
     <Folder Include="Events\" />
+    <Folder Include="Interfaces\" />
     <Folder Include="Queries\" />
   </ItemGroup>
 

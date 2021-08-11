@@ -28,7 +28,6 @@ using System.Linq;
 using FavoDeMel.Catalogo.Application.ViewModels;
 using FavoDeMel.Catalogo.Domain;
 using FavoDeMel.Catalogo.Application.Services;
-using FavoDeMel.Catalogo.Domain.Interfaces;
 using FavoDeMel.Catalogo.Data.EF.Repository;
 using FavoDeMel.Catalogo.Application.Interfaces;
 using FavoDeMel.Catalogo.Data.Dapper.Connection;
@@ -145,8 +144,6 @@ namespace FavoDeMel.Catalogo.Api
             services.AddScoped<IProdutoAppService, ProdutoAppService>();
 
             //Data
-            services.AddTransient<ICatalogoRepository, Data.EF.Repository.CatalogoRepository>();
-
             services.AddScoped<CatalogoDbContext>();
             services.AddScoped<IProdutoRepository, ProdutoRepository>();
 

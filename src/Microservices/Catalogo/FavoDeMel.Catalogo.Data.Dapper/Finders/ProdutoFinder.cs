@@ -2,11 +2,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using FavoDeMel.Catalogo.Data.Dapper.ExtensionsMethods;
-using Dapper;
-using System.Data;
 using System;
 using FavoDeMel.Catalogo.Application.Interfaces;
-using FavoDeMel.Catalogo.Domain.Models;
 using FavoDeMel.Catalogo.Application.ViewModels;
 
 namespace FavoDeMel.Catalogo.Data.Dapper.Finders

@@ -21,7 +21,6 @@ namespace FavoDeMel.Venda.Data.Context
             _mediatorHandler = mediatorHandler;
         }
 
-        public DbSet<VendaLog> VendaLogs { get; set; }
         public DbSet<Pedido> Pedidos { get; set; }
         public DbSet<PedidoItem> PedidoItems { get; set; }
         public DbSet<Voucher> Vouchers { get; set; }

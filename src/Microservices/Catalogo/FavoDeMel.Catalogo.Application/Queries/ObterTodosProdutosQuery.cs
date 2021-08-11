@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using FavoDeMel.Catalogo.Domain.Models;
 using System;
 using System.Collections.Generic;
 using FavoDeMel.Catalogo.Application.ViewModels;

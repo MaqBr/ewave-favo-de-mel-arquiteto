@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using FavoDeMel.Venda.Application.Interfaces;
 using FavoDeMel.Venda.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 

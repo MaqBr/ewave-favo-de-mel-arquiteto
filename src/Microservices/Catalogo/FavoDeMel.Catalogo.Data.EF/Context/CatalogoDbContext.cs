@@ -2,7 +2,6 @@
 using FavoDeMel.Domain.Core.Data;
 using FavoDeMel.Domain.Core.Messages;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,7 +14,6 @@ namespace FavoDeMel.Catalogo.Data.EF.Context
         {
         }
 
-        public DbSet<Domain.Models.Catalogo> Accounts { get; set; }
         public DbSet<Produto> Produtos { get; set; }
         public DbSet<Categoria> Categorias { get; set; }
 

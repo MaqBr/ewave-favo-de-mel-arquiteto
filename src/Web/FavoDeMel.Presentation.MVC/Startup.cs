@@ -1,5 +1,7 @@
+using BuildingBlocks.EventSourcing;
 using FavoDeMel.Domain.Core.CommonMessages.Notifications;
 using FavoDeMel.Domain.Core.Communication.Mediator;
+using FavoDeMel.Domain.Core.Data.EventSourcing;
 using FavoDeMel.Domain.Core.Messages.CommonMessages.Notifications;
 using FavoDeMel.Presentation.MVC.Services;
 using MediatR;
@@ -41,7 +43,10 @@ namespace FavoDeMel.Presentation.MVC
             {
                 options.LoginPath = new PathString("/conta/entrar");
             });
-
+            services.AddMediatR(typeof(Startup));
+            // Event Sourcing
+            services.AddSingleton<IEventStoreService, EventStoreService>();
+            services.AddSingleton<IEventSourcingRepository, EventSourcingRepository>();
             services.AddScoped<IMediatorHandler, MediatorHandler>();
             services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();
 
@@ -62,7 +67,6 @@ namespace FavoDeMel.Presentation.MVC
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseSession();
             // Fix samesite issue when running from docker-compose locally as by default http protocol is being used
             // Refer to https://github.com/dotnet-architecture/eShopOnContainers/issues/1391
             app.UseCookiePolicy(new CookiePolicyOptions { MinimumSameSitePolicy = SameSiteMode.Lax });
@@ -94,8 +98,8 @@ namespace FavoDeMel.Presentation.MVC
             //services.AddTransient<HttpClientRequestIdDelegatingHandler>();
 
             //set 5 min as the lifetime for each HttpMessageHandler int the pool
-            services.AddHttpClient("extendedhandlerlifetime")
-                .SetHandlerLifetime(TimeSpan.FromMinutes(5));
+            //services.AddHttpClient("extendedhandlerlifetime")
+                //.SetHandlerLifetime(TimeSpan.FromMinutes(5));
 
             //add http client services
             services.AddHttpClient<IProdutoAppService, ProdutoAppService>();
