@@ -1,3 +1,4 @@
+using FavoDeMel.Presentation.MVC.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -6,8 +7,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
+using WebMVC.Infrastructure;
 
 namespace FavoDeMel.Presentation.MVC
 {
@@ -26,12 +29,80 @@ namespace FavoDeMel.Presentation.MVC
 
             services.AddControllersWithViews();
             services.AddRazorPages();
-            services.AddHttpContextAccessor();
+            services.AddHttpClientServices(Configuration);
+            services.AddCustomAuthentication(Configuration);
+            services.AddHttpClient();
+            services.AddControllers();
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = new PathString("/conta/entrar");
+            });
+        }
 
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseHsts();
+            }
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
+            app.UseSession();
+            // Fix samesite issue when running from docker-compose locally as by default http protocol is being used
+            // Refer to https://github.com/dotnet-architecture/eShopOnContainers/issues/1391
+            app.UseCookiePolicy(new CookiePolicyOptions { MinimumSameSitePolicy = SameSiteMode.Lax });
+            app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
+            });
+        }
+    }
+
+    static class ServiceCollectionExtensions
+    {
+        // Adds all Http client services
+        public static IServiceCollection AddHttpClientServices(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            //TODO: Integrar com SSO
+            //register delegating handlers
+            //services.AddTransient<HttpClientAuthorizationDelegatingHandler>();
+            //services.AddTransient<HttpClientRequestIdDelegatingHandler>();
+
+            //set 5 min as the lifetime for each HttpMessageHandler int the pool
+            services.AddHttpClient("extendedhandlerlifetime")
+                .SetHandlerLifetime(TimeSpan.FromMinutes(5));
+
+            //add http client services
+            services.AddHttpClient<IProdutoAppService, ProdutoAppService>();
+            services.AddHttpClient<IPedidoAppService, PedidoAppService>();
+
+            return services;
+        }
+
+
+        public static IServiceCollection AddCustomAuthentication(this IServiceCollection services, IConfiguration configuration)
+        {
             JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
 
-            if(Debugger.IsAttached)
-                IdentityModelEventSource.ShowPII = true;
+            if (Debugger.IsAttached)
+                IdentityModelEventSource.ShowPII = true;//Somente em ambiente de desenvolvimento
 
             services.AddAuthentication(options =>
             {
@@ -50,7 +121,7 @@ namespace FavoDeMel.Presentation.MVC
                     options.Scope.Add("api_favo_mel");
                     options.GetClaimsFromUserInfoEndpoint = true;
                     options.SaveTokens = true;
-                     options.TokenValidationParameters = new TokenValidationParameters
+                    options.TokenValidationParameters = new TokenValidationParameters
                     {
                         NameClaimType = "name",
                         RoleClaimType = "role",
@@ -58,43 +129,7 @@ namespace FavoDeMel.Presentation.MVC
                     };
                 });
 
-            services.AddHttpClient();
-
-            services.ConfigureApplicationCookie(options =>
-            {
-                options.LoginPath = new PathString("/conta/entrar");
-            });
-        }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
-
-            app.UseRouting();
-
-            app.UseAuthentication();
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
-                endpoints.MapRazorPages();
-            });
+            return services;
         }
     }
 }
