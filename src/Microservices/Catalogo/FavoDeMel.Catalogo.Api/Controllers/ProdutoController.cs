@@ -23,6 +23,23 @@ namespace FavoDeMel.Catalogo.Api.Controllers
         }
 
         [HttpGet]
+        [Route("vitrine")]
+        public async Task<IEnumerable<ProdutoViewModel>> ObterTodos()
+        {
+            try
+            {
+                return await _produtoService.ObterTodos();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Houve um erro ao obter os dados");
+                throw new Exception($"Houve um erro ao obter os dados: {ex.Message}");
+            }
+
+        }
+
+
+        [HttpGet]
         [Route("categoria")]
         public async Task<IEnumerable<ProdutoViewModel>> ObterPorCategoria(int codigo)
         {
@@ -37,5 +54,23 @@ namespace FavoDeMel.Catalogo.Api.Controllers
             }
 
         }
+
+        [HttpGet]
+        [Route("produto-detalhe/{id}")]
+        public async Task<ProdutoViewModel> ProdutoDetalhe(Guid id)
+        {
+            try
+            {
+                var produto = await _produtoService.ObterPorId(id);
+                return produto;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Houve um erro ao obter os dados");
+                throw new Exception($"Houve um erro ao obter os dados: {ex.Message}");
+            }
+
+        }
+
     }
 }

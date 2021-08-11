@@ -12,13 +12,11 @@ namespace FavoDeMel.Venda.Data.Context
 {
     public class VendaDbContext : DbContext, IUnitOfWork
     {
-        private readonly IMediatorHandler _mediatorHandler;
 
-        public VendaDbContext(DbContextOptions<VendaDbContext> options,
-            IMediatorHandler mediatorHandler) 
+        public VendaDbContext(DbContextOptions<VendaDbContext> options) 
             : base(options)
         {
-            _mediatorHandler = mediatorHandler;
+
         }
 
         public DbSet<Pedido> Pedidos { get; set; }
@@ -42,7 +40,6 @@ namespace FavoDeMel.Venda.Data.Context
             }
 
             var sucesso = await base.SaveChangesAsync() > 0;
-            if (sucesso) await _mediatorHandler.PublicarEventos(this);
 
             return sucesso;
         }
