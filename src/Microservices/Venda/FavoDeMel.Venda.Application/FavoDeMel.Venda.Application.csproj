@@ -6,9 +6,13 @@
 
   <ItemGroup>
     <Folder Include="Models\" />
+    <Folder Include="Commands\" />
+    <Folder Include="Events\" />
+    <Folder Include="Queries\" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Catalogo\FavoDeMel.Catalogo.Data.Dapper\FavoDeMel.Catalogo.Data.Dapper.csproj" />
     <ProjectReference Include="..\FavoDeMel.Venda.Domain\FavoDeMel.Venda.Domain.csproj" />
   </ItemGroup>
 

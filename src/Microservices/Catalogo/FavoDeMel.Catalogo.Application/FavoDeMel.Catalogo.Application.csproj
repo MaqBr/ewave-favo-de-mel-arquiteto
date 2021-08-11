@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\..\BuildingBlocks\EventBus\EventBus.csproj" />
     <ProjectReference Include="..\..\Core\FavoDeMel.Domain.Core\FavoDeMel.Domain.Core.csproj" />
     <ProjectReference Include="..\FavoDeMel.Catalogo.Domain\FavoDeMel.Catalogo.Domain.csproj" />
