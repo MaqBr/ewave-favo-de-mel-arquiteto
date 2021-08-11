@@ -22,7 +22,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Infrastructure\" />
+    <Folder Include="Extensions\" />
     <Folder Include="Views\Account\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Microservices\Core\FavoDeMel.Domain.Core\FavoDeMel.Domain.Core.csproj" />
   </ItemGroup>
 
 </Project>

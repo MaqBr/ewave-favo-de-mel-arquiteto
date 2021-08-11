@@ -1,12 +1,8 @@
 ﻿using FavoDeMel.Presentation.MVC.Models;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace FavoDeMel.Presentation.MVC.Controllers
@@ -14,16 +10,14 @@ namespace FavoDeMel.Presentation.MVC.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        public HomeController(ILogger<HomeController> logger, IHttpContextAccessor httpContextAccessor)
+
+        public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
-            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<IActionResult> Index()
         {
-            var at = await _httpContextAccessor.HttpContext.GetTokenAsync("access_token");
             return View();
         }
 

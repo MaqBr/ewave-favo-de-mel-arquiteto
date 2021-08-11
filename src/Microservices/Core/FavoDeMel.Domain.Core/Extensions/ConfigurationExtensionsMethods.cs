@@ -12,6 +12,7 @@ namespace FavoDeMel.Domain.Core.Extensions
             {
                 IdentityProvider = new IdentityProvider(configuration),
                 Data = new DataSettings(configuration),
+                Microservices = new MicroServiceSettings(configuration),
                 ElasticLogs = new ElasticSettings(configuration),
                 RabbitMqSettings = new RabbitMqSettings(configuration),
 

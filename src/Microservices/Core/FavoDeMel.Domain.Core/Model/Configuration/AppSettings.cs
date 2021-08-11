@@ -20,6 +20,12 @@ namespace FavoDeMel.Domain.Core.Model.Configuration
                 public const string SCOPES = "IDENTITYPROVIDER:SCOPES";
             }
 
+            public static class MicroServices
+            {
+                public const string VENDA_BASE_URI = "MICROSERVICES:VENDA_BASE_URI";
+                public const string CATALOGO_BASE_URI = "MICROSERVICES:CATALOGO_BASE_URI";
+            }
+
             public static class ConnectionStrings
             {
                 public const string Catalogo_CONNECTION_STRING = "CatalogoDbConnection";
@@ -51,6 +57,7 @@ namespace FavoDeMel.Domain.Core.Model.Configuration
         public SwaggerSettings Swagger { get; set; }
         public ElasticSettings ElasticLogs { get; set; }
         public RabbitMqSettings RabbitMqSettings { get; set; }
+        public MicroServiceSettings Microservices { get; set; }
 
         public override string ToString()
         {
