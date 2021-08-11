@@ -20,7 +20,7 @@ namespace FavoDeMel.Presentation.MVC.Controllers
         private readonly IMediatorHandler _mediatorHandler;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        protected Guid ClienteId = Guid.Parse("4885e451-b0e4-4490-b959-04fabc806d32");
+        protected Guid ClienteId = Guid.Parse("9faf55b5-5088-42dd-8c55-5f8698b8295c");
 
         protected ControllerBase(INotificationHandler<DomainNotification> notifications, 
                                  IMediatorHandler mediatorHandler, IHttpContextAccessor httpContextAccessor)
