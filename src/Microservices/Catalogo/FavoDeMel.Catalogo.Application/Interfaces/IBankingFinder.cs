@@ -1,4 +1,4 @@
-﻿using FavoDeMel.Catalogo.Application.Models;
+﻿using FavoDeMel.Catalogo.Application.ViewModels;
 using FavoDeMel.Catalogo.Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace FavoDeMel.Catalogo.Application.Interfaces
 {
-    public interface ICatalogoFinder
+    public interface IProdutoFinder
     {
-        Task<IEnumerable<CatalogoDTO>> GetAll();
+        Task<IEnumerable<ProdutoViewModel>> ObterTodos();
     }
 }

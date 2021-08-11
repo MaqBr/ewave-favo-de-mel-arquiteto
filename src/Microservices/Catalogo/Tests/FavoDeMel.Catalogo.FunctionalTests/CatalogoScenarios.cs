@@ -1,4 +1,4 @@
-﻿using FavoDeMel.Catalogo.Domain.Models;
+﻿using FavoDeMel.Catalogo.Application.ViewModels;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -50,12 +50,11 @@ namespace Catalogo.FunctionalTests
 
         string BuildAccount()
         {
-            var account = new CatalogoDTO()
+            var produto = new ProdutoViewModel()
             {
-                AccountType = "Pessoa Física",
-                AccountBalance = 10
+                //TODO:
             };
-            return JsonSerializer.Serialize(account);
+            return JsonSerializer.Serialize(produto);
         }
     }
 }

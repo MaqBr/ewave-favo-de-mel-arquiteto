@@ -5,8 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="CommandHandlers\" />
-    <Folder Include="Commands\" />
+    <Compile Remove="CommandHandlers\**" />
+    <Compile Remove="Commands\**" />
+    <EmbeddedResource Remove="CommandHandlers\**" />
+    <EmbeddedResource Remove="Commands\**" />
+    <None Remove="CommandHandlers\**" />
+    <None Remove="Commands\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Interfaces\" />
   </ItemGroup>
 
   <ItemGroup>

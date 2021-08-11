@@ -2,10 +2,11 @@
 using FavoDeMel.Catalogo.Domain.Models;
 using System;
 using System.Collections.Generic;
+using FavoDeMel.Catalogo.Application.ViewModels;
 
 namespace FavoDeMel.Catalogo.Application.Queries
 {
-    public class GetAllCatalogoQuery : IRequest<IEnumerable<CatalogoDTO>>
+    public class ObterTodosProdutosQuery : IRequest<IEnumerable<ProdutoViewModel>>
     {
 
     }

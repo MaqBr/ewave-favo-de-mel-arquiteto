@@ -7,21 +7,22 @@ using System.Data;
 using System;
 using FavoDeMel.Catalogo.Application.Interfaces;
 using FavoDeMel.Catalogo.Domain.Models;
+using FavoDeMel.Catalogo.Application.ViewModels;
 
 namespace FavoDeMel.Catalogo.Data.Dapper.Finders
 {
-    public class CatalogoFinder : FinderSql, ICatalogoFinder
+    public class ProdutoFinder : FinderSql, IProdutoFinder
     {
-        public CatalogoFinder(IBackendConnectionFactory connection) : base(connection)
+        public ProdutoFinder(IBackendConnectionFactory connection) : base(connection)
         {
         }
 
-        public async Task<IEnumerable<CatalogoDTO>> GetAll()
+        public async Task<IEnumerable<ProdutoViewModel>> ObterTodos()
         {
             try
             {
                 using var cnn = ConnectionFactory.CreateManaged();
-                var data = await cnn.QueryAsync<CatalogoDTO>($"select * from Accounts");
+                var data = await cnn.QueryAsync<ProdutoViewModel>($"select * from Produto");
                 return data;
             }
             catch (Exception ex)

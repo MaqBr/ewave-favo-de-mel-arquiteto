@@ -4,8 +4,6 @@ using BuildingBlocks.EventBusRabbitMQ;
 using MediatR;
 using FavoDeMel.Venda.Api.Factories;
 using FavoDeMel.Venda.Data.Context;
-using FavoDeMel.Venda.Domain.EventHandlers;
-using FavoDeMel.Venda.Domain.Events;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +18,11 @@ using System.Text.Json.Serialization;
 using FavoDeMel.Domain.Core.Model.Configuration;
 using FavoDeMel.Domain.Core.Extensions;
 using FavoDeMel.Infra.IoC;
+using FavoDeMel.Catalogo.Application.AutoMapper;
+using FavoDeMel.Venda.Application;
+using FavoDeMel.Venda.Application.Queries;
+using FavoDeMel.Venda.Domain.Models;
+using FavoDeMel.Venda.Data.Repository;
 
 namespace FavoDeMel.Venda.Api
 {
@@ -56,6 +59,7 @@ namespace FavoDeMel.Venda.Api
                      .AddConsole()
                      .AddSerilog(logger, dispose: true);
                  });
+            services.AddAutoMapper(typeof(DomainToViewModelMappingProfile), typeof(ViewModelToDomainMappingProfile));
             services.AddMediatR(typeof(Startup));
             services.AddEventBus(_appSettings.RabbitMqSettings);
             services.ConfigureRabbitMQ(_appSettings.RabbitMqSettings);
@@ -119,12 +123,26 @@ namespace FavoDeMel.Venda.Api
         private void RegisterServices(IServiceCollection services)
         {
             DependencyContainer.RegisterServices(services);
+
+            services.AddScoped<IPedidoRepository, PedidoRepository>();
+            services.AddScoped<IPedidoQueries, PedidoQueries>();
+            services.AddScoped<VendaDbContext>();
+
+            services.AddScoped<IRequestHandler<AdicionarItemPedidoCommand, bool>, PedidoCommandHandler>();
+            services.AddScoped<IRequestHandler<AtualizarItemPedidoCommand, bool>, PedidoCommandHandler>();
+            services.AddScoped<IRequestHandler<RemoverItemPedidoCommand, bool>, PedidoCommandHandler>();
+            services.AddScoped<IRequestHandler<AplicarVoucherPedidoCommand, bool>, PedidoCommandHandler>();
+            services.AddScoped<IRequestHandler<IniciarPedidoCommand, bool>, PedidoCommandHandler>();
+            services.AddScoped<IRequestHandler<FinalizarPedidoCommand, bool>, PedidoCommandHandler>();
+            services.AddScoped<IRequestHandler<CancelarProcessamentoPedidoCommand, bool>, PedidoCommandHandler>();
+            services.AddScoped<IRequestHandler<CancelarProcessamentoPedidoEstornarEstoqueCommand, bool>, PedidoCommandHandler>();
+
         }
 
         private void ConfigureEventBus(IApplicationBuilder app)
         {
             var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
-            eventBus.Subscribe<VendaCreatedEvent, VendaEventHandler>();
+            //eventBus.Subscribe<VendaCreatedEvent, VendaEventHandler>();
         }
     }
 
@@ -146,7 +164,7 @@ namespace FavoDeMel.Venda.Api
             });
 
             services.AddSingleton<IEventBusSubscriptionsManager, InMemoryEventBusSubscriptionsManager>();
-            services.AddTransient<VendaEventHandler>();
+            //services.AddTransient<VendaEventHandler>();
 
             return services;
         }

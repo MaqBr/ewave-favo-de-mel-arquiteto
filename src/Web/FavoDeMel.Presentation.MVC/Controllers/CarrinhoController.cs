@@ -15,7 +15,6 @@ namespace FavoDeMel.Presentation.MVC.Controllers
     {
         private readonly IProdutoAppService _produtoAppService;
         private readonly IPedidoAppService _pedidoAppService;
-        private readonly IMediatorHandler _mediatorHandler;
 
         public CarrinhoController(INotificationHandler<DomainNotification> notifications,
                                   IProdutoAppService produtoAppService, 

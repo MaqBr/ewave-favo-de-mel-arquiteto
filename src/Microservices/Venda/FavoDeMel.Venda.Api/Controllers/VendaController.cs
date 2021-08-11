@@ -9,18 +9,6 @@ namespace FavoDeMel.Venda.Api.Controllers
     [ApiController]
     public class VendaController : ControllerBase
     {
-        private readonly IVendaService _VendaService;
-
-        public VendaController(IVendaService VendaService)
-        {
-            _VendaService = VendaService;
-        }
-
-        // GET api/Venda
-        [HttpGet]
-        public ActionResult<IEnumerable<VendaLog>> Get()
-        {
-            return Ok(_VendaService.GetVendaLogs());
-        }
+        
     }
 }

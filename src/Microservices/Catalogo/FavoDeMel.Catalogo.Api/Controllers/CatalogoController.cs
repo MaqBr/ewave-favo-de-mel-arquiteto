@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using FavoDeMel.Catalogo.Application.Interfaces;
-using FavoDeMel.Catalogo.Application.Models;
 using FavoDeMel.Catalogo.Application.Services;
 using FavoDeMel.Catalogo.Application.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -15,13 +13,11 @@ namespace FavoDeMel.Catalogo.Api.Controllers
     [ApiController]
     public class CatalogoController : ControllerBase
     {
-        private readonly ICatalogoService _accountService;
         private readonly IProdutoAppService _produtoService;
         private readonly ILogger<CatalogoController> _logger;
 
-        public CatalogoController(ICatalogoService accountService, IProdutoAppService produtoService, ILogger<CatalogoController> logger)
+        public CatalogoController(IProdutoAppService produtoService, ILogger<CatalogoController> logger)
         {
-            _accountService = accountService;
             _logger = logger;
             _produtoService = produtoService;
         }
@@ -50,8 +46,7 @@ namespace FavoDeMel.Catalogo.Api.Controllers
             try
             {
                 _logger.LogTrace("Executando o método get para obter contas");
-                var accounts = await _accountService.GetAccounts();
-                return new JsonResult(accounts);
+                return Ok();
             }
             catch(Exception ex)
             {
@@ -62,17 +57,16 @@ namespace FavoDeMel.Catalogo.Api.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] AccountVenda accountVenda)
+        public IActionResult Post([FromBody] int id)
         {
             try
             {
                 _logger.LogTrace("Executando o método post para Vendaência entre contas");
-                _accountService.Venda(accountVenda);
-                return Ok(accountVenda);
+                return Ok();
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Houve um erro ao enviar os dados {accountVenda}", accountVenda);
+                _logger.LogError(ex, "Houve um erro ao enviar os dados {id}", id);
                 throw new Exception($"Houve um erro ao enviar os dados: {ex.Message}");
             }
 

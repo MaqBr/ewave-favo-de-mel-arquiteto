@@ -19,6 +19,22 @@ using Swashbuckle.AspNetCore.SwaggerUI;
 using System.Text.Json.Serialization;
 using FavoDeMel.Domain.Core.Model.Configuration;
 using FavoDeMel.Domain.Core.Extensions;
+using FavoDeMel.Catalogo.Application.AutoMapper;
+using System.Collections.Generic;
+using FavoDeMel.Catalogo.Data.Dapper.Abstractions;
+using System;
+using FavoDeMel.Catalogo.Application.Queries;
+using System.Linq;
+using FavoDeMel.Catalogo.Application.ViewModels;
+using FavoDeMel.Catalogo.Domain;
+using FavoDeMel.Catalogo.Application.Services;
+using FavoDeMel.Catalogo.Domain.Interfaces;
+using FavoDeMel.Catalogo.Data.EF.Repository;
+using FavoDeMel.Catalogo.Application.Interfaces;
+using FavoDeMel.Catalogo.Data.Dapper.Connection;
+using FavoDeMel.Venda.Application.Events;
+using FavoDeMel.Catalogo.Domain.Events;
+using FavoDeMel.Domain.Core.Messages.CommonMessages.IntegrationEvents;
 
 namespace FavoDeMel.Catalogo.Api
 {
@@ -57,6 +73,7 @@ namespace FavoDeMel.Catalogo.Api
                      .AddConsole()
                      .AddSerilog(logger, dispose: true);
                  });
+            services.AddAutoMapper(typeof(DomainToViewModelMappingProfile), typeof(ViewModelToDomainMappingProfile));
             services.AddMediatR(typeof(Startup));
             RegisterServices(services);
 
@@ -122,7 +139,65 @@ namespace FavoDeMel.Catalogo.Api
         private void RegisterServices(IServiceCollection services)
         {
             DependencyContainer.RegisterServices(services);
+
+            //Application Services
+            services.AddScoped<IEstoqueService, EstoqueService>();
+            services.AddScoped<IProdutoAppService, ProdutoAppService>();
+
+            //Data
+            services.AddTransient<ICatalogoRepository, Data.EF.Repository.CatalogoRepository>();
+
+            services.AddScoped<CatalogoDbContext>();
+            services.AddScoped<IProdutoRepository, ProdutoRepository>();
+
+            //Finders
+            services.AddTransient<IBackendConnectionFactory, BackendConnectionFactory>();
+
+            foreach (var item in GetClassName("Finder"))
+            {
+                foreach (var typeArray in item.Value)
+                {
+                    services.AddScoped(typeArray, item.Key);
+                }
+            }
+
+            //Notifications
+            services.AddScoped<INotificationHandler<PedidoRascunhoIniciadoEvent>, PedidoEventHandler>();
+            services.AddScoped<INotificationHandler<ProdutoAbaixoEstoqueEvent>, ProdutoEventHandler>();
+            services.AddScoped<INotificationHandler<PedidoIniciadoEvent>, ProdutoEventHandler>();
+            services.AddScoped<INotificationHandler<PedidoProcessamentoCanceladoEvent>, ProdutoEventHandler>();
+
+            //Queries Commands
+            services.AddTransient<IRequestHandler<ObterTodosProdutosQuery, IEnumerable<ProdutoViewModel>>, ObterTodosProdutosQueryHandler>();
+
         }
+
+        private static Dictionary<Type, Type[]> GetClassName(string assemblyName)
+        {
+            if (string.IsNullOrEmpty(assemblyName))
+                return new Dictionary<Type, Type[]>();
+
+            Type type = typeof(FinderSql);
+
+            var assembly = type.Assembly;
+            var ts = assembly.GetTypes().ToList();
+
+            var result = new Dictionary<Type, Type[]>();
+
+            foreach (var item in ts.Where(s => !s.IsInterface))
+            {
+                var isIsAssignable = type.IsAssignableFrom(item);
+
+                if (isIsAssignable)
+                {
+                    var interfaceType = item.GetInterfaces();
+                    result.Add(item, interfaceType);
+                }
+            }
+            return result;
+        }
+
+
     }
 
     static class CustomExtensionsMethods
