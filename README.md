@@ -48,7 +48,8 @@ Os contêineres oferecem os benefícios de portabilidade, agilidade, escalabilid
 
 
 2) Autenticação no Identity Server - SSO
-[Aguarde]
+
+![image](https://user-images.githubusercontent.com/19453244/129215180-ac5106d6-0674-4017-8c60-7a9a669cc485.png)
 
 3) Swagger UI – API REST microserviço – Catálogo/Produto
 [Aguarde]
