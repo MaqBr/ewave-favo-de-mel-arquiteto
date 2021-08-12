@@ -35,6 +35,19 @@ Os contêineres oferecem os benefícios de portabilidade, agilidade, escalabilid
 # Principais tecnologias utilizadas
 [Aguarde]
 
+# Explorando a aplicação
+1)	Camada de Apresentação: Web App MVC Core
+[Aguarde]
 
+2) Autenticação no Identity Server - SSO
+[Aguarde]
 
+3) Swagger UI – API REST microserviço – Catálogo/Produto
+[Aguarde]
+
+4) Swagger UI – API REST microserviço – Venda
+[Aguarde]
+
+5) Banco de Dados
+[Aguarde]
 
