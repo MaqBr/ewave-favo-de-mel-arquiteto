@@ -74,11 +74,11 @@ namespace FavoDeMel.Presentation.MVC.Controllers.Admin
         {
             if (quantidade > 0)
             {
-                await _produtoAppService.ReporEstoque(id, quantidade);
+                await _produtoAppService.ReporEstoque(new Models.DTO.AtualizarEstoqueDTO { ProdutoId = id, Quantidade = quantidade });
             }
             else
             {
-                await _produtoAppService.DebitarEstoque(id, quantidade);
+                await _produtoAppService.DebitarEstoque(new Models.DTO.AtualizarEstoqueDTO { ProdutoId = id, Quantidade = quantidade });
             }
 
             return View("Index", await _produtoAppService.ObterTodos());

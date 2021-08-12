@@ -152,10 +152,10 @@
         <div class="col-xs-5" style="border: 20px solid white">
             <h3>@Model.Nome</h3>
 
-            <h6 class="title-price"><small>OFERTA</small></h6>
+            <h6 class="title-price"><small>VALOR UNITÁRIO</small></h6>
             <h3 style="margin-top: 0px;">@Model.Valor.ToString("C")</h3>
 
-            <p>Apenas @Model.QuantidadeEstoque em estoque!</p>
+            <p>Apenas @Model.QuantidadeEstoque disponíveis</p>
             <p>@Model.Descricao</p>
             <form method="post" asp-controller="Carrinho" asp-action="AdicionarItem">
 
@@ -172,7 +172,7 @@
 
                 <!-- Botoes de compra -->
                 <div class="section" style="padding-bottom: 20px;">
-                    <button type="submit" class="btn btn-success"><span style="margin-right: 20px" aria-hidden="true"></span> Comprar agora!</button>
+                    <button type="submit" class="btn btn-success"><span style="margin-right: 20px" aria-hidden="true"></span> Adicionar na comanda</button>
                 </div>
             </form>
         </div>

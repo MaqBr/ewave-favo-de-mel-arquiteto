@@ -43,6 +43,12 @@ namespace WebMVC.Infrastructure
 
         public static class Produto
         {
+
+            public static string ObterCategorias(string baseUri)
+            {
+                return $"{baseUri}/api/produto/categorias";
+            }
+
             public static string ObterPorCategoria(string baseUri, int codigo)
             {
                 return $"{baseUri}/api/produto/categoria/{codigo}";
@@ -60,17 +66,22 @@ namespace WebMVC.Infrastructure
 
             public static string Adicionar(string baseUri)
             {
-                return $"{baseUri}/novo-produto";
+                return $"{baseUri}/api/produto/adicionar";
             }
 
-            public static string Editar(string baseUri)
+            public static string Atualizar(string baseUri)
             {
-                return $"{baseUri}/editar-produto";
+                return $"{baseUri}/api/produto/atualizar";
             }
 
-            public static string AtualizarEstoque(string baseUri)
+            public static string DebitarEstoque(string baseUri)
             {
-                return $"{baseUri}/produtos-atualizar-estoque";
+                return $"{baseUri}/api/produto/estoque/debitar";
+            }
+
+            public static string ReporEstoque(string baseUri)
+            {
+                return $"{baseUri}/api/produto/estoque/repor";
             }
 
         }

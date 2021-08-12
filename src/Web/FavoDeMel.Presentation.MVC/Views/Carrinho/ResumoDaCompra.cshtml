@@ -52,37 +52,17 @@
                 </div>
                 <div class="col-md-8 order-md-1">
                     <form method="post" asp-controller="Carrinho" asp-action="IniciarPedido">
-
-                        <h4 class="mb-3">Pagamento</h4>
-                        <hr class="mb-4">
-                        <div class="row">
-                            <img class="img-fluid" src="Images/cards.png">
-
+                        <h4>Pagamento</h4>
+                        <div class="form-group">
+                            <label for="email"><b>Cliente:</b></label>
+                            <p>Fulano da Silva</p>
                         </div>
-                        <br /><br />
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label>Nome no Cartão</label>
-                                <input asp-for="Pagamento.NomeCartao" type="text" class="form-control" placeholder="" required="">
-                                <small class="text-muted">Nome completo como consta no cartão</small>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label>Número do Cartão</label>
-                                <input asp-for="Pagamento.NumeroCartao" type="text" class="form-control" placeholder="" required="">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3 mb-3">
-                                <label>Data Expiração</label>
-                                <input asp-for="Pagamento.ExpiracaoCartao" type="text" class="form-control" placeholder="" required="">
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label>CVV</label>
-                                <input asp-for="Pagamento.CvvCartao" type="text" class="form-control" placeholder="" required="">
-                            </div>
+                        <div class="form-group">
+                            <label for="pwd"><b>Mesa:</b></label>
+                            <p>Mesa 01</p>
                         </div>
                         <hr class="mb-4">
-                        <button class="btn btn-primary btn-lg btn-block" type="submit">Finalizar Compra</button>
+                        <button class="btn btn-primary btn-lg btn-block" type="submit">Finalizar</button>
                     </form>
                 </div>
             }

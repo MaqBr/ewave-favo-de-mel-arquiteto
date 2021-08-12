@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using FavoDeMel.Catalogo.Application.Services;
 using FavoDeMel.Catalogo.Application.ViewModels;
+using FavoDeMel.Catalogo.Domain.Models.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -39,6 +40,96 @@ namespace FavoDeMel.Catalogo.Api.Controllers
 
         }
 
+        [HttpPost]
+        [Route("adicionar")]
+        public async Task<IActionResult> AdicionarProduto([FromBody]ProdutoViewModel produto)
+        {
+            if (produto == null) return BadRequest();
+
+            try
+            {
+                await _produtoService.AdicionarProduto(produto);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Houve um erro ao adicionar o produto");
+                throw new Exception($"Houve um erro ao adicionar o produto: {ex.Message}");
+            }
+        }
+
+        [HttpPut]
+        [Route("atualizar")]
+        public async Task<IActionResult> AtualizarProduto([FromBody] ProdutoViewModel produto)
+        {
+            if (produto == null) return BadRequest();
+
+            try
+            {
+                await _produtoService.AtualizarProduto(produto);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Houve um erro ao atualizar o produto");
+                throw new Exception($"Houve um erro ao atualizar o produto: {ex.Message}");
+            }
+        }
+
+        [HttpPut]
+        [Route("estoque/debitar")]
+        public async Task<IActionResult> DebitarEstoque([FromBody] AtualizarEstoqueDTO produto)
+        {
+            if (produto == null) return BadRequest();
+
+            try
+            {
+                await _produtoService.DebitarEstoque(produto.ProdutoId, produto.Quantidade);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Houve um erro ao atualizar o estoque");
+                throw new Exception($"Houve um erro ao atualizar o estoque: {ex.Message}");
+            }
+        }
+
+        [HttpPut]
+        [Route("estoque/repor")]
+        public async Task<IActionResult> ReporEstoque([FromBody] AtualizarEstoqueDTO produto)
+        {
+            if (produto == null) return BadRequest();
+
+            try
+            {
+                await _produtoService.ReporEstoque(produto.ProdutoId, produto.Quantidade);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Houve um erro ao atualizar o estoque");
+                throw new Exception($"Houve um erro ao atualizar o estoque: {ex.Message}");
+            }
+        }
+
+        [HttpGet]
+        [Route("categorias")]
+        public async Task<IEnumerable<CategoriaViewModel>> ObterCategorias()
+        {
+            try
+            {
+                return await _produtoService.ObterCategorias();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Houve um erro ao obter os dados");
+                throw new Exception($"Houve um erro ao obter os dados: {ex.Message}");
+            }
+        }
 
         [HttpGet]
         [Route("categoria/{id}")]

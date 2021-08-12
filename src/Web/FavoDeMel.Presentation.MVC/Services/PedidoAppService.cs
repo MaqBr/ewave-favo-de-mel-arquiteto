@@ -36,6 +36,7 @@ namespace FavoDeMel.Presentation.MVC.Services
 
         public async Task<CarrinhoViewModel> ObterCarrinhoCliente(Guid clienteId)
         {
+            
             var uri = API.Pedido.ObterCarrinhoCliente(_remoteServiceBaseUrl, clienteId);
 
             var responseString = await _httpClient.GetStringAsync(uri);

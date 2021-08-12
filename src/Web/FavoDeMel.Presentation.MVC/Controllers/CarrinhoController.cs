@@ -55,9 +55,6 @@ namespace FavoDeMel.Presentation.MVC.Controllers
                     ValorUnitario = produto.Valor 
                 });
 
-            //TODO: NA API que recebe a requição que irá disparar o comando
-            //await _mediatorHandler.EnviarComando(command);
-
             if (OperacaoValida())
             {
                 return RedirectToAction("Index", "Vitrine");
@@ -80,8 +77,6 @@ namespace FavoDeMel.Presentation.MVC.Controllers
                         ClienteId = ClienteId,
                         ProdutoId = id,
                     });
-            //TODO: NA API que recebe a requição que irá disparar o comando
-            //await _mediatorHandler.RemoverItemPedidoCommand(ClienteId, id);
 
             if (OperacaoValida())
             {
@@ -105,9 +100,6 @@ namespace FavoDeMel.Presentation.MVC.Controllers
                         ProdutoId = produto.Id,
                         Quantidade = quantidade,
                     });
-
-            //TODO: NA API que recebe a requição que irá disparar o comando
-            //await _mediatorHandler.AtualizarItemPedidoCommand(ClienteId, id, quantidade);
 
             if (OperacaoValida())
             {
@@ -141,10 +133,6 @@ namespace FavoDeMel.Presentation.MVC.Controllers
                         ExpiracaoCartao = carrinhoViewModel.Pagamento.ExpiracaoCartao,
                         CvvCartao = carrinhoViewModel.Pagamento.CvvCartao
                     });
-
-            //TODO: NA API que recebe a requição que irá disparar o comando
-            //await _mediatorHandler.IniciarPedidoCommand(carrinho.PedidoId, ClienteId, carrinho.ValorTotal, carrinhoViewModel.Pagamento.NomeCartao,
-            //carrinhoViewModel.Pagamento.NumeroCartao, carrinhoViewModel.Pagamento.ExpiracaoCartao, carrinhoViewModel.Pagamento.CvvCartao);
 
             if (OperacaoValida())
              {

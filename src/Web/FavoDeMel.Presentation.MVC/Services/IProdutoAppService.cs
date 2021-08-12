@@ -1,4 +1,5 @@
 ﻿using FavoDeMel.Presentation.MVC.CatalogoViewModels.ViewModels;
+using FavoDeMel.Presentation.MVC.Models.DTO;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ namespace FavoDeMel.Presentation.MVC.Services
         Task AdicionarProduto(ProdutoViewModel produtoViewModel);
         Task AtualizarProduto(ProdutoViewModel produtoViewModel);
 
-        Task<ProdutoViewModel> DebitarEstoque(Guid id, int quantidade);
-        Task<ProdutoViewModel> ReporEstoque(Guid id, int quantidade);
+        Task DebitarEstoque(AtualizarEstoqueDTO produto);
+        Task ReporEstoque(AtualizarEstoqueDTO produto);
     }
 }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using FavoDeMel.Domain.Core.Extensions;
 using FavoDeMel.Domain.Core.Model.Configuration;
 using FavoDeMel.Presentation.MVC.CatalogoViewModels.ViewModels;
+using FavoDeMel.Presentation.MVC.Models.DTO;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -74,22 +75,22 @@ namespace FavoDeMel.Presentation.MVC.Services
 
         public async Task<IEnumerable<CategoriaViewModel>> ObterCategorias()
         {
-            throw new NotImplementedException();
-            //return _mapper.Map<IEnumerable<CategoriaViewModel>>(await _produtoRepository.ObterCategorias());
+            var uri = API.Produto.ObterCategorias(_remoteServiceBaseUrl);
+
+            var responseString = await _httpClient.GetStringAsync(uri);
+
+            var categorias = JsonConvert.DeserializeObject<List<CategoriaViewModel>>(responseString);
+
+            return categorias;
         }
 
         public async Task AdicionarProduto(ProdutoViewModel produtoViewModel)
         {
-            var produto = new ProdutoViewModel()
-            {
-                Descricao = ""
-            };
-
             var uri = API.Produto.Adicionar(_remoteServiceBaseUrl);
-            var produtoContent = new StringContent(JsonConvert.SerializeObject(produto),
+            var produtoContent = new StringContent(JsonConvert.SerializeObject(produtoViewModel),
                 System.Text.Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.PutAsync(uri, produtoContent);
+            var response = await _httpClient.PostAsync(uri, produtoContent);
 
             if (response.StatusCode == System.Net.HttpStatusCode.InternalServerError)
             {
@@ -101,35 +102,50 @@ namespace FavoDeMel.Presentation.MVC.Services
 
         public async Task AtualizarProduto(ProdutoViewModel produtoViewModel)
         {
-            throw new NotImplementedException();
-            /*var produto = _mapper.Map<Produto>(produtoViewModel);
-            _produtoRepository.Atualizar(produto);
+            var uri = API.Produto.Atualizar(_remoteServiceBaseUrl);
+            var produtoContent = new StringContent(JsonConvert.SerializeObject(produtoViewModel),
+                System.Text.Encoding.UTF8, "application/json");
 
-            await _produtoRepository.UnitOfWork.Commit();*/
-        }
+            var response = await _httpClient.PutAsync(uri, produtoContent);
 
-        public async Task<ProdutoViewModel> DebitarEstoque(Guid id, int quantidade)
-        {
-            throw new NotImplementedException();
-
-            /*if (!_estoqueService.DebitarEstoque(id, quantidade).Result)
+            if (response.StatusCode == System.Net.HttpStatusCode.InternalServerError)
             {
-                throw new DomainException("Falha ao debitar estoque");
+                throw new Exception("Error ao atualizar o produto.");
             }
 
-            return _mapper.Map<ProdutoViewModel>(await _produtoRepository.ObterPorId(id));*/
+            response.EnsureSuccessStatusCode();
         }
 
-        public async Task<ProdutoViewModel> ReporEstoque(Guid id, int quantidade)
+        public async Task DebitarEstoque(AtualizarEstoqueDTO produto)
         {
-            throw new NotImplementedException();
+            var uri = API.Produto.DebitarEstoque(_remoteServiceBaseUrl);
+            var produtoContent = new StringContent(JsonConvert.SerializeObject(produto),
+                System.Text.Encoding.UTF8, "application/json");
 
-            /*if (!_estoqueService.ReporEstoque(id, quantidade).Result)
+            var response = await _httpClient.PutAsync(uri, produtoContent);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.InternalServerError)
             {
-                throw new DomainException("Falha ao repor estoque");
+                throw new Exception("Error ao debitar o estoque.");
             }
 
-            return _mapper.Map<ProdutoViewModel>(await _produtoRepository.ObterPorId(id));*/
+            response.EnsureSuccessStatusCode();
+        }
+
+        public async Task ReporEstoque(AtualizarEstoqueDTO produto)
+        {
+            var uri = API.Produto.ReporEstoque(_remoteServiceBaseUrl);
+            var produtoContent = new StringContent(JsonConvert.SerializeObject(produto),
+                System.Text.Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PutAsync(uri, produtoContent);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.InternalServerError)
+            {
+                throw new Exception("Error ao debitar o estoque.");
+            }
+
+            response.EnsureSuccessStatusCode();
         }
 
     }

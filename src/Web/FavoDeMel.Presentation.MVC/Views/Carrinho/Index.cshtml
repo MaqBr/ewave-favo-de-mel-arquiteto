@@ -3,6 +3,19 @@
     ViewData["Title"] = "Index";
 }
 <div class="container">
+    <h1>Detalhes da Comanda [010203]</h1>
+    <div class="form-group">
+        <label for="email"><b>Cliente:</b></label>
+        <p>Fulano da Silva</p>
+    </div>
+    <div class="form-group">
+        <label for="email"><b>Garçon:</b></label>
+        <p>Beltrano da Silva</p>
+    </div>
+    <div class="form-group">
+        <label for="pwd"><b>Mesa:</b></label>
+        <p>Mesa 01</p>
+    </div>
     <div class="row">
         <div class="col-sm-12 col-md-10 col-md-offset-1">
 
@@ -18,6 +31,7 @@
                                 <th>Quantidade</th>
                                 <th class="text-center">Valor</th>
                                 <th class="text-center">Valor Total</th>
+                                <th> </th>
                                 <th> </th>
                             </tr>
                         </thead>
@@ -56,6 +70,14 @@
                                                 <input type="hidden" id="Id" name="Id" value="@item.ProdutoId" />
                                                 <button type="submit" class="btn btn-danger">
                                                     <span class="fas fa-trash-alt"></span> Remover
+                                                </button>
+                                            </form>
+                                        </td>
+                                        <td class="col-sm-1 col-md-1">
+                                            <form method="post" asp-controller="Carrinho" asp-action="EnviarParaCozinha">
+                                                <input type="hidden" id="Id" name="Id" value="@item.ProdutoId" />
+                                                <button type="submit" class="btn btn-info">
+                                                    <span class="fas fa-play"></span> Enviar Cozinha
                                                 </button>
                                             </form>
                                         </td>
@@ -104,12 +126,12 @@
                                 <td> </td>
                                 <td>
                                     <a asp-controller="Vitrine" asp-action="Index" class="btn btn-dark">
-                                        <span class="fa fa-shopping-cart"></span>Continuar Compra
+                                        <span class="fa fa-shopping-cart"></span>Adicionar Itens
                                     </a>
                                 </td>
                                 <td>
                                     <a asp-controller="Carrinho" asp-action="ResumoDaCompra" class="btn btn-success">
-                                        <span class="fas fa-play"></span><br /> Finalizar Compra
+                                        <span class="fas fa-play"></span><br /> Finalizar Comanda
                                     </a>
                                 </td>
                             </tr>
