@@ -14,6 +14,13 @@ Além dos requisitos mínimos acima, deixamos por opção livre a implementaçã
 -  Garçom poder visualizar o andamento de preparo dos pedidos de uma comanda;
 -  Repriorização de ordem de preparo dos pedidos pela cozinha.
 
+# Pré-requisitos para utilização:
+- Docker (https://docs.docker.com/docker-for-windows/install/)
+- .NET Core 5 (https://dotnet.microsoft.com/download/dotnet/5.0 )
+
+Entrar na pastar src e executar o comando:
+docker-compose -f 'docker-compose.yml' -f 'docker-compose.override.yml' up -d --build
+
 # Visão Geral da Arquitetura
 
 Esta aplicação é cross-pataform e apresenta uma proposta inicial da solução ‘Favo de Mel’ no qual tem a principal característica de ser executada de forma independente e com eventos assíncronos com base em microserviços com o .NET Core e o Docker.
@@ -21,6 +28,13 @@ Esta aplicação é cross-pataform e apresenta uma proposta inicial da solução
 Os contêineres oferecem os benefícios de portabilidade, agilidade, escalabilidade, controle e isolamento em todo o fluxo de trabalho do ciclo de vida do aplicativo. 
 
 ![image](https://user-images.githubusercontent.com/19453244/129207906-9c06c7d5-3886-440e-8703-14122bb36550.png)
+
+# Principais padrões utilizados no desenvolvimento da solução
+[Aguarde]
+
+# Principais tecnologias utilizadas
+[Aguarde]
+
 
 
 
