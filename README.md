@@ -13,3 +13,14 @@ Além dos requisitos mínimos acima, deixamos por opção livre a implementaçã
 -  Notificação ativa entre o garçom e a cozinha ou vice-versa;
 -  Garçom poder visualizar o andamento de preparo dos pedidos de uma comanda;
 -  Repriorização de ordem de preparo dos pedidos pela cozinha.
+
+# Visão Geral da Arquitetura
+
+Esta aplicação é cross-pataform e apresenta uma proposta inicial da solução ‘Favo de Mel’ no qual tem a principal característica de ser executada de forma independente e com eventos assíncronos com base em microserviços com o .NET Core e o Docker.
+
+Os contêineres oferecem os benefícios de portabilidade, agilidade, escalabilidade, controle e isolamento em todo o fluxo de trabalho do ciclo de vida do aplicativo. 
+
+![image](https://user-images.githubusercontent.com/19453244/129207906-9c06c7d5-3886-440e-8703-14122bb36550.png)
+
+
+
