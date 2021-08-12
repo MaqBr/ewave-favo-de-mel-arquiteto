@@ -1,20 +1,22 @@
 ﻿@model FavoDeMel.Presentation.MVC.CatalogoViewModels.Venda.ViewModels.CarrinhoViewModel
+@using Microsoft.AspNetCore.Identity
 @{
     ViewData["Title"] = "Index";
+
 }
 <div class="container">
-    <h1>Detalhes da Comanda [010203]</h1>
+    <h1>Detalhes da Comanda [@Model.PedidoId]</h1>
     <div class="form-group">
         <label for="email"><b>Cliente:</b></label>
-        <p>Fulano da Silva</p>
+        <p>@Model.ClienteId</p>
     </div>
     <div class="form-group">
-        <label for="email"><b>Garçon:</b></label>
-        <p>Beltrano da Silva</p>
-    </div>
-    <div class="form-group">
-        <label for="pwd"><b>Mesa:</b></label>
-        <p>Mesa 01</p>
+
+        @if (User.Identity.IsAuthenticated)
+        {
+            <label for="email"><b>Atentende:</b></label>
+            <p>@User.Identity.Name</p>
+        }
     </div>
     <div class="row">
         <div class="col-sm-12 col-md-10 col-md-offset-1">
@@ -28,10 +30,10 @@
                         <thead>
                             <tr>
                                 <th>Produto</th>
+                                <th>Situação</th>
                                 <th>Quantidade</th>
                                 <th class="text-center">Valor</th>
                                 <th class="text-center">Valor Total</th>
-                                <th> </th>
                                 <th> </th>
                             </tr>
                         </thead>
@@ -45,6 +47,14 @@
                                             <div class="media">
                                                 <div class="media-body">
                                                     <h4 class="media-heading"><a asp-controller="Vitrine" asp-action="ProdutoDetalhe" asp-route-id="@item.ProdutoId">@item.ProdutoNome</a></h4>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                       <td class="col-sm-5 col-md-5">
+                                            <div class="media">
+                                                <div class="media-body">
+                                                    @item.ItemStatus
                                                 </div>
                                             </div>
                                         </td>
@@ -73,14 +83,6 @@
                                                 </button>
                                             </form>
                                         </td>
-                                        <td class="col-sm-1 col-md-1">
-                                            <form method="post" asp-controller="Carrinho" asp-action="EnviarParaCozinha">
-                                                <input type="hidden" id="Id" name="Id" value="@item.ProdutoId" />
-                                                <button type="submit" class="btn btn-info">
-                                                    <span class="fas fa-play"></span> Enviar Cozinha
-                                                </button>
-                                            </form>
-                                        </td>
                                     </tr>
                                 }
                             }
@@ -95,7 +97,7 @@
                             <tr>
                                 <td> </td>
                                 <td colspan="2">
-                                    <form method="post" asp-controller="Carrinho" asp-action="AplicarVoucher">
+                                    @*<form method="post" asp-controller="Carrinho" asp-action="AplicarVoucher">
                                         <div class="row" style="float: left">
                                             <input placeholder="Voucher" style="width: 150px" type="text" class="form-control" name="VoucherCodigo" id="VoucherCodigo" value="@Model.VoucherCodigo">
                                         </div>
@@ -104,7 +106,7 @@
                                                 <span class="fas fa-sync"></span>
                                             </button>
                                         </div>
-                                    </form>
+                                    </form>*@
                                 </td>
                                 <td><h5>Desconto</h5></td>
                                 <td class="text-right"><h5><strong>@Model.ValorDesconto.ToString("C")</strong></h5></td>
@@ -140,7 +142,7 @@
                 }
                 else
                 {
-                    <div><p>Carrinho Vazio</p></div>
+                    <div><p>Comanda Vazia</p></div>
                 }
             }
         </div>

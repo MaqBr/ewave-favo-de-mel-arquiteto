@@ -41,6 +41,7 @@ namespace FavoDeMel.Venda.Application.Queries
                 {
                     ProdutoId = item.ProdutoId,
                     ProdutoNome = item.ProdutoNome,
+                    ItemStatus = item.ItemStatus,
                     Quantidade = item.Quantidade,
                     ValorUnitario = item.ValorUnitario,
                     ValorTotal = item.ValorUnitario * item.Quantidade
