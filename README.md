@@ -39,11 +39,18 @@ Os contêineres oferecem os benefícios de portabilidade, agilidade, escalabilid
      - git clone https://github.com/MaqBr/ewave-favo-de-mel-arquiteto.git
      - No diretório raiz executar o comando:
        - docker-compose -f 'docker-compose.yml' -f 'docker-compose.override.yml' up -d --build
-
+     - Será carregado o container com todas as dependências e abrirá a página do servidor https://localhost:5006
+     
 1. Camada de Apresentação: Web App MVC Core
    - URL: https://localhost:5006
-    ![image](https://user-images.githubusercontent.com/19453244/129215456-9d120692-6008-4d1a-a730-6cefd9122bc9.png)
-
+    ![image](https://user-images.githubusercontent.com/19453244/129280907-44035b89-6412-443b-945b-6de2b92956a1.png)
+   - Clique em "Acessar via SSO"
+     - A aplicação é redirecionada para o serviço de autenticação single sign on (SSO) no endereço http://localhost:5000 
+      ![image](https://user-images.githubusercontent.com/19453244/129281239-0213875c-a2ec-40d2-bd65-d5603ed26327.png)
+     - Entre primeiramente com o perfil de "Garçom"
+       - Nome de usuário: garcom
+       - Senha: Teste@123
+ 
 2. Autenticação no Identity Server (SSO) OAuth 2 
    - URL: http://localhost:5000
     ![image](https://user-images.githubusercontent.com/19453244/129215180-ac5106d6-0674-4017-8c60-7a9a669cc485.png)
