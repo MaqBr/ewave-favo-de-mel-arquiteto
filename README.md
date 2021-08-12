@@ -82,3 +82,6 @@ Strings de conexão:
 "VendaDbConnection": "Server=tcp:127.0.0.1,11433;Database=VendaDb;User Id=sa;Password=Numsey#2021"
 
 "CatalogoDbConnection": "Server=tcp:127.0.0.1,11433;Database=CatalogoDb;User Id=sa;Password=Numsey#2021"
+
+- Scripts para seed de dados:
+https://github.com/MaqBr/ewave-favo-de-mel-arquiteto/tree/master/src/Scripts
