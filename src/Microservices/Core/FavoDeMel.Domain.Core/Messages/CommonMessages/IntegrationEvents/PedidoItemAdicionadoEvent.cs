@@ -1,8 +1,6 @@
 ﻿using System;
-using FavoDeMel.Domain.Core.Messages;
-using FavoDeMel.Domain.Core.Messages.CommonMessages.IntegrationEvents;
 
-namespace FavoDeMel.Venda.Application.Events
+namespace FavoDeMel.Domain.Core.Messages.CommonMessages.IntegrationEvents
 {
     public class PedidoItemAdicionadoEvent : IntegrationEvent
     {

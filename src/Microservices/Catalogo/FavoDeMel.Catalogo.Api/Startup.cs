@@ -34,6 +34,7 @@ using FavoDeMel.Catalogo.Data.Dapper.Connection;
 using FavoDeMel.Venda.Application.Events;
 using FavoDeMel.Catalogo.Domain.Events;
 using FavoDeMel.Domain.Core.Messages.CommonMessages.IntegrationEvents;
+using FavoDeMel.Catalogo.Application.IntegrationEvents.EventHandling;
 
 namespace FavoDeMel.Catalogo.Api
 {
@@ -199,7 +200,7 @@ namespace FavoDeMel.Catalogo.Api
         private void ConfigureEventBus(IApplicationBuilder app)
         {
             var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
-            eventBus.Subscribe<PedidoItemAdicionadoEvent, PedidoEventHandler>();
+            eventBus.Subscribe<PedidoItemAdicionadoEvent, PedidoItemAdicionadoEventHandler>();
         }
 
     }
@@ -221,7 +222,7 @@ namespace FavoDeMel.Catalogo.Api
             });
 
             services.AddSingleton<IEventBusSubscriptionsManager, InMemoryEventBusSubscriptionsManager>();
-            services.AddTransient<PedidoEventHandler>();
+            services.AddTransient<PedidoItemAdicionadoEventHandler>();
 
             return services;
         }

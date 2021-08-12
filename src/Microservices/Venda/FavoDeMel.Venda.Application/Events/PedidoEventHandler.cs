@@ -8,7 +8,6 @@ namespace FavoDeMel.Venda.Application.Events
 {
     public class PedidoEventHandler :
         INotificationHandler<PedidoRascunhoIniciadoEvent>,
-        IIntegrationEventHandler<PedidoItemAdicionadoEvent>,
         INotificationHandler<PedidoProdutoAdicionadoEvent>
     {
 
@@ -24,20 +23,10 @@ namespace FavoDeMel.Venda.Application.Events
             return Task.CompletedTask;
         }
 
-        public Task Handle(PedidoItemAdicionadoEvent notification, CancellationToken cancellationToken)
-        {
-            return Task.CompletedTask;
-        }
-
         public Task Handle(PedidoProdutoAdicionadoEvent notification, CancellationToken cancellationToken)
         {
             return Task.CompletedTask;
         }
 
-        public Task Handle(PedidoItemAdicionadoEvent @event)
-        {
-            var pedidoItemAdicionado = @event;
-            return Task.CompletedTask;
-        }
     }
 }
