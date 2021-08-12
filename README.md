@@ -85,3 +85,15 @@ Strings de conexão:
 
 - Scripts para seed de dados:
 https://github.com/MaqBr/ewave-favo-de-mel-arquiteto/tree/master/src/Scripts
+
+
+6) Visualização de logs com Elasticsearch e Kibana
+
+URL Cluster Elastic: http://localhost:9200/
+
+![image](https://user-images.githubusercontent.com/19453244/129223746-a902f10d-8e7e-471b-882b-ce4e3729cb8e.png)
+
+URL Dashboard Kibana: http://localhost:5601
+
+![image](https://user-images.githubusercontent.com/19453244/129224025-3cf06da7-bc95-49e4-9307-7034542e8954.png)
+
