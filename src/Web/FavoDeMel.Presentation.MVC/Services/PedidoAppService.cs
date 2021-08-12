@@ -29,7 +29,7 @@ namespace FavoDeMel.Presentation.MVC.Services
             _httpClient = httpClient;
             _logger = logger;
             _appSettings = configuration.GetAppSettings();
-            _remoteServiceBaseUrl = $"{_appSettings.Microservices.VendaBaseUrl}/api/v1/adminprodutos";
+            _remoteServiceBaseUrl = $"{_appSettings.Microservices.VendaBaseUrl}";
             
         }
 

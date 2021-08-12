@@ -45,17 +45,17 @@ namespace WebMVC.Infrastructure
         {
             public static string ObterPorCategoria(string baseUri, int codigo)
             {
-                return $"{baseUri}/produto-detalhe/categoria/{codigo}";
+                return $"{baseUri}/api/produto/categoria/{codigo}";
             }
 
             public static string ObterPorId(string baseUri, Guid id)
             {
-                return $"{baseUri}/id={id}";
+                return $"{baseUri}/api/produto/produto-detalhe/{id}";
             }
 
             public static string ObterTodos(string baseUri)
             {
-                return $"{baseUri}/admin-produtos";
+                return $"{baseUri}/api/produto/vitrine";
             }
 
             public static string Adicionar(string baseUri)

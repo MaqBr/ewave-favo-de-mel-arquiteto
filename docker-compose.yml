@@ -3,7 +3,7 @@ version: '3.4'
 services:
   favodemel.catalogo.api:
     image: ${DOCKER_REGISTRY-}favodemelcatalogoapi
-    container_name: catalog-api
+    container_name: catalogo-api
     build:
       context: .
       dockerfile: src/Microservices/Catalogo/FavoDeMel.Catalogo.Api/Dockerfile

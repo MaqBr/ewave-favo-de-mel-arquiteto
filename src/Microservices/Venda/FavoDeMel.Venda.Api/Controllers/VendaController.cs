@@ -47,8 +47,8 @@ namespace FavoDeMel.Venda.Api.Controllers
         }
 
         [HttpPost]
-        [Route("meu-carrinho/adicionar")]
-        public async Task<IActionResult> AdicionarItem([FromBody]AdicionarItemPedidoDTO itemPedido)
+        [Route("meu-carrinho/item/adicionar")]
+        public async Task<IActionResult> AdicionarItem([FromBody] AdicionarItemPedidoDTO itemPedido)
         {
             if (itemPedido == null) return BadRequest();
 
@@ -68,9 +68,57 @@ namespace FavoDeMel.Venda.Api.Controllers
                 throw new Exception($"Houve um erro ao adicionar o item no carrinho: {ex.Message}");
             }
 
-
-
-            
         }
+
+        [HttpPost]
+        [Route("meu-carrinho/item/atualizar")]
+        public async Task<IActionResult> AtualizarItem([FromBody] AtualizarItemPedidoDTO itemPedido)
+        {
+            if (itemPedido == null) return BadRequest();
+
+            try
+            {
+                var command = new AtualizarItemPedidoCommand(itemPedido.ClienteId,
+                    itemPedido.ProdutoId, itemPedido.Quantidade);
+
+                await _mediatorHandler.EnviarComando(command);
+
+                return Ok();
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Houve um erro ao atualizar o item no carrinho {itemPedido}", itemPedido);
+                throw new Exception($"Houve um erro ao atualizar o item no carrinho: {ex.Message}");
+            }
+
+        }
+
+        [HttpPost]
+        [Route("meu-carrinho/item/remover")]
+        public async Task<IActionResult> RemoverItem([FromBody] RemoverItemPedidoDTO itemPedido)
+        {
+            if (itemPedido == null) return BadRequest();
+
+            try
+            {
+                var command = new RemoverItemPedidoCommand(itemPedido.ClienteId,
+                    itemPedido.ProdutoId);
+
+                await _mediatorHandler.EnviarComando(command);
+
+                return Ok();
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Houve um erro ao remover o item do carrinho {itemPedido}", itemPedido);
+                throw new Exception($"Houve um erro ao remover o item do carrinho: {ex.Message}");
+            }
+
+
+        }
+
+
     }
 }

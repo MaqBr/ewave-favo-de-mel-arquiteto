@@ -5,7 +5,7 @@ WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
-FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
+FROM mcr.microsoft.com/dotnet/runtime:5.0 AS build
 WORKDIR /src
 COPY ["src/Web/FavoDeMel.Presentation.MVC/FavoDeMel.Presentation.MVC.csproj", "src/Web/FavoDeMel.Presentation.MVC/"]
 RUN dotnet restore "src/Web/FavoDeMel.Presentation.MVC/FavoDeMel.Presentation.MVC.csproj"

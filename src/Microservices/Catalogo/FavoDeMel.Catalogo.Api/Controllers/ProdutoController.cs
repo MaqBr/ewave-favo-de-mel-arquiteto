@@ -24,11 +24,12 @@ namespace FavoDeMel.Catalogo.Api.Controllers
 
         [HttpGet]
         [Route("vitrine")]
-        public async Task<IEnumerable<ProdutoViewModel>> ObterTodos()
+        public async Task<object> ObterTodos()
         {
             try
             {
-                return await _produtoService.ObterTodos();
+                var produtos = await _produtoService.ObterTodos();
+                return new JsonResult(produtos);
             }
             catch (Exception ex)
             {
@@ -40,12 +41,12 @@ namespace FavoDeMel.Catalogo.Api.Controllers
 
 
         [HttpGet]
-        [Route("categoria")]
-        public async Task<IEnumerable<ProdutoViewModel>> ObterPorCategoria(int codigo)
+        [Route("categoria/{id}")]
+        public async Task<IEnumerable<ProdutoViewModel>> ObterPorCategoria(int id)
         {
             try
             {
-                return await _produtoService.ObterPorCategoria(codigo);
+                return await _produtoService.ObterPorCategoria(id);
             }
             catch (Exception ex)
             {

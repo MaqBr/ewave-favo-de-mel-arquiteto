@@ -98,12 +98,14 @@ namespace FavoDeMel.Presentation.MVC
             //services.AddTransient<HttpClientRequestIdDelegatingHandler>();
 
             //set 5 min as the lifetime for each HttpMessageHandler int the pool
-            //services.AddHttpClient("extendedhandlerlifetime")
-                //.SetHandlerLifetime(TimeSpan.FromMinutes(5));
+            services.AddHttpClient("extendedhandlerlifetime")
+                .SetHandlerLifetime(TimeSpan.FromMinutes(5));
 
             //add http client services
-            services.AddHttpClient<IProdutoAppService, ProdutoAppService>();
-            services.AddHttpClient<IPedidoAppService, PedidoAppService>();
+            services.AddHttpClient<IProdutoAppService, ProdutoAppService>()
+                .SetHandlerLifetime(TimeSpan.FromMinutes(5));
+            services.AddHttpClient<IPedidoAppService, PedidoAppService>()
+                .SetHandlerLifetime(TimeSpan.FromMinutes(5));
 
             return services;
         }

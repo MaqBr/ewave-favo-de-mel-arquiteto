@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Security.Authentication;
 using System.Text.Json;
 using System.Threading.Tasks;
 using FavoDeMel.Domain.Core.Extensions;
 using FavoDeMel.Domain.Core.Model.Configuration;
 using FavoDeMel.Presentation.MVC.CatalogoViewModels.ViewModels;
-using Microsoft.eShopOnContainers.WebMVC;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using WebMVC.Infrastructure;
 
 namespace FavoDeMel.Presentation.MVC.Services
@@ -27,25 +25,24 @@ namespace FavoDeMel.Presentation.MVC.Services
             ILogger<ProdutoAppService> logger,
             IConfiguration configuration)
         {
+
             _configuration = configuration;
             _httpClient = httpClient;
             _logger = logger;
             _appSettings = configuration.GetAppSettings();
-            _remoteServiceBaseUrl = $"{_appSettings.Microservices.CatalogoBaseUrl}/api/v1/adminprodutos";
+            _remoteServiceBaseUrl = $"{_appSettings.Microservices.CatalogoBaseUrl}";
         }
 
 
         public async Task<IEnumerable<ProdutoViewModel>> ObterPorCategoria(int codigo)
         {
 
+            
             var uri = API.Produto.ObterPorCategoria(_remoteServiceBaseUrl, codigo);
 
             var responseString = await _httpClient.GetStringAsync(uri);
 
-            var produtos = JsonSerializer.Deserialize<IEnumerable<ProdutoViewModel>>(responseString, new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true
-            });
+            var produtos = JsonConvert.DeserializeObject<IEnumerable<ProdutoViewModel>>(responseString);
 
             return produtos;
 
@@ -58,10 +55,7 @@ namespace FavoDeMel.Presentation.MVC.Services
 
             var responseString = await _httpClient.GetStringAsync(uri);
 
-            var produto = JsonSerializer.Deserialize<ProdutoViewModel>(responseString, new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true
-            });
+            var produto = JsonConvert.DeserializeObject<ProdutoViewModel>(responseString);
 
             return produto;
 
@@ -73,10 +67,7 @@ namespace FavoDeMel.Presentation.MVC.Services
 
             var responseString = await _httpClient.GetStringAsync(uri);
 
-            var produtos = JsonSerializer.Deserialize<IEnumerable<ProdutoViewModel>>(responseString, new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true
-            });
+            var produtos = JsonConvert.DeserializeObject<List<ProdutoViewModel>>(responseString);
 
             return produtos;
         }
@@ -95,7 +86,7 @@ namespace FavoDeMel.Presentation.MVC.Services
             };
 
             var uri = API.Produto.Adicionar(_remoteServiceBaseUrl);
-            var produtoContent = new StringContent(JsonSerializer.Serialize(produto),
+            var produtoContent = new StringContent(JsonConvert.SerializeObject(produto),
                 System.Text.Encoding.UTF8, "application/json");
 
             var response = await _httpClient.PutAsync(uri, produtoContent);
