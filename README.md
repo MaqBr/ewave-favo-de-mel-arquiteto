@@ -56,9 +56,11 @@ As APIs utilizam as credenciais abaixo para a autorização via token JWT:
 - ClientSecret: "360ceac2e80545dca6083fef4f94d09f"
 - Scopes: openid | profile | api_favo_mel
 
-
 3) Swagger UI – API REST microserviço – Catálogo/Produto
-[Aguarde]
+URL: http://localhost:5101
+
+![image](https://user-images.githubusercontent.com/19453244/129218403-fbe97d75-d50e-4627-8a0a-33554de83654.png)
+
 
 4) Swagger UI – API REST microserviço – Venda
 [Aguarde]
