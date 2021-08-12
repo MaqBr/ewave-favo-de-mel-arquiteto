@@ -41,7 +41,11 @@ Os contêineres oferecem os benefícios de portabilidade, agilidade, escalabilid
 
 # Explorando a aplicação
 1)	Camada de Apresentação: Web App MVC Core
-[Aguarde]
+
+![layer-web-mvc](https://user-images.githubusercontent.com/19453244/129214047-0fb5c615-f8bc-4576-8236-0996ba0c1393.png)
+
+
+
 
 2) Autenticação no Identity Server - SSO
 [Aguarde]
