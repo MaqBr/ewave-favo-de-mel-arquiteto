@@ -11,6 +11,7 @@ using FavoDeMel.Venda.Application.Events;
 using FavoDeMel.Venda.Domain.Models;
 using FavoDeMel.Domain.Core.DomainObjects.DTO;
 using FavoDeMel.Catalogo.Data.Dapper.ExtensionsMethods;
+using BuildingBlocks.EventBus.Abstractions;
 
 namespace FavoDeMel.Venda.Application
 {
@@ -27,12 +28,14 @@ namespace FavoDeMel.Venda.Application
     {
         private readonly IPedidoRepository _pedidoRepository;
         private readonly IMediatorHandler _mediatorHandler;
-
+        private readonly IEventBus _bus;
         public PedidoCommandHandler(IPedidoRepository pedidoRepository, 
-                                    IMediatorHandler mediatorHandler)
+                                    IMediatorHandler mediatorHandler,
+                                    IEventBus bus)
         {
             _pedidoRepository = pedidoRepository;
             _mediatorHandler = mediatorHandler;
+            _bus = bus;
         }
 
         public async Task<bool> Handle(AdicionarItemPedidoCommand message, CancellationToken cancellationToken)
@@ -66,6 +69,10 @@ namespace FavoDeMel.Venda.Application
             }
 
             pedido.AdicionarEvento(new PedidoItemAdicionadoEvent(pedido.ClienteId, pedido.Id, message.ProdutoId, message.Nome, message.ValorUnitario, message.Quantidade));
+            
+            //Publica em RabbitMQ para integração
+            _bus.Publish(new PedidoItemAdicionadoEvent(pedido.ClienteId, pedido.Id, message.ProdutoId, message.Nome, message.ValorUnitario, message.Quantidade));
+
             return await _pedidoRepository.UnitOfWork.Commit();
         }
 

@@ -23,6 +23,7 @@ using FavoDeMel.Venda.Application;
 using FavoDeMel.Venda.Application.Queries;
 using FavoDeMel.Venda.Domain.Models;
 using FavoDeMel.Venda.Data.Repository;
+using FavoDeMel.Venda.Application.Events;
 
 namespace FavoDeMel.Venda.Api
 {
@@ -142,7 +143,8 @@ namespace FavoDeMel.Venda.Api
         private void ConfigureEventBus(IApplicationBuilder app)
         {
             var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
-            //eventBus.Subscribe<VendaCreatedEvent, VendaEventHandler>();
+            //Exemplo de registro de subscriber
+            //eventBus.Subscribe<PedidoProdutoAdicionadoEvent, PedidoEventHandler>();
         }
     }
 
@@ -164,7 +166,8 @@ namespace FavoDeMel.Venda.Api
             });
 
             services.AddSingleton<IEventBusSubscriptionsManager, InMemoryEventBusSubscriptionsManager>();
-            //services.AddTransient<VendaEventHandler>();
+            //Exemplo de registro de subscriber
+            //services.AddTransient<PedidoEventHandler>();
 
             return services;
         }

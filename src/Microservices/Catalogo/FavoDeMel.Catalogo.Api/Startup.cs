@@ -127,6 +127,8 @@ namespace FavoDeMel.Catalogo.Api
             {
                 endpoints.MapControllers();
             });
+
+            ConfigureEventBus(app);
         }
 
         protected virtual void ConfigureAuth(IApplicationBuilder app)
@@ -194,6 +196,11 @@ namespace FavoDeMel.Catalogo.Api
             return result;
         }
 
+        private void ConfigureEventBus(IApplicationBuilder app)
+        {
+            var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
+            eventBus.Subscribe<PedidoItemAdicionadoEvent, PedidoEventHandler>();
+        }
 
     }
 
@@ -214,6 +221,7 @@ namespace FavoDeMel.Catalogo.Api
             });
 
             services.AddSingleton<IEventBusSubscriptionsManager, InMemoryEventBusSubscriptionsManager>();
+            services.AddTransient<PedidoEventHandler>();
 
             return services;
         }
@@ -272,5 +280,6 @@ namespace FavoDeMel.Catalogo.Api
 
             return services;
         }
-     }
+
+    }
 }

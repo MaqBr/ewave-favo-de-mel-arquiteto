@@ -2,12 +2,14 @@
 using System.Threading.Tasks;
 using MediatR;
 using FavoDeMel.Domain.Core.Communication.Mediator;
+using BuildingBlocks.EventBus.Abstractions;
 
 namespace FavoDeMel.Venda.Application.Events
 {
     public class PedidoEventHandler :
         INotificationHandler<PedidoRascunhoIniciadoEvent>,
-        INotificationHandler<PedidoItemAdicionadoEvent>
+        IIntegrationEventHandler<PedidoItemAdicionadoEvent>,
+        INotificationHandler<PedidoProdutoAdicionadoEvent>
     {
 
         private readonly IMediatorHandler _mediatorHandler;
@@ -24,6 +26,17 @@ namespace FavoDeMel.Venda.Application.Events
 
         public Task Handle(PedidoItemAdicionadoEvent notification, CancellationToken cancellationToken)
         {
+            return Task.CompletedTask;
+        }
+
+        public Task Handle(PedidoProdutoAdicionadoEvent notification, CancellationToken cancellationToken)
+        {
+            return Task.CompletedTask;
+        }
+
+        public Task Handle(PedidoItemAdicionadoEvent @event)
+        {
+            var pedidoItemAdicionado = @event;
             return Task.CompletedTask;
         }
     }

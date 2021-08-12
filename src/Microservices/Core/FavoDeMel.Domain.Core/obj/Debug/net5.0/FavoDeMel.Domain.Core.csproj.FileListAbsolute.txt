@@ -20,4 +20,3 @@ C:\git\ewave-favo-de-mel-arquiteto\src\Microservices\Core\FavoDeMel.Domain.Core\
 C:\git\ewave-favo-de-mel-arquiteto\src\Microservices\Core\FavoDeMel.Domain.Core\obj\Debug\net5.0\FavoDeMel.Domain.Core.dll
 C:\git\ewave-favo-de-mel-arquiteto\src\Microservices\Core\FavoDeMel.Domain.Core\obj\Debug\net5.0\ref\FavoDeMel.Domain.Core.dll
 C:\git\ewave-favo-de-mel-arquiteto\src\Microservices\Core\FavoDeMel.Domain.Core\obj\Debug\net5.0\FavoDeMel.Domain.Core.pdb
-C:\git\ewave-favo-de-mel-arquiteto\src\Microservices\Core\FavoDeMel.Domain.Core\obj\Debug\net5.0\FavoDeMel.Domain.Core.csproj.AssemblyReference.cache

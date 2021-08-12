@@ -1,9 +1,10 @@
 ﻿using System;
 using FavoDeMel.Domain.Core.Messages;
+using FavoDeMel.Domain.Core.Messages.CommonMessages.IntegrationEvents;
 
 namespace FavoDeMel.Venda.Application.Events
 {
-    public class PedidoItemAdicionadoEvent : Event
+    public class PedidoItemAdicionadoEvent : IntegrationEvent
     {
         public Guid ClienteId { get; private set; }
         public Guid PedidoId { get; private set; }
