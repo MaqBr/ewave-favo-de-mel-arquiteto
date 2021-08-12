@@ -28,10 +28,26 @@ Os contêineres oferecem os benefícios de portabilidade, agilidade, escalabilid
 ![image](https://user-images.githubusercontent.com/19453244/129207906-9c06c7d5-3886-440e-8703-14122bb36550.png)
 
 ### Principais padrões utilizados no desenvolvimento da solução
-[Aguarde]
+- Domain Driven Design - Arquitetura Hexagonal
+- Unit of Work
+- Repository and Generic Repository
+- Docker-Compose
+- Principios SOLID
 
 ## Principais tecnologias utilizadas
-[Aguarde]
+- ASP.NET Core MVC 5
+- WEB API Core
+- Entity Framework Core
+- Docker
+- Dapper
+- MediatR
+- AutoMapper
+- .NET Core Native DI
+- FluentValidation
+- Swagger UI
+- RabbitMQ
+- XUnit
+- EventStore
 
 ### Explorando a aplicação
 
