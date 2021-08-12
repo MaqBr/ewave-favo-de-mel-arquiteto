@@ -103,4 +103,9 @@ URL: http://localhost:15672/
 
 ![image](https://user-images.githubusercontent.com/19453244/129224660-5b56a927-275f-4e27-a5cf-1a38172cb60a.png)
 
+8) Monitoramento dos microserviços com Healtchecks
+
+URL: http://localhost:5013/
+
+![image](https://user-images.githubusercontent.com/19453244/129225181-60c83fbb-be2e-4d96-8371-fe6542a1b7dc.png)
 
