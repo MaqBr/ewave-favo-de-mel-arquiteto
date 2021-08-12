@@ -10,32 +10,32 @@ namespace WebMVC.Infrastructure
 
             public static string IniciarPedido(string baseUri)
             {
-                return $"{baseUri}/pedido/iniciar";
+                return $"{baseUri}/api/venda/iniciar";
             }
 
             public static string ObterCarrinhoCliente(string baseUri, Guid clienteId)
             {
-                return $"{baseUri}/pedido/meus-pedidos/{clienteId}";
+                return $"{baseUri}/api/venda/meu-carrinho/{clienteId}";
             }
 
             public static string ObterPedidosCliente(string baseUri, Guid clienteId)
             {
-                return $"{baseUri}/pedido/cliente/{clienteId}";
+                return $"{baseUri}/api/venda/meu-carrinho/{clienteId}";
             }
 
             public static string AdicionarItemPedido(string baseUri)
             {
-                return $"{baseUri}/pedido/adicionarItemPedido";
+                return $"{baseUri}/api/venda/meu-carrinho/item/adicionar";
             }
 
             public static string AtualizarItemPedido(string baseUri)
             {
-                return $"{baseUri}/pedido/atualizarItemPedido";
+                return $"{baseUri}/api/venda/meu-carrinho/item/atualizar";
             }
 
             public static string RemoverItemPedido(string baseUri)
             {
-                return $"{baseUri}/pedido/removerItemPedido";
+                return $"{baseUri}/api/venda/meu-carrinho/item/remover";
             }
 
             

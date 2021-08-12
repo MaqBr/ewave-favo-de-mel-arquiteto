@@ -30,12 +30,12 @@ namespace FavoDeMel.Venda.Api.Controllers
         }
 
         [HttpGet]
-        [Route("meu-carrinho")]
-        public async Task<CarrinhoViewModel> ObterCarrinhoCliente(Guid clienteId)
+        [Route("meu-carrinho/{id}")]
+        public async Task<CarrinhoViewModel> ObterCarrinhoCliente(Guid id)
         {
             try
             {
-                var result = await _pedidoQueries.ObterCarrinhoCliente(clienteId);
+                var result = await _pedidoQueries.ObterCarrinhoCliente(id);
                 return result;
             }
             catch (Exception ex)
@@ -70,7 +70,7 @@ namespace FavoDeMel.Venda.Api.Controllers
 
         }
 
-        [HttpPost]
+        [HttpPut]
         [Route("meu-carrinho/item/atualizar")]
         public async Task<IActionResult> AtualizarItem([FromBody] AtualizarItemPedidoDTO itemPedido)
         {

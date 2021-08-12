@@ -10,6 +10,7 @@ using FavoDeMel.Presentation.MVC.Models.DTO;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using WebMVC.Infrastructure;
 
 namespace FavoDeMel.Presentation.MVC.Services
@@ -39,10 +40,7 @@ namespace FavoDeMel.Presentation.MVC.Services
 
             var responseString = await _httpClient.GetStringAsync(uri);
 
-            var carrinho = JsonSerializer.Deserialize<CarrinhoViewModel>(responseString, new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true
-            });
+            var carrinho = JsonConvert.DeserializeObject<CarrinhoViewModel>(responseString);
 
             return carrinho;
         }
@@ -53,10 +51,7 @@ namespace FavoDeMel.Presentation.MVC.Services
 
             var responseString = await _httpClient.GetStringAsync(uri);
 
-            var pedidos = JsonSerializer.Deserialize<IEnumerable<PedidoViewModel>>(responseString, new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true
-            });
+            var pedidos = JsonConvert.DeserializeObject<IEnumerable<PedidoViewModel>>(responseString);
 
             return pedidos;
         }
@@ -65,10 +60,10 @@ namespace FavoDeMel.Presentation.MVC.Services
         {
             var uri = API.Pedido.AdicionarItemPedido(_remoteServiceBaseUrl);
 
-            var pedidoContent = new StringContent(JsonSerializer.Serialize(itemPedido),
+            var pedidoContent = new StringContent(JsonConvert.SerializeObject(itemPedido),
                 System.Text.Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.PutAsync(uri, pedidoContent);
+            var response = await _httpClient.PostAsync(uri, pedidoContent);
 
             if (response.StatusCode == System.Net.HttpStatusCode.InternalServerError)
             {
@@ -82,7 +77,7 @@ namespace FavoDeMel.Presentation.MVC.Services
         {
             var uri = API.Pedido.AtualizarItemPedido(_remoteServiceBaseUrl);
 
-            var pedidoContent = new StringContent(JsonSerializer.Serialize(itemPedido),
+            var pedidoContent = new StringContent(JsonConvert.SerializeObject(itemPedido),
                 System.Text.Encoding.UTF8, "application/json");
 
             var response = await _httpClient.PutAsync(uri, pedidoContent);
@@ -99,10 +94,10 @@ namespace FavoDeMel.Presentation.MVC.Services
         {
             var uri = API.Pedido.RemoverItemPedido(_remoteServiceBaseUrl);
 
-            var pedidoContent = new StringContent(JsonSerializer.Serialize(itemPedido),
+            var pedidoContent = new StringContent(JsonConvert.SerializeObject(itemPedido),
                 System.Text.Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.PutAsync(uri, pedidoContent);
+            var response = await _httpClient.PostAsync(uri, pedidoContent);
 
             if (response.StatusCode == System.Net.HttpStatusCode.InternalServerError)
             {
@@ -116,7 +111,7 @@ namespace FavoDeMel.Presentation.MVC.Services
         {
             var uri = API.Pedido.IniciarPedido(_remoteServiceBaseUrl);
 
-            var pedidoContent = new StringContent(JsonSerializer.Serialize(pedido),
+            var pedidoContent = new StringContent(JsonConvert.SerializeObject(pedido),
                 System.Text.Encoding.UTF8, "application/json");
 
             var response = await _httpClient.PutAsync(uri, pedidoContent);

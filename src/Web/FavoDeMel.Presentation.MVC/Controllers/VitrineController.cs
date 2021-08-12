@@ -23,7 +23,7 @@ namespace FavoDeMel.Presentation.MVC.Controllers
         }
 
         [HttpGet]
-        [Route("produto-detalhe/{id}")]
+        [Route("ProdutoDetalhe/{id}")]
         public async Task<IActionResult> ProdutoDetalhe(Guid id)
         {
             return View(await _produtoAppService.ObterPorId(id));

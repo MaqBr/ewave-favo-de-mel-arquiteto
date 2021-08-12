@@ -60,7 +60,7 @@ namespace FavoDeMel.Presentation.MVC.Controllers
 
             if (OperacaoValida())
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Vitrine");
             }
 
             TempData["Erros"] = ObterMensagensErro();
