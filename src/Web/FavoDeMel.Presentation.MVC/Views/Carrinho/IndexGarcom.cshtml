@@ -1,7 +1,7 @@
 ﻿@model FavoDeMel.Presentation.MVC.CatalogoViewModels.Venda.ViewModels.CarrinhoViewModel
 @using Microsoft.AspNetCore.Identity
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Detalhes da Comanda";
 
 }
 <div class="container">
@@ -14,7 +14,7 @@
 
         @if (User.Identity.IsAuthenticated)
         {
-            <label for="email"><b>Atentende:</b></label>
+            <label for="email"><b>Garçom:</b></label>
             <p>@User.Identity.Name</p>
         }
     </div>
@@ -54,12 +54,12 @@
                                        <td class="col-sm-5 col-md-5">
                                             <div class="media">
                                                 <div class="media-body">
-                                                    @item.ItemStatus
+                                                     <p>@item.ItemStatus</p>
                                                 </div>
                                             </div>
                                         </td>
+                                       <td class="col-sm-2 col-md-2" style="text-align: center">
 
-                                        <td class="col-sm-2 col-md-2" style="text-align: center">
                                             <form method="post" asp-controller="Carrinho" asp-action="AtualizarItem">
                                                 <input type="hidden" id="Id" name="Id" value="@item.ProdutoId" />
                                                 <div class="row" style="float: left">
@@ -71,7 +71,7 @@
                                                     </button>
                                                 </div>
                                             </form>
-                                        </td>
+                                       </td>
                                         <td class="col-sm-1 col-md-1 text-center"><strong>@item.ValorUnitario.ToString("C")</strong></td>
                                         <td class="col-sm-1 col-md-1 text-center"><strong>@item.ValorTotal.ToString("C")</strong></td>
 
@@ -97,16 +97,7 @@
                             <tr>
                                 <td> </td>
                                 <td colspan="2">
-                                    @*<form method="post" asp-controller="Carrinho" asp-action="AplicarVoucher">
-                                        <div class="row" style="float: left">
-                                            <input placeholder="Voucher" style="width: 150px" type="text" class="form-control" name="VoucherCodigo" id="VoucherCodigo" value="@Model.VoucherCodigo">
-                                        </div>
-                                        <div class="row" style="float: right">
-                                            <button type="submit" class="btn btn-success">
-                                                <span class="fas fa-sync"></span>
-                                            </button>
-                                        </div>
-                                    </form>*@
+
                                 </td>
                                 <td><h5>Desconto</h5></td>
                                 <td class="text-right"><h5><strong>@Model.ValorDesconto.ToString("C")</strong></h5></td>

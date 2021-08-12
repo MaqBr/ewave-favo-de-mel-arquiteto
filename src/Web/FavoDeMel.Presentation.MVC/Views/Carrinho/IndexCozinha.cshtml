@@ -1,0 +1,101 @@
+﻿@model FavoDeMel.Presentation.MVC.CatalogoViewModels.Venda.ViewModels.CarrinhoViewModel
+@using Microsoft.AspNetCore.Identity
+@{
+    ViewData["Title"] = "Itens para preparo";
+}
+<div class="container">
+    <h1>Detalhes da Comanda [@Model.PedidoId]</h1>
+    <div class="form-group">
+        <label for="email"><b>Cliente:</b></label>
+        <p>@Model.ClienteId</p>
+    </div>
+    <div class="form-group">
+
+        @if (User.Identity.IsAuthenticated)
+        {
+            <label for="email"><b>Perfil:</b></label>
+            <p>@User.Identity.Name</p>
+        }
+    </div>
+    <div class="row">
+        <div class="col-sm-12 col-md-10 col-md-offset-1">
+
+            <vc:summary />
+
+            @{
+                if (Model?.Items != null)
+                {
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Produto</th>
+                                <th>Situação</th>
+                                <th> </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @{
+                                foreach (var item in Model.Items)
+                                {
+                                    <tr>
+                                        <td class="col-sm-5 col-md-5">
+                                            <div class="media">
+                                                <div class="media-body">
+                                                    <h4 class="media-heading"><a asp-controller="Vitrine" asp-action="ProdutoDetalhe" asp-route-id="@item.ProdutoId">@item.ProdutoNome</a></h4>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                       <td class="col-sm-5 col-md-5">
+                                            <div class="media">
+                                                <div class="media-body">
+                                                    <select asp-for="ItensStatus" asp-items="Html.GetEnumSelectList<FavoDeMel.Presentation.MVC.ViewModels.VendaViewModels.Enuns.ItemStatus>()"></select>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                       <td class="col-sm-1 col-md-1">
+
+                                           <form method="post" asp-controller="Carrinho" asp-action="AtualizarItem">
+                                               <input type="hidden" id="Id" name="Id" value="@item.ProdutoId" />
+                                               <button type="submit" class="btn btn-success">
+                                                   <span class="fas fa-sync"></span> Atualizar
+                                               </button>
+                                           </form>
+
+                                           <form method="post" asp-controller="Carrinho" asp-action="RemoverItem">
+                                               <input type="hidden" id="Id" name="Id" value="@item.ProdutoId" />
+                                               <button type="submit" class="btn btn-danger">
+                                                   <span class="fas fa-trash-alt"></span> Cancelar
+                                               </button>
+                                           </form>
+                                       </td>
+                                    </tr>
+                                }
+                            }
+
+
+                        <tr>
+                            <td>
+
+                                <a asp-controller="Carrinho" asp-action="ResumoDaCompra" class="btn btn-success">
+                                    <span class="fas fa-play"></span><br /> Finalizar Comanda
+                                </a>
+
+                                <a asp-controller="Carrinho" asp-action="ResumoDaCompra" class="btn btn-danger">
+                                    <span class="fas fa-trash-alt"></span><br /> Cancelar Comanda
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <div><p>Comanda Vazia</p></div>
+                }
+            }
+        </div>
+    </div>
+</div>

@@ -27,14 +27,20 @@ namespace FavoDeMel.Presentation.MVC.Controllers
             _pedidoAppService = pedidoAppService;
         }
 
-        [Route("meu-carrinho")]
-        public async Task<IActionResult> Index()
+        [Route("vizualizar-comanda/garcom")]
+        public async Task<IActionResult> IndexGarcom()
+        {
+            return View(await _pedidoAppService.ObterCarrinhoCliente(ClienteId));
+        }
+
+        [Route("vizualizar-comanda/cozinha")]
+        public async Task<IActionResult> IndexCozinha()
         {
             return View(await _pedidoAppService.ObterCarrinhoCliente(ClienteId));
         }
 
         [HttpPost]
-        [Route("meu-carrinho")]
+        [Route("comanda")]
         public async Task<IActionResult> AdicionarItem(Guid id, int quantidade)
         {
             var produto = await _produtoAppService.ObterPorId(id);

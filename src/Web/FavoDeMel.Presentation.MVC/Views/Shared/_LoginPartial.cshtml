@@ -11,6 +11,22 @@
                 <button type="submit" class="nav-link btn btn-link text-dark"><i class="fa fa-sign-out-alt"></i> Sair SSO</button>
             </form>
         </li>
+        @if (User.Identity.Name.Equals("cozinha"))
+        {
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-controller="Carrinho" asp-action="IndexCozinha"><span class="fa fa-shopping-cart"></span> Visualizar comanda</a>
+            </li>
+        }
+        else
+        {
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="AdminProdutos" asp-action="Index"><span class="fa fa-key"></span> Gerenciar Produtos</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-controller="Carrinho" asp-action="IndexGarcom"><span class="fa fa-shopping-cart"></span> Visualizar comanda</a>
+            </li>
+        }
+
     }
     else
     {
@@ -18,10 +34,5 @@
             <a class="nav-link text-dark" asp-controller="Account" asp-action="Login"><span class="fa fa-key"></span> Acessar via SSO</a>
         </li>
     }
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="" asp-controller="AdminProdutos" asp-action="Index"><span class="fa fa-key"></span> Gerenciar Produtos</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-controller="Carrinho" asp-action="Index"><span class="fa fa-shopping-cart"></span> Detahes da comanda</a>
-    </li>
+
 </ul>
