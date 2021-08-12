@@ -18,8 +18,12 @@ Além dos requisitos mínimos acima, deixamos por opção livre a implementaçã
 - Docker (https://docs.docker.com/docker-for-windows/install/)
 - .NET Core 5 (https://dotnet.microsoft.com/download/dotnet/5.0 )
 
-Entrar na pastar src e executar o comando:
+- Entrar na pastar src e executar o comando:
 docker-compose -f 'docker-compose.yml' -f 'docker-compose.override.yml' up -d --build
+
+- No Visual Studio:
+Marcar o projeto docker-compose com "Projeto Inicial" e executar a build (conforme exibido na imagem abaixo)
+![image](https://user-images.githubusercontent.com/19453244/129209793-73e1f907-d70b-4e3a-887d-12693404b51c.png)
 
 # Visão Geral da Arquitetura
 
