@@ -97,3 +97,10 @@ URL Dashboard Kibana: http://localhost:5601
 
 ![image](https://user-images.githubusercontent.com/19453244/129224025-3cf06da7-bc95-49e4-9307-7034542e8954.png)
 
+7) Message Broker RabbitMQ
+
+URL: http://localhost:15672/
+
+![image](https://user-images.githubusercontent.com/19453244/129224660-5b56a927-275f-4e27-a5cf-1a38172cb60a.png)
+
+
