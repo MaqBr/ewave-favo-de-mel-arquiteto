@@ -41,15 +41,21 @@ Os contêineres oferecem os benefícios de portabilidade, agilidade, escalabilid
 
 # Explorando a aplicação
 1)	Camada de Apresentação: Web App MVC Core
+URL: https://localhost:5006
 
-![layer-web-mvc](https://user-images.githubusercontent.com/19453244/129214047-0fb5c615-f8bc-4576-8236-0996ba0c1393.png)
-
-
-
+![image](https://user-images.githubusercontent.com/19453244/129215456-9d120692-6008-4d1a-a730-6cefd9122bc9.png)
 
 2) Autenticação no Identity Server - SSO
-
+URL: http://localhost:5000
 ![image](https://user-images.githubusercontent.com/19453244/129215180-ac5106d6-0674-4017-8c60-7a9a669cc485.png)
+
+As APIs utilizam as credenciais abaixo para a autorização via token JWT:
+
+- Authority: "https://localhost:5001"
+- ClientId: "715000d0c10040258c1be259c09e3b91"
+- ClientSecret: "360ceac2e80545dca6083fef4f94d09f"
+- Scopes: openid | profile | api_favo_mel
+
 
 3) Swagger UI – API REST microserviço – Catálogo/Produto
 [Aguarde]
