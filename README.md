@@ -69,5 +69,16 @@ URL: https://localhost:5003
 
 
 5) Banco de Dados
-[Aguarde]
 
+Server: tcp:127.0.0.1,11433
+User: sa
+Password: Numsey#2021
+
+![image](https://user-images.githubusercontent.com/19453244/129221734-2a1bc9b8-b48d-4251-8efd-b1b9ebcb676f.png)
+
+
+Strings de conexão:
+
+"VendaDbConnection": "Server=tcp:127.0.0.1,11433;Database=VendaDb;User Id=sa;Password=Numsey#2021"
+
+"CatalogoDbConnection": "Server=tcp:127.0.0.1,11433;Database=CatalogoDb;User Id=sa;Password=Numsey#2021"
