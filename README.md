@@ -17,13 +17,7 @@ Além dos requisitos mínimos acima, deixamos por opção livre a implementaçã
 ### Pré-requisitos para utilização:
 - Docker (https://docs.docker.com/docker-for-windows/install/)
 - .NET Core 5 (https://dotnet.microsoft.com/download/dotnet/5.0 )
-
-- Entrar na pastar src e executar o comando:
-docker-compose -f 'docker-compose.yml' -f 'docker-compose.override.yml' up -d --build
-
-- No Visual Studio:
-Marcar o projeto docker-compose com "Projeto Inicial" e executar a build (conforme exibido na imagem abaixo)
-![image](https://user-images.githubusercontent.com/19453244/129209793-73e1f907-d70b-4e3a-887d-12693404b51c.png)
+- Visual Studio Code ou qualquer outro IDE compatível com .NET
 
 ### Visão Geral da Arquitetura
 
@@ -33,13 +27,19 @@ Os contêineres oferecem os benefícios de portabilidade, agilidade, escalabilid
 
 ![image](https://user-images.githubusercontent.com/19453244/129207906-9c06c7d5-3886-440e-8703-14122bb36550.png)
 
-## Principais padrões utilizados no desenvolvimento da solução
+### Principais padrões utilizados no desenvolvimento da solução
 [Aguarde]
 
 ## Principais tecnologias utilizadas
 [Aguarde]
 
-## Explorando a aplicação
+### Explorando a aplicação
+
+#### Execute a aplicação em ambiente local seguindo as etaspas a seguir:
+     - git clone https://github.com/MaqBr/ewave-favo-de-mel-arquiteto.git
+     - No diretório raiz executar o comando:
+       - docker-compose -f 'docker-compose.yml' -f 'docker-compose.override.yml' up -d --build
+
 1. Camada de Apresentação: Web App MVC Core
    - URL: https://localhost:5006
     ![image](https://user-images.githubusercontent.com/19453244/129215456-9d120692-6008-4d1a-a730-6cefd9122bc9.png)
