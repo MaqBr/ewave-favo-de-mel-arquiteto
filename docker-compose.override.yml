@@ -78,7 +78,7 @@ services:
   favodemel.sqlserver:
     environment:
       ACCEPT_EULA: 'Y'
-      SA_PASSWORD: "Numsey#2021"
+      SA_PASSWORD: "Numsey!2021"
     volumes:
       - mssql-data:/var/opt/mssql
     ports:
