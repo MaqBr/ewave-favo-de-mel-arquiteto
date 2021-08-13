@@ -131,7 +131,7 @@ https://github.com/MaqBr/ewave-favo-de-mel-arquiteto/tree/master/src/Scripts
 
     - URL: http://localhost:15672/
 
-    ![image](https://user-images.githubusercontent.com/19453244/129224660-5b56a927-275f-4e27-a5cf-1a38172cb60a.png)
+    ![image](https://user-images.githubusercontent.com/19453244/129299354-024bf817-641e-4884-a3dc-0e89d30e916d.png)
 
 8. Monitoramento dos microserviços com Healtchecks
 
