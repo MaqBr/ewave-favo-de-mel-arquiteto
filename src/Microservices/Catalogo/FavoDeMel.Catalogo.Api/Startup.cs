@@ -201,6 +201,10 @@ namespace FavoDeMel.Catalogo.Api
         {
             var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
             eventBus.Subscribe<PedidoItemAdicionadoEvent, PedidoItemAdicionadoEventHandler>();
+            eventBus.Subscribe<PedidoProdutoRemovidoEvent, PedidoProdutoRemovidoEventHandler>();
+            eventBus.Subscribe<PedidoFinalizadoEvent, PedidoFinalizadoEventHandler>();
+            eventBus.Subscribe<PedidoCanceladoEvent, PedidoCanceladoEventHandler>();
+            eventBus.Subscribe<PedidoProcessamentoCanceladoEvent, PedidoProcessamentoCanceladoEventHandler>();
         }
 
     }
@@ -223,6 +227,10 @@ namespace FavoDeMel.Catalogo.Api
 
             services.AddSingleton<IEventBusSubscriptionsManager, InMemoryEventBusSubscriptionsManager>();
             services.AddTransient<PedidoItemAdicionadoEventHandler>();
+            services.AddTransient<PedidoProdutoRemovidoEventHandler>();
+            services.AddTransient<PedidoFinalizadoEventHandler>();
+            services.AddTransient<PedidoCanceladoEventHandler>();
+            services.AddTransient<PedidoProcessamentoCanceladoEventHandler>();
 
             return services;
         }

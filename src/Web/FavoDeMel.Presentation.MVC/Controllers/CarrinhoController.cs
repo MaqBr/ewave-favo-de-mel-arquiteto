@@ -15,6 +15,8 @@ namespace FavoDeMel.Presentation.MVC.Controllers
     {
         private readonly IProdutoAppService _produtoAppService;
         private readonly IPedidoAppService _pedidoAppService;
+        private string returnView => User.Identity.IsAuthenticated && User.Identity.Name.Equals("cozinha")
+            ? "IndexCozinha" : "IndexGarcom";
 
         public CarrinhoController(INotificationHandler<DomainNotification> notifications,
                                   IProdutoAppService produtoAppService, 
@@ -30,13 +32,22 @@ namespace FavoDeMel.Presentation.MVC.Controllers
         [Route("vizualizar-comanda/garcom")]
         public async Task<IActionResult> IndexGarcom()
         {
-            return View(await _pedidoAppService.ObterCarrinhoCliente(ClienteId));
+            var model = await _pedidoAppService.ObterCarrinhoCliente(ClienteId);
+
+            if(model == null)
+                model = new CarrinhoViewModel { ClienteId = ClienteId };
+
+            return View(model);
         }
 
         [Route("vizualizar-comanda/cozinha")]
         public async Task<IActionResult> IndexCozinha()
         {
-            return View(await _pedidoAppService.ObterCarrinhoCliente(ClienteId));
+            var model = await _pedidoAppService.ObterCarrinhoCliente(ClienteId);
+            if (model == null)
+                model = new CarrinhoViewModel { ClienteId = ClienteId };
+
+            return View(model);
         }
 
         [HttpPost]
@@ -86,9 +97,9 @@ namespace FavoDeMel.Presentation.MVC.Controllers
 
             if (OperacaoValida())
             {
-                return RedirectToAction("Index");
+                return RedirectToAction(returnView);
             }
-
+            
             return View("Index", await _pedidoAppService.ObterCarrinhoCliente(ClienteId));
         }
 
@@ -109,43 +120,66 @@ namespace FavoDeMel.Presentation.MVC.Controllers
 
             if (OperacaoValida())
             {
-                return RedirectToAction("Index");
+                return RedirectToAction(returnView);
             }
 
             return View("Index", await _pedidoAppService.ObterCarrinhoCliente(ClienteId));
         }
 
-        [Route("resumo-da-compra")]
+        [Route("resumo-da-compra/finalizar")]
         public async Task<IActionResult> ResumoDaCompra()
         {
             return View(await _pedidoAppService.ObterCarrinhoCliente(ClienteId));
         }
 
+        [Route("resumo-da-compra/cancelar")]
+        public async Task<IActionResult> ResumoDaCompraCancelar()
+        {
+            return View(await _pedidoAppService.ObterCarrinhoCliente(ClienteId));
+        }
+
         [HttpPost]
-        [Route("iniciar-pedido")]
-        public async Task<IActionResult> IniciarPedido(CarrinhoViewModel carrinhoViewModel)
+        [Route("finalizar-pedido")]
+        public async Task<IActionResult> FinalizarPedido(CarrinhoViewModel carrinhoViewModel)
         {
             var carrinho = await _pedidoAppService.ObterCarrinhoCliente(ClienteId);
 
             await _pedidoAppService
-                    .IniciarPedido(new IniciarPedidoDTO
+                    .FinalizarPedido(new FinalizarPedidoDTO
                     {
 
                         PedidoId = carrinho.PedidoId,
-                        ClienteId = ClienteId,
-                        Total = carrinho.ValorTotal,
-                        NomeCartao = carrinhoViewModel.Pagamento.NomeCartao,
-                        NumeroCartao = carrinhoViewModel.Pagamento.NumeroCartao,
-                        ExpiracaoCartao = carrinhoViewModel.Pagamento.ExpiracaoCartao,
-                        CvvCartao = carrinhoViewModel.Pagamento.CvvCartao
+                        ClienteId = ClienteId
+
                     });
 
             if (OperacaoValida())
-             {
-                 return RedirectToAction("Index", "Pedido");
+            {
+                 return RedirectToAction("Index", "Vitrine");
              }
 
              return View("ResumoDaCompra", await _pedidoAppService.ObterCarrinhoCliente(ClienteId));
+        }
+
+        [HttpPost]
+        [Route("cancelar-pedido")]
+        public async Task<IActionResult> CancelarPedido(CarrinhoViewModel carrinhoViewModel)
+        {
+            var carrinho = await _pedidoAppService.ObterCarrinhoCliente(ClienteId);
+
+            await _pedidoAppService
+                    .CancelarPedido(new CancelarPedidoDTO
+                    {
+                        PedidoId = carrinho.PedidoId,
+                        ClienteId = ClienteId
+                    });
+
+            if (OperacaoValida())
+            {
+                return RedirectToAction("Index", "Vitrine");
+            }
+
+            return View("ResumoDaCompraCancelar", await _pedidoAppService.ObterCarrinhoCliente(ClienteId));
         }
     }
 }

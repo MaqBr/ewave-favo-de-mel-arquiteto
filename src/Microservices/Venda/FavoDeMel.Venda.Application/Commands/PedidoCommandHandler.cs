@@ -22,6 +22,7 @@ namespace FavoDeMel.Venda.Application
         IRequestHandler<AplicarVoucherPedidoCommand, bool>,
         IRequestHandler<IniciarPedidoCommand, bool>,
         IRequestHandler<FinalizarPedidoCommand, bool>,
+        IRequestHandler<CancelarPedidoCommand, bool>,
         IRequestHandler<CancelarProcessamentoPedidoEstornarEstoqueCommand, bool>,
         IRequestHandler<CancelarProcessamentoPedidoCommand, bool>
         
@@ -127,7 +128,8 @@ namespace FavoDeMel.Venda.Application
 
             pedido.RemoverItem(pedidoItem);
             pedido.AdicionarEvento(new PedidoProdutoRemovidoEvent(message.ClienteId, pedido.Id, message.ProdutoId));
-
+            //Publica em RabbitMQ para integração
+            _bus.Publish(new PedidoProdutoRemovidoEvent(message.ClienteId, pedido.Id, message.ProdutoId));
             _pedidoRepository.RemoverItem(pedidoItem);
             _pedidoRepository.Atualizar(pedido);
 
@@ -202,6 +204,26 @@ namespace FavoDeMel.Venda.Application
             pedido.FinalizarPedido();
 
             pedido.AdicionarEvento(new PedidoFinalizadoEvent(message.PedidoId));
+            //Publica em RabbitMQ para integração
+            _bus.Publish(new PedidoFinalizadoEvent(message.PedidoId));
+            return await _pedidoRepository.UnitOfWork.Commit();
+        }
+
+        public async Task<bool> Handle(CancelarPedidoCommand message, CancellationToken cancellationToken)
+        {
+            var pedido = await _pedidoRepository.ObterPorId(message.PedidoId);
+
+            if (pedido == null)
+            {
+                await _mediatorHandler.PublicarNotificacao(new DomainNotification("pedido", "Pedido não encontrado!"));
+                return false;
+            }
+
+            pedido.CancelarPedido();
+
+            pedido.AdicionarEvento(new PedidoCanceladoEvent(message.PedidoId));
+            //Publica em RabbitMQ para integração
+            _bus.Publish(new PedidoCanceladoEvent(message.PedidoId));
             return await _pedidoRepository.UnitOfWork.Commit();
         }
 

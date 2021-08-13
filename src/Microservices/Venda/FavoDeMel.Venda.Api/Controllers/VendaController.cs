@@ -119,6 +119,50 @@ namespace FavoDeMel.Venda.Api.Controllers
 
         }
 
+        [HttpPost]
+        [Route("finalizar")]
+        public async Task<IActionResult> FinalizarPedido(FinalizarPedidoDTO pedido)
+        {
+            try
+            {
+                var carrinho = await _pedidoQueries.ObterCarrinhoCliente(pedido.ClienteId);
+
+                var command = new FinalizarPedidoCommand(carrinho.PedidoId, pedido.ClienteId);
+
+                await _mediatorHandler.EnviarComando(command);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Houve um erro ao finalizar o pedido {pedido}", pedido);
+                throw new Exception($"Houve um erro ao finalizar o pedido: {ex.Message}");
+            }
+
+        }
+
+        [HttpPost]
+        [Route("cancelar")]
+        public async Task<IActionResult> CancelarPedido(CancelarPedidoDTO pedido)
+        {
+            try
+            {
+                var carrinho = await _pedidoQueries.ObterCarrinhoCliente(pedido.ClienteId);
+
+                var command = new CancelarPedidoCommand(carrinho.PedidoId, pedido.ClienteId);
+
+                await _mediatorHandler.EnviarComando(command);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Houve um erro ao cancelar o pedido {pedido}", pedido);
+                throw new Exception($"Houve um erro ao cancelar o pedido: {ex.Message}");
+            }
+
+        }
+
 
     }
 }

@@ -10,7 +10,8 @@ namespace FavoDeMel.Presentation.MVC.Services
     {
         Task<CarrinhoViewModel> ObterCarrinhoCliente(Guid clienteId);
         Task<IEnumerable<PedidoViewModel>> ObterPedidosCliente(Guid clienteId);
-        Task IniciarPedido(IniciarPedidoDTO pedido);
+        Task FinalizarPedido(FinalizarPedidoDTO pedido);
+        Task CancelarPedido(CancelarPedidoDTO pedido);
         Task AdicionarItemPedido(AdicionarItemPedidoDTO itemPedido);
         Task AtualizarItemPedido(AtualizarItemPedidoDTO itemPedido);
         Task RemoverItemPedido(RemoverItemPedidoDTO itemPedido);

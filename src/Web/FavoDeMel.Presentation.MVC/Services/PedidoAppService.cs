@@ -108,18 +108,35 @@ namespace FavoDeMel.Presentation.MVC.Services
             response.EnsureSuccessStatusCode();
         }
 
-        public async Task IniciarPedido(IniciarPedidoDTO pedido)
+        public async Task FinalizarPedido(FinalizarPedidoDTO pedido)
         {
-            var uri = API.Pedido.IniciarPedido(_remoteServiceBaseUrl);
+            var uri = API.Pedido.FinalizarPedido(_remoteServiceBaseUrl);
 
             var pedidoContent = new StringContent(JsonConvert.SerializeObject(pedido),
                 System.Text.Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.PutAsync(uri, pedidoContent);
+            var response = await _httpClient.PostAsync(uri, pedidoContent);
 
             if (response.StatusCode == System.Net.HttpStatusCode.InternalServerError)
             {
-                throw new Exception("Error ao iniciar o pedido produto.");
+                throw new Exception("Error ao finalizar o pedido produto.");
+            }
+
+            response.EnsureSuccessStatusCode();
+        }
+
+        public async Task CancelarPedido(CancelarPedidoDTO pedido)
+        {
+            var uri = API.Pedido.CancelarPedido(_remoteServiceBaseUrl);
+
+            var pedidoContent = new StringContent(JsonConvert.SerializeObject(pedido),
+                System.Text.Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PostAsync(uri, pedidoContent);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.InternalServerError)
+            {
+                throw new Exception("Error ao cancelar o pedido produto.");
             }
 
             response.EnsureSuccessStatusCode();

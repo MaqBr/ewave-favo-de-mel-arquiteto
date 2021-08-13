@@ -15,4 +15,16 @@ namespace FavoDeMel.Presentation.MVC.Models.DTO
         public string ExpiracaoCartao { get; set; }
         public string CvvCartao { get; set; }
     }
+
+    public class FinalizarPedidoDTO
+    {
+        public Guid PedidoId { get; set; }
+        public Guid ClienteId { get; set; }
+    }
+
+    public class CancelarPedidoDTO
+    {
+        public Guid PedidoId { get; set; }
+        public Guid ClienteId { get; set; }
+    }
 }

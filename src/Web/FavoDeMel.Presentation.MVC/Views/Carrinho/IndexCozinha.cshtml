@@ -4,7 +4,7 @@
     ViewData["Title"] = "Itens para preparo";
 }
 <div class="container">
-    <h1>Detalhes da Comanda [@Model.PedidoId]</h1>
+    <h1>Detalhes da Comanda</h1>
     <div class="form-group">
         <label for="email"><b>Cliente:</b></label>
         <p>@Model.ClienteId</p>
@@ -23,7 +23,7 @@
             <vc:summary />
 
             @{
-                if (Model?.Items != null)
+                if (Model.Items.Any())
                 {
                     <table class="table">
                         <thead>
@@ -83,7 +83,7 @@
                                     <span class="fas fa-play"></span><br /> Finalizar Comanda
                                 </a>
 
-                                <a asp-controller="Carrinho" asp-action="ResumoDaCompra" class="btn btn-danger">
+                                <a asp-controller="Carrinho" asp-action="ResumoDaCompraCancelar" class="btn btn-danger">
                                     <span class="fas fa-trash-alt"></span><br /> Cancelar Comanda
                                 </a>
                             </td>

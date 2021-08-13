@@ -51,14 +51,14 @@
 
                 </div>
                 <div class="col-md-8 order-md-1">
-                    <form method="post" asp-controller="Carrinho" asp-action="FinalizarPedido">
-                        <h4>Confirmação de Finalização</h4>
+                    <form method="post" asp-controller="Carrinho" asp-action="CancelarPedido">
+                        <h4>Confirmação de Cancelamento</h4>
                         <div class="form-group">
                             <label for="email"><b>Cliente:</b></label>
                             <p>@Model.ClienteId</p>
                         </div>
                         <hr class="mb-4">
-                        <button class="btn btn-primary btn-lg btn-block" type="submit">Finalizar</button>
+                        <button class="btn btn-danger btn-lg btn-block" type="submit">Cancelar</button>
                     </form>
                 </div>
             }

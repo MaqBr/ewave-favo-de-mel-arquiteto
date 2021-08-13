@@ -8,9 +8,14 @@ namespace WebMVC.Infrastructure
         public static class Pedido
         {
 
-            public static string IniciarPedido(string baseUri)
+            public static string FinalizarPedido(string baseUri)
             {
-                return $"{baseUri}/api/venda/iniciar";
+                return $"{baseUri}/api/venda/finalizar";
+            }
+
+            public static string CancelarPedido(string baseUri)
+            {
+                return $"{baseUri}/api/venda/cancelar";
             }
 
             public static string ObterCarrinhoCliente(string baseUri, Guid clienteId)

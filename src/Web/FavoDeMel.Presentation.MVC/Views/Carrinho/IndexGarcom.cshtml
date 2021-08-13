@@ -5,7 +5,7 @@
 
 }
 <div class="container">
-    <h1>Detalhes da Comanda [@Model.PedidoId]</h1>
+    <h1>Detalhes da Comanda</h1>
     <div class="form-group">
         <label for="email"><b>Cliente:</b></label>
         <p>@Model.ClienteId</p>
@@ -24,7 +24,7 @@
             <vc:summary />
 
             @{
-                if (Model?.Items != null)
+                if (Model.Items.Any())
                 {
                     <table class="table">
                         <thead>
@@ -134,6 +134,11 @@
                 else
                 {
                     <div><p>Comanda Vazia</p></div>
+                    <div>
+                        <a asp-controller="Vitrine" asp-action="Index" class="btn btn-dark">
+                            <span class="fa fa-shopping-cart"></span>Adicionar Itens
+                        </a>
+                    </div>
                 }
             }
         </div>
