@@ -46,6 +46,11 @@ namespace FavoDeMel.Venda.Domain.Models
             Quantidade = unidades;
         }
 
+        internal void AtualizarItemStatus(ItemStatus itemStatus)
+        {
+            ItemStatus = itemStatus;
+        }
+
         public override bool EhValido()
         {
             return true;

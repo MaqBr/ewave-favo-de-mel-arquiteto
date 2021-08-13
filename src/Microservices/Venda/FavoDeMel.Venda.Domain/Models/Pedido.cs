@@ -142,6 +142,12 @@ namespace FavoDeMel.Venda.Domain.Models
             AtualizarItem(item);
         }
 
+        public void AtualizarItemStatus(PedidoItem item, ItemStatus itemStatus)
+        {
+            item.AtualizarItemStatus(itemStatus);
+            AtualizarItem(item);
+        }
+
         public void TornarRascunho()
         {
             PedidoStatus = PedidoStatus.Rascunho;

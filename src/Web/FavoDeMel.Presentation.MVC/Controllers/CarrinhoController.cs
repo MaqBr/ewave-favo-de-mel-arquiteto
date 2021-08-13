@@ -5,6 +5,7 @@ using FavoDeMel.Domain.Core.Messages.CommonMessages.Notifications;
 using FavoDeMel.Presentation.MVC.CatalogoViewModels.Venda.ViewModels;
 using FavoDeMel.Presentation.MVC.Models.DTO;
 using FavoDeMel.Presentation.MVC.Services;
+using FavoDeMel.Presentation.MVC.ViewModels.VendaViewModels.Enuns;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -105,7 +106,7 @@ namespace FavoDeMel.Presentation.MVC.Controllers
 
         [HttpPost]
         [Route("atualizar-item")]
-        public async Task<IActionResult> AtualizarItem(Guid id, int quantidade)
+        public async Task<IActionResult> AtualizarItem(Guid id, int quantidade, ItemStatus itemStatus)
         {
             var produto = await _produtoAppService.ObterPorId(id);
             if (produto == null) return BadRequest();
@@ -116,6 +117,7 @@ namespace FavoDeMel.Presentation.MVC.Controllers
                         ClienteId = ClienteId,
                         ProdutoId = produto.Id,
                         Quantidade = quantidade,
+                        ItemStatus = itemStatus
                     });
 
             if (OperacaoValida())

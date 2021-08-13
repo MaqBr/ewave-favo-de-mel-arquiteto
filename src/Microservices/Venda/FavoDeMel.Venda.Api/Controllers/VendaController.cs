@@ -79,7 +79,7 @@ namespace FavoDeMel.Venda.Api.Controllers
             try
             {
                 var command = new AtualizarItemPedidoCommand(itemPedido.ClienteId,
-                    itemPedido.ProdutoId, itemPedido.Quantidade);
+                    itemPedido.ProdutoId, itemPedido.Quantidade, itemPedido.ItemStatus);
 
                 await _mediatorHandler.EnviarComando(command);
 

@@ -29,6 +29,7 @@
                         <thead>
                             <tr>
                                 <th>Produto</th>
+                                <th>Quantidade</th>
                                 <th>Situação</th>
                                 <th> </th>
                             </tr>
@@ -38,40 +39,43 @@
                             @{
                                 foreach (var item in Model.Items)
                                 {
-                                    <tr>
-                                        <td class="col-sm-5 col-md-5">
-                                            <div class="media">
-                                                <div class="media-body">
-                                                    <h4 class="media-heading"><a asp-controller="Vitrine" asp-action="ProdutoDetalhe" asp-route-id="@item.ProdutoId">@item.ProdutoNome</a></h4>
-                                                </div>
-                                            </div>
-                                        </td>
+                                                        <tr>
+                                                            <td class="col-sm-5 col-md-5">
+                                                                <div class="media">
+                                                                    <div class="media-body">
+                                                                        <h4 class="media-heading"><a asp-controller="Vitrine" asp-action="ProdutoDetalhe" asp-route-id="@item.ProdutoId">@item.ProdutoNome</a></h4>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
 
-                                       <td class="col-sm-5 col-md-5">
-                                            <div class="media">
-                                                <div class="media-body">
-                                                    <select asp-for="ItensStatus" asp-items="Html.GetEnumSelectList<FavoDeMel.Presentation.MVC.ViewModels.VendaViewModels.Enuns.ItemStatus>()"></select>
-                                                </div>
-                                            </div>
-                                        </td>
+                                                            <td class="col-sm-2 col-md-2" style="text-align: center">
+                                                                    @item.Quantidade
+                                                            </td>
 
-                                       <td class="col-sm-1 col-md-1">
+                                                            <td class="col-sm-3 col-md-2" style="text-align: center">
+                                                                <form method="post" asp-controller="Carrinho" asp-action="AtualizarItem">
+                                                                    <input type="hidden" id="Id" name="Id" value="@item.ProdutoId" />
+                                                                    <input type="hidden" id="quantidade" name="quantidade" value="@item.Quantidade" />
+                                                                    <div class="row" style="float: left">
+                                                                        <select id="itemStatus" name="itemStatus" asp-for="@item.ItemStatus" asp-items="Html.GetEnumSelectList<FavoDeMel.Presentation.MVC.ViewModels.VendaViewModels.Enuns.ItemStatus>()">@item.ItemStatus</select>
+                                                                    </div>
+                                                                    <div class="row" style="float: right">
+                                                                        <button type="submit" class="btn btn-success">
+                                                                            <span class="fas fa-sync"></span>
+                                                                        </button>
+                                                                    </div>
+                                                                </form>
+                                                            </td>
 
-                                           <form method="post" asp-controller="Carrinho" asp-action="AtualizarItem">
-                                               <input type="hidden" id="Id" name="Id" value="@item.ProdutoId" />
-                                               <button type="submit" class="btn btn-success">
-                                                   <span class="fas fa-sync"></span> Atualizar
-                                               </button>
-                                           </form>
-
-                                           <form method="post" asp-controller="Carrinho" asp-action="RemoverItem">
-                                               <input type="hidden" id="Id" name="Id" value="@item.ProdutoId" />
-                                               <button type="submit" class="btn btn-danger">
-                                                   <span class="fas fa-trash-alt"></span> Cancelar
-                                               </button>
-                                           </form>
-                                       </td>
-                                    </tr>
+                                                            <td class="col-sm-3 col-md-3">
+                                                                <form method="post" asp-controller="Carrinho" asp-action="RemoverItem">
+                                                                    <input type="hidden" id="Id" name="Id" value="@item.ProdutoId" />
+                                                                    <button type="submit" class="btn btn-danger">
+                                                                        <span class="fas fa-trash-alt"></span>
+                                                                    </button>
+                                                                </form>
+                                                            </td>
+                                                        </tr>
                                 }
                             }
 

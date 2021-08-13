@@ -1,6 +1,7 @@
 ﻿using System;
 using FluentValidation;
 using FavoDeMel.Domain.Core.Messages;
+using FavoDeMel.Venda.Domain.Models;
 
 namespace FavoDeMel.Venda.Application
 {
@@ -9,12 +10,14 @@ namespace FavoDeMel.Venda.Application
         public Guid ClienteId { get; private set; }
         public Guid ProdutoId { get; private set; }
         public int Quantidade { get; private set; }
+        public ItemStatus ItemStatus { get; private set; }
 
-        public AtualizarItemPedidoCommand(Guid clienteId, Guid produtoId, int quantidade)
+        public AtualizarItemPedidoCommand(Guid clienteId, Guid produtoId, int quantidade, ItemStatus itemStatus)
         {
             ClienteId = clienteId;
             ProdutoId = produtoId;
             Quantidade = quantidade;
+            ItemStatus = itemStatus;
         }
 
         public override bool EhValido()
