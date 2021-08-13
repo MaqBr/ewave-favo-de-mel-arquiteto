@@ -1,7 +1,7 @@
-# Ewave-favo-de-mel-arquiteto
+### Ewave-favo-de-mel-arquiteto
 Desenvolvimento da solução 'Favo de Mel' para concorrer a vaga de Arquiteto de Software - Ewave 2021
 
-# Visão Geral da Aplicação ‘Favo de Mel’
+### Visão Geral da Aplicação ‘Favo de Mel’
 
 A proposta inicial foi desenvolver uma solução que ajude o restaurante ‘Favo de Mel’ a gerenciar o atendimento ao cliente, pois o mesmo está tendo sérios problemas com isso. Os problemas são: pedidos são feitos e muitas vezes o mesmo não chegam cozinha, clientes cancelam pedido e a cozinha não recebe o aviso e acaba preparando o mesmo, os pedidos estão demorando para serem entregues ou muitas vezes estão entregando pedido fora de ordem sem priorização.
 Como esse fluxo hoje é manual e devido a correria dos funcionários para tentar atender os clientes, a comunicação entre eles acaba sendo ineficiente, causando esses gargalos.
@@ -14,18 +14,12 @@ Além dos requisitos mínimos acima, deixamos por opção livre a implementaçã
 -  Garçom poder visualizar o andamento de preparo dos pedidos de uma comanda;
 -  Repriorização de ordem de preparo dos pedidos pela cozinha.
 
-# Pré-requisitos para utilização:
+### Pré-requisitos para utilização:
 - Docker (https://docs.docker.com/docker-for-windows/install/)
 - .NET Core 5 (https://dotnet.microsoft.com/download/dotnet/5.0 )
+- Visual Studio Code ou qualquer outro IDE compatível com .NET
 
-- Entrar na pastar src e executar o comando:
-docker-compose -f 'docker-compose.yml' -f 'docker-compose.override.yml' up -d --build
-
-- No Visual Studio:
-Marcar o projeto docker-compose com "Projeto Inicial" e executar a build (conforme exibido na imagem abaixo)
-![image](https://user-images.githubusercontent.com/19453244/129209793-73e1f907-d70b-4e3a-887d-12693404b51c.png)
-
-# Visão Geral da Arquitetura
+### Visão Geral da Arquitetura
 
 Esta aplicação é cross-pataform e apresenta uma proposta inicial da solução ‘Favo de Mel’ no qual tem a principal característica de ser executada de forma independente e com eventos assíncronos com base em microserviços com o .NET Core e o Docker.
 
@@ -33,79 +27,114 @@ Os contêineres oferecem os benefícios de portabilidade, agilidade, escalabilid
 
 ![image](https://user-images.githubusercontent.com/19453244/129207906-9c06c7d5-3886-440e-8703-14122bb36550.png)
 
-# Principais padrões utilizados no desenvolvimento da solução
-[Aguarde]
+### Principais padrões utilizados no desenvolvimento da solução
+- Domain Driven Design - Arquitetura Hexagonal
+- Unit of Work
+- Repository and Generic Repository
+- Docker-Compose
+- Principios SOLID
 
-# Principais tecnologias utilizadas
-[Aguarde]
+## Principais tecnologias utilizadas
+- ASP.NET Core MVC 5
+- WEB API Core
+- Entity Framework Core
+- Docker
+- Dapper
+- MediatR
+- AutoMapper
+- .NET Core Native DI
+- FluentValidation
+- Swagger UI
+- RabbitMQ
+- XUnit
+- EventStore
 
-# Explorando a aplicação
-1)	Camada de Apresentação: Web App MVC Core
-URL: https://localhost:5006
+### Explorando a aplicação
 
-![image](https://user-images.githubusercontent.com/19453244/129215456-9d120692-6008-4d1a-a730-6cefd9122bc9.png)
+#### Execute a aplicação em ambiente local seguindo as etaspas a seguir:
+     - git clone https://github.com/MaqBr/ewave-favo-de-mel-arquiteto.git
+     - No diretório raiz executar o comando:
+       - docker-compose -f 'docker-compose.yml' -f 'docker-compose.override.yml' up -d --build
+     - Será carregado o container com todas as dependências e abrirá a página do servidor https://localhost:5006
+     
+1. Camada de Apresentação: Web App MVC Core
+   - URL: https://localhost:5006
+    ![image](https://user-images.githubusercontent.com/19453244/129280907-44035b89-6412-443b-945b-6de2b92956a1.png)
+   - Clique em "Acessar via SSO"
+     - A aplicação é redirecionada para o serviço de autenticação single sign on (SSO) no endereço http://localhost:5000 
+      ![image](https://user-images.githubusercontent.com/19453244/129281239-0213875c-a2ec-40d2-bd65-d5603ed26327.png)
+     - Entre primeiramente com o perfil de "Garçom"
+       - Nome de usuário: garcom
+       - Senha: Teste@123
+ 
+2. Autenticação no Identity Server (SSO) OAuth 2 
+   - URL: http://localhost:5000
+    ![image](https://user-images.githubusercontent.com/19453244/129215180-ac5106d6-0674-4017-8c60-7a9a669cc485.png)
 
-2) Autenticação no Identity Server - SSO
-URL: http://localhost:5000
-![image](https://user-images.githubusercontent.com/19453244/129215180-ac5106d6-0674-4017-8c60-7a9a669cc485.png)
+2.1. Perfis de usuários:
 
-As APIs utilizam as credenciais abaixo para a autorização via token JWT:
+    - Garçom
+      - Nome de usuário: garcom
+      - Senha: Teste@123
 
-- Authority: "https://localhost:5001"
-- ClientId: "715000d0c10040258c1be259c09e3b91"
-- ClientSecret: "360ceac2e80545dca6083fef4f94d09f"
-- Scopes: openid | profile | api_favo_mel
+    - Cozinheiro
+      - Nome de usuário: cozinha
+      - Senha: Teste@123
 
-3) Swagger UI – API REST microserviço – Catálogo/Produto
-URL: https://localhost:5101
+2.2. As APIs utilizam as credenciais abaixo para a autorização via token JWT:
+    
+    - Credenciais para autenticaçao de clientes e APIs
+      - Authority: "https://localhost:5001"
+      - ClientId: "715000d0c10040258c1be259c09e3b91"
+      - ClientSecret: "360ceac2e80545dca6083fef4f94d09f"
+      - Scopes: openid | profile | api_favo_mel
 
-![image](https://user-images.githubusercontent.com/19453244/129218403-fbe97d75-d50e-4627-8a0a-33554de83654.png)
+3. Swagger UI – API REST microserviço – Catálogo/Produto
+   - URL: https://localhost:5101
 
-
-4) Swagger UI – API REST microserviço – Venda
-URL: https://localhost:5003
-
-![image](https://user-images.githubusercontent.com/19453244/129219798-b693cc0e-b5d5-4d90-8c37-8d0da7ab3456.png)
-
-
-5) Banco de Dados
-
-Server: tcp:127.0.0.1,11433
-User: sa
-Password: Numsey#2021
-
-![image](https://user-images.githubusercontent.com/19453244/129221734-2a1bc9b8-b48d-4251-8efd-b1b9ebcb676f.png)
+    ![image](https://user-images.githubusercontent.com/19453244/129218403-fbe97d75-d50e-4627-8a0a-33554de83654.png)
 
 
-Strings de conexão:
+4. Swagger UI – API REST microserviço – Venda
+   - URL: https://localhost:5003
 
-"VendaDbConnection": "Server=tcp:127.0.0.1,11433;Database=VendaDb;User Id=sa;Password=Numsey#2021"
+    ![image](https://user-images.githubusercontent.com/19453244/129219798-b693cc0e-b5d5-4d90-8c37-8d0da7ab3456.png)
 
-"CatalogoDbConnection": "Server=tcp:127.0.0.1,11433;Database=CatalogoDb;User Id=sa;Password=Numsey#2021"
+5. Banco de Dados
+
+   - Server: tcp:127.0.0.1,11433
+     - User: sa
+     - Password: Numsey#2021
+
+   ![image](https://user-images.githubusercontent.com/19453244/129221734-2a1bc9b8-b48d-4251-8efd-b1b9ebcb676f.png)
+
+
+  - Strings de conexão:
+    - "VendaDbConnection": "Server=tcp:127.0.0.1,11433;Database=VendaDb;User Id=sa;Password=Numsey#2021"
+    - "CatalogoDbConnection": "Server=tcp:127.0.0.1,11433;Database=CatalogoDb;User Id=sa;Password=Numsey#2021"
 
 - Scripts para seed de dados:
 https://github.com/MaqBr/ewave-favo-de-mel-arquiteto/tree/master/src/Scripts
 
 
-6) Visualização de logs com Elasticsearch e Kibana
+6.  Visualização de logs com Elasticsearch e Kibana
 
-URL Cluster Elastic: http://localhost:9200/
+    - URL Cluster Elastic: http://localhost:9200/
 
-![image](https://user-images.githubusercontent.com/19453244/129223746-a902f10d-8e7e-471b-882b-ce4e3729cb8e.png)
+    ![image](https://user-images.githubusercontent.com/19453244/129223746-a902f10d-8e7e-471b-882b-ce4e3729cb8e.png)
 
-URL Dashboard Kibana: http://localhost:5601
+    - URL Dashboard Kibana: http://localhost:5601
 
-![image](https://user-images.githubusercontent.com/19453244/129224025-3cf06da7-bc95-49e4-9307-7034542e8954.png)
+    ![image](https://user-images.githubusercontent.com/19453244/129224025-3cf06da7-bc95-49e4-9307-7034542e8954.png)
 
-7) Message Broker RabbitMQ
+7. Message Broker RabbitMQ
 
-URL: http://localhost:15672/
+    - URL: http://localhost:15672/
 
-![image](https://user-images.githubusercontent.com/19453244/129224660-5b56a927-275f-4e27-a5cf-1a38172cb60a.png)
+    ![image](https://user-images.githubusercontent.com/19453244/129299354-024bf817-641e-4884-a3dc-0e89d30e916d.png)
 
-8) Monitoramento dos microserviços com Healtchecks
+8. Monitoramento dos microserviços com Healtchecks
 
-URL: http://localhost:5013/
-
-![image](https://user-images.githubusercontent.com/19453244/129225181-60c83fbb-be2e-4d96-8371-fe6542a1b7dc.png)
+    - URL: http://localhost:5013/
+    ![image](https://user-images.githubusercontent.com/19453244/129225181-60c83fbb-be2e-4d96-8371-fe6542a1b7dc.png)
 
