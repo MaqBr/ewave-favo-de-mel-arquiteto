@@ -205,6 +205,7 @@ namespace FavoDeMel.Catalogo.Api
             eventBus.Subscribe<PedidoFinalizadoEvent, PedidoFinalizadoEventHandler>();
             eventBus.Subscribe<PedidoCanceladoEvent, PedidoCanceladoEventHandler>();
             eventBus.Subscribe<PedidoProcessamentoCanceladoEvent, PedidoProcessamentoCanceladoEventHandler>();
+            eventBus.Subscribe<PedidoProdutoAtualizadoEvent, PedidoProdutoAtualizadoEventHandler>();
         }
 
     }
@@ -231,6 +232,7 @@ namespace FavoDeMel.Catalogo.Api
             services.AddTransient<PedidoFinalizadoEventHandler>();
             services.AddTransient<PedidoCanceladoEventHandler>();
             services.AddTransient<PedidoProcessamentoCanceladoEventHandler>();
+            services.AddTransient<PedidoProdutoAtualizadoEventHandler>();
 
             return services;
         }

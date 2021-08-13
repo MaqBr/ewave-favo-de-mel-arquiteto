@@ -1,4 +1,4 @@
-﻿using FavoDeMel.Venda.Domain.Models;
+﻿using FavoDeMel.Domain.Core.DomainObjects;
 using System;
 
 namespace FavoDeMel.Venda.Application.Queries.ViewModels

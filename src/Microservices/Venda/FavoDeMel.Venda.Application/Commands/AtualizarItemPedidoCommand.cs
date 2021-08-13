@@ -1,7 +1,7 @@
 ﻿using System;
 using FluentValidation;
 using FavoDeMel.Domain.Core.Messages;
-using FavoDeMel.Venda.Domain.Models;
+using FavoDeMel.Domain.Core.DomainObjects;
 
 namespace FavoDeMel.Venda.Application
 {

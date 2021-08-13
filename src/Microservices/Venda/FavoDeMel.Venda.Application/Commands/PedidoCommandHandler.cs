@@ -100,7 +100,8 @@ namespace FavoDeMel.Venda.Application
             pedido.AtualizarUnidades(pedidoItem, message.Quantidade);
             pedido.AtualizarItemStatus(pedidoItem, message.ItemStatus);
             pedido.AdicionarEvento(new PedidoProdutoAtualizadoEvent(message.ClienteId, pedido.Id, message.ProdutoId, message.Quantidade, message.ItemStatus));
-
+            //Publica em RabbitMQ para integração
+            _bus.Publish(new PedidoProdutoAtualizadoEvent(message.ClienteId, pedido.Id, message.ProdutoId, message.Quantidade, message.ItemStatus));
             _pedidoRepository.AtualizarItem(pedidoItem);
             _pedidoRepository.Atualizar(pedido);
 

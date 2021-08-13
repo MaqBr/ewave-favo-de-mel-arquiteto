@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FavoDeMel.Venda.Domain.Models
+namespace FavoDeMel.Domain.Core.DomainObjects
 {
     public enum ItemStatus
     {

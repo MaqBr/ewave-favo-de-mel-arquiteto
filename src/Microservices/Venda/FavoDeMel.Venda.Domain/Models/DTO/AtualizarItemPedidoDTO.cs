@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FavoDeMel.Domain.Core.DomainObjects;
+using System;
 
 namespace FavoDeMel.Venda.Domain.Models
 {
