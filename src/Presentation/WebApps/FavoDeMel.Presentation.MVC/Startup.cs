@@ -2,7 +2,9 @@ using BuildingBlocks.EventSourcing;
 using FavoDeMel.Domain.Core.CommonMessages.Notifications;
 using FavoDeMel.Domain.Core.Communication.Mediator;
 using FavoDeMel.Domain.Core.Data.EventSourcing;
+using FavoDeMel.Domain.Core.Extensions;
 using FavoDeMel.Domain.Core.Messages.CommonMessages.Notifications;
+using FavoDeMel.Domain.Core.Model.Configuration;
 using FavoDeMel.Presentation.MVC.Services;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -23,21 +25,28 @@ namespace FavoDeMel.Presentation.MVC
 {
     public class Startup
     {
+        private readonly AppSettings _appSettings;
+        public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            _appSettings = configuration.GetAppSettings();
         }
-
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
 
+            services.Configure<AppSettings>(c =>
+            {
+                c.IdentityProvider = _appSettings.IdentityProvider;
+            });
+
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddHttpClientServices(Configuration);
-            services.AddCustomAuthentication(Configuration);
+            services.AddCustomAuthentication(_appSettings.IdentityProvider);
             services.AddHttpClient();
             services.AddControllers();
             services.ConfigureApplicationCookie(options =>
@@ -53,7 +62,6 @@ namespace FavoDeMel.Presentation.MVC
 
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -63,13 +71,10 @@ namespace FavoDeMel.Presentation.MVC
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            // Fix samesite issue when running from docker-compose locally as by default http protocol is being used
-            // Refer to https://github.com/dotnet-architecture/eShopOnContainers/issues/1391
             app.UseCookiePolicy(new CookiePolicyOptions { MinimumSameSitePolicy = SameSiteMode.Lax });
             app.UseRouting();
 
@@ -107,7 +112,7 @@ namespace FavoDeMel.Presentation.MVC
         }
 
 
-        public static IServiceCollection AddCustomAuthentication(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddCustomAuthentication(this IServiceCollection services, IdentityProvider identityProvider)
         {
             JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
 
@@ -122,7 +127,7 @@ namespace FavoDeMel.Presentation.MVC
                 .AddCookie("Cookies")
                 .AddOpenIdConnect("oidc", options =>
                 {
-                    options.Authority = "https://localhost:5001";
+                    options.Authority = identityProvider.AuthorityUri;
                     options.ClientId = "715000d0c10040258c1be259c09e3b91";
                     options.ClientSecret = "360ceac2e80545dca6083fef4f94d09f";
                     options.ResponseType = "code";

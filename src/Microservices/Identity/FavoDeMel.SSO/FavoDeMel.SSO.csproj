@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="2.2.4" />
     <PackageReference Include="IdentityExpress.Identity" Version="3.0.0" />
     <PackageReference Include="IdentityExpress.Manager.Api.Community" Version="3.0.0" />
 

@@ -35,6 +35,8 @@ using FavoDeMel.Venda.Application.Events;
 using FavoDeMel.Catalogo.Domain.Events;
 using FavoDeMel.Domain.Core.Messages.CommonMessages.IntegrationEvents;
 using FavoDeMel.Catalogo.Application.IntegrationEvents.EventHandling;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using HealthChecks.UI.Client;
 
 namespace FavoDeMel.Catalogo.Api
 {
@@ -48,8 +50,7 @@ namespace FavoDeMel.Catalogo.Api
             Configuration = configuration;
             _appSettings = configuration.GetAppSettings();
         }
-        
-        // This method gets called by the runtime. Use this method to add services to the container.
+
         public virtual void ConfigureServices(IServiceCollection services)
         {
             var logger = SerilogFactory.GetLogger(_appSettings.ElasticLogs);
@@ -88,12 +89,12 @@ namespace FavoDeMel.Catalogo.Api
                     {
                         options.Authority = _appSettings.IdentityProvider.AuthorityUri;
                         options.Audience = _appSettings.IdentityProvider.Scopes[0];
+                        options.RequireHttpsMetadata = false;
                     });
-
+            services.AddHealthChecks();
             services.ConfigureSwagger(_appSettings.Swagger);
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -101,11 +102,7 @@ namespace FavoDeMel.Catalogo.Api
                 app.UseDeveloperExceptionPage();
             }
 
-            // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
-
-            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
-            // specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Catalogo API V1");
@@ -128,7 +125,11 @@ namespace FavoDeMel.Catalogo.Api
             {
                 endpoints.MapControllers();
             });
-
+            app.UseHealthChecks("/healthz", new HealthCheckOptions
+            {
+                Predicate = _ => true,
+                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+            });
             ConfigureEventBus(app);
         }
 

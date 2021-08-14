@@ -24,6 +24,8 @@ using FavoDeMel.Venda.Application.Queries;
 using FavoDeMel.Venda.Domain.Models;
 using FavoDeMel.Venda.Data.Repository;
 using FavoDeMel.Venda.Application.Events;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using HealthChecks.UI.Client;
 
 namespace FavoDeMel.Venda.Api
 {
@@ -36,7 +38,6 @@ namespace FavoDeMel.Venda.Api
             _appSettings = configuration.GetAppSettings();
         }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             var logger = SerilogFactory.GetLogger(_appSettings.ElasticLogs);
@@ -76,24 +77,19 @@ namespace FavoDeMel.Venda.Api
                     {
                         options.Authority = _appSettings.IdentityProvider.AuthorityUri;
                         options.Audience = _appSettings.IdentityProvider.Scopes[0];
+                        options.RequireHttpsMetadata = false;
                     });
-
+            services.AddHealthChecks();
             services.ConfigureSwagger(_appSettings.Swagger);
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
-
-            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
-            // specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Venda API V1");
@@ -113,7 +109,12 @@ namespace FavoDeMel.Venda.Api
                 .AllowCredentials()); // allow credentials
             app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseHealthChecks("/healthz", new HealthCheckOptions
+            {
+                Predicate = _ => true,
+                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+            });
+            ConfigureEventBus(app);
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

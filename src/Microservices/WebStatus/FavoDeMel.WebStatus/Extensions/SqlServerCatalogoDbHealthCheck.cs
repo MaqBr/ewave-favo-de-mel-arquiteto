@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace FavoDeMel.WebStatus.Extensions
 {
-    public class SqlServerHealthCheck : IHealthCheck
+    public class SqlServerCatalogoDbHealthCheck : IHealthCheck
     {
         readonly string _connection;
 
-        public SqlServerHealthCheck(string connection)
+        public SqlServerCatalogoDbHealthCheck(string connection)
         {
             _connection = connection;
         }
@@ -26,9 +26,11 @@ namespace FavoDeMel.WebStatus.Extensions
                     await connection.OpenAsync(cancellationToken);
 
                     var command = connection.CreateCommand();
-                    command.CommandText = "select count(*) from Accounts";
+                    command.CommandText = "select count(*) from Produtos";
 
-                    return Convert.ToInt32(await command.ExecuteScalarAsync(cancellationToken)) > 0 ? HealthCheckResult.Healthy() : HealthCheckResult.Unhealthy();
+                    return Convert.ToInt32(await command.ExecuteScalarAsync(cancellationToken)) > 0 
+                        ? HealthCheckResult.Healthy() 
+                        : HealthCheckResult.Unhealthy();
                 }
             }
             catch (Exception ex)

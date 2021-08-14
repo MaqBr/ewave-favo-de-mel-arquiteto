@@ -16,6 +16,8 @@ using Microsoft.Extensions.Hosting;
 using FavoDeMel.SSO.Data.Users;
 using FavoDeMel.SSO.Models;
 using System.Reflection;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using HealthChecks.UI.Client;
 
 namespace FavoDeMel.SSO
 {
@@ -107,6 +109,7 @@ namespace FavoDeMel.SSO
                 });
 
             services.UseAdminUI();
+            services.AddHealthChecks();
             services.AddScoped<IdentityExpressDbContext, SqliteIdentityDbContext>();
         }
 
@@ -130,6 +133,11 @@ namespace FavoDeMel.SSO
             app.UseAuthorization();
 
             app.UseAdminUI();
+            app.UseHealthChecks("/healthz", new HealthCheckOptions
+            {
+                Predicate = _ => true,
+                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+            });
 
             app.UseEndpoints(endpoints => endpoints.MapDefaultControllerRoute());
         }

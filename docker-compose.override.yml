@@ -7,7 +7,7 @@ services:
       - ASPNETCORE_URLS=http://0.0.0.0:80
       - CatalogoDbConnection=Server=local-mssql,1433;Database=CatalogoDb;User Id=sa;Password=P@ssw0rd
     ports:
-      - "5101:80"
+      - "5110:80"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro 
@@ -20,7 +20,7 @@ services:
       - ASPNETCORE_URLS=http://0.0.0.0:80
       - VendaDbConnection=Server=local-mssql,1433;Database=VendaDb;User Id=sa;Password=P@ssw0rd
     ports:
-      - "5103:80"
+      - "5120:80"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro 
@@ -33,10 +33,9 @@ services:
       - ASPNETCORE_URLS=http://0.0.0.0:80
       - MICROSERVICES__VENDA_BASE_URI=http://venda-api
       - MICROSERVICES__CATALOGO_BASE_URI=http://catalogo-api
-      - IDENTITYPROVIDER__AUTHORITYURI=http://identity-sso
+      - IDENTITYPROVIDER__AUTHORITYURI=https://identity-sso
     ports:
-      - "5007:80"
-      - "5006:443"
+      - "5130:80"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro 
@@ -46,19 +45,17 @@ services:
   favodemel.sso:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://0.0.0.0:80
     ports:
-      - "5000:80"
+      - "5140:80"
     networks:
       - favodemel-network
 
   favodemel.webstatus:
     environment:
-      ASPNETCORE_ENVIRONMENT: Development
-      ASPNETCORE_URLS: "https://webstatus:443;http://webstatus:80"
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:80
     ports:
-      - "5011:80"
-      - "5012:443"
+      - "5150:80"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
@@ -73,10 +70,16 @@ services:
       - ui_path=/
       - ui_api_path=/api
       - ui_webhooks_path=/webhooks
-      - HealthChecksUI__HealthChecks__0__Name=WebApp Status
-      - HealthChecksUI__HealthChecks__0__Uri=https://webstatus-api/healthz
+      - HealthChecksUI__HealthChecks__0__Name=Micoserviço(self) API Status 
+      - HealthChecksUI__HealthChecks__0__Uri=http://webstatus-api/healthz
+      - HealthChecksUI__HealthChecks__1__Name=Microserviço API Catálogo
+      - HealthChecksUI__HealthChecks__1__Uri=http://catalogo-api/healthz
+      - HealthChecksUI__HealthChecks__2__Name=Microserviço API Vendas
+      - HealthChecksUI__HealthChecks__2__Uri=http://venda-api/healthz
+      - HealthChecksUI__HealthChecks__3__Name=Microserviço Identity SSO
+      - HealthChecksUI__HealthChecks__3__Uri=http://identity-sso/healthz
     ports:
-      - "5013:80"
+      - "5160:80"
     networks:
       - favodemel-network
 

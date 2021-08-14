@@ -22,7 +22,6 @@ namespace FavoDeMel.WebStatus
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<AppSettings>(c =>
@@ -36,7 +35,6 @@ namespace FavoDeMel.WebStatus
             services.AddCustomHealthChecks(_appSettings.Data, _appSettings.RabbitMqSettings);
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -70,7 +68,6 @@ namespace FavoDeMel.WebStatus
 
     }
 
-
     static class CustomExtensionsMethods
     {
         public static IServiceCollection AddCustomHealthChecks(this IServiceCollection services, DataSettings dataSettings, RabbitMqSettings rabbitMqSettings)
@@ -79,7 +76,9 @@ namespace FavoDeMel.WebStatus
 
             hcBuilder
                 .AddCheck("SqlServer - Catálogo",
-                    new SqlServerHealthCheck(dataSettings.CatalogoConnection))
+                    new SqlServerCatalogoDbHealthCheck(dataSettings.CatalogoConnection))
+                .AddCheck("SqlServer - Catálogo",
+                    new SqlServerVendaDbHealthCheck(dataSettings.VendaConnection))
                 .AddCheck("self", () => HealthCheckResult.Healthy(), tags: new[] { "essential" })
                 .AddProcessAllocatedMemoryHealthCheck(dataSettings.MemoryLimit, "memory", tags: new[] { "essential" })
                 .AddRabbitMQ(
