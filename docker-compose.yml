@@ -26,7 +26,7 @@ services:
     container_name: webapp-mvc
     build:
       context: .
-      dockerfile: src/Web/FavoDeMel.Presentation.MVC/Dockerfile
+      dockerfile: src/Presentation/WebApps/FavoDeMel.Presentation.MVC/Dockerfile
 
   favodemel.sso:
     image: ${DOCKER_REGISTRY-}favodemelsso
@@ -59,7 +59,7 @@ services:
     container_name: local-rabbitmq
 
   favodemel.sqlserver:
-    image: mcr.microsoft.com/mssql/server:2019-latest
+    image: mcr.microsoft.com/mssql/server:2017-latest
     container_name: local-mssql
     build:
       context: .

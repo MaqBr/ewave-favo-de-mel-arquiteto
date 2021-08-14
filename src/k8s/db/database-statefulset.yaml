@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: database-mongo
+  labels:
+    app: database-gerenciador-produtos
+spec:
+  serviceName: db
+  selector:
+    matchLabels:
+      service: database-mongo
+  template:
+    metadata:
+      labels:
+        app: database-gerenciador-produtos
+        service: database-mongo
+    spec:
+      containers:
+        - name: database-mongo
+          image: mongo
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 27017
+          volumeMounts:
+            - mountPath: /data/db
+              name: volume-database
+      volumes:
+        - name: volume-database
+          persistentVolumeClaim:
+            claimName: configuracao-mysql

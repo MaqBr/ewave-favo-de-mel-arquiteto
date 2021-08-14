@@ -7,6 +7,7 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
+
 COPY ["src/Microservices/Catalogo/FavoDeMel.Catalogo.Api/FavoDeMel.Catalogo.Api.csproj", "src/Microservices/Catalogo/FavoDeMel.Catalogo.Api/"]
 COPY ["src/Microservices/Infrastructure/FavoDeMel.Infra.IoC/FavoDeMel.Infra.IoC.csproj", "src/Microservices/Infrastructure/FavoDeMel.Infra.IoC/"]
 COPY ["src/BuildingBlocks/EventSourcing/EventSourcing.csproj", "src/BuildingBlocks/EventSourcing/"]

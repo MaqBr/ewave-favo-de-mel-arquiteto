@@ -6,6 +6,7 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
 WORKDIR /src
+
 COPY ["src/Microservices/Identity/FavoDeMel.SSO/FavoDeMel.SSO.csproj", "src/Microservices/Identity/FavoDeMel.SSO/"]
 RUN dotnet restore "src/Microservices/Identity/FavoDeMel.SSO/FavoDeMel.SSO.csproj"
 COPY . .

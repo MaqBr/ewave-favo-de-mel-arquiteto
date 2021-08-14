@@ -4,53 +4,66 @@ services:
   favodemel.catalogo.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_URLS=http://0.0.0.0:80
+      - CatalogoDbConnection=Server=local-mssql,1433;Database=CatalogoDb;User Id=sa;Password=P@ssw0rd
     ports:
       - "5101:80"
-      - "5102:443"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro 
+    networks:
+      - favodemel-network
 
   favodemel.venda.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_URLS=http://0.0.0.0:80
+      - VendaDbConnection=Server=local-mssql,1433;Database=VendaDb;User Id=sa;Password=P@ssw0rd
     ports:
       - "5103:80"
-      - "5104:443"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro 
+    networks:
+      - favodemel-network
 
   favodemel.presentation.mvc:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_URLS=http://0.0.0.0:80
+      - MICROSERVICES__VENDA_BASE_URI=http://venda-api
+      - MICROSERVICES__CATALOGO_BASE_URI=http://catalogo-api
+      - IDENTITYPROVIDER__AUTHORITYURI=http://identity-sso
     ports:
       - "5007:80"
       - "5006:443"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro 
+    networks:
+      - favodemel-network
 
   favodemel.sso:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:80
     ports:
       - "5000:80"
-      - "5001:443"
+    networks:
+      - favodemel-network
 
   favodemel.webstatus:
     environment:
       ASPNETCORE_ENVIRONMENT: Development
-      ASPNETCORE_URLS: "https://+:443;http://+:80"
+      ASPNETCORE_URLS: "https://webstatus:443;http://webstatus:80"
     ports:
       - "5011:80"
       - "5012:443"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+    networks:
+      - favodemel-network
 
   favodemel.healthcheck-ui:
     environment:
@@ -64,6 +77,8 @@ services:
       - HealthChecksUI__HealthChecks__0__Uri=https://webstatus-api/healthz
     ports:
       - "5013:80"
+    networks:
+      - favodemel-network
 
   favodemel.rabbitmq:
     environment:
@@ -74,17 +89,21 @@ services:
     ports:
         - "15672:15672"
         - "5672:5672"
+    networks:
+      - favodemel-network
 
   favodemel.sqlserver:
     environment:
       ACCEPT_EULA: 'Y'
-      SA_PASSWORD: "Numsey!2021"
+      SA_PASSWORD: "P@ssw0rd"
     volumes:
       - mssql-data:/var/opt/mssql
     ports:
       - '11433:1433'    
     expose:
       - 1433
+    networks:
+      - favodemel-network
 
   favodemel.elasticsearch:
     environment:
@@ -95,7 +114,7 @@ services:
     ports:
       - 9200:9200
     networks:
-      - elastic
+      - favodemel-network
 
   favodemel.kibana:
     environment: 
@@ -103,10 +122,10 @@ services:
     ports:
       - 5601:5601
     networks:
-      - elastic
+      - favodemel-network
 
 networks:
-  elastic:
+  favodemel-network:
     driver: bridge    
 
 volumes:

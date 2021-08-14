@@ -16,6 +16,7 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net.Http;
 using WebMVC.Infrastructure;
 
 namespace FavoDeMel.Presentation.MVC
@@ -91,11 +92,6 @@ namespace FavoDeMel.Presentation.MVC
         public static IServiceCollection AddHttpClientServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
-            //TODO: Integrar com SSO
-            //register delegating handlers
-            //services.AddTransient<HttpClientAuthorizationDelegatingHandler>();
-            //services.AddTransient<HttpClientRequestIdDelegatingHandler>();
 
             //set 5 min as the lifetime for each HttpMessageHandler int the pool
             services.AddHttpClient("extendedhandlerlifetime")

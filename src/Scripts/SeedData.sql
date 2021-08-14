@@ -1,11 +1,11 @@
-﻿IF DB_ID(N'[CatalogoDb]') IS NULL
+﻿IF DB_ID(N'CatalogoDb') IS NULL
 BEGIN
 	CREATE DATABASE [CatalogoDb]
 END
 
 GO
 
-IF DB_ID(N'[VendaDb]') IS NULL
+IF DB_ID(N'VendaDb') IS NULL
 BEGIN
 	CREATE DATABASE [VendaDb]
 END
@@ -13,7 +13,7 @@ END
 GO
 
 
-IF (OBJECT_ID(N'[Categorias]') IS NULL)
+IF (OBJECT_ID(N'Categorias') IS NULL)
 BEGIN
 
 USE [CatalogoDb]
@@ -65,7 +65,7 @@ INSERT [dbo].[Produtos] ([Id], [CategoriaId], [Nome], [Descricao], [Ativo], [Val
 
 END
 
-IF (OBJECT_ID(N'[Pedidos]') IS NULL)
+IF (OBJECT_ID(N'Pedidos') IS NULL)
 BEGIN
 
 USE [VendaDb]

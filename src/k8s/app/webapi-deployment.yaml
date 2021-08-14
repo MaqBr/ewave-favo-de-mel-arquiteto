@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapi
+  labels:
+    app: gerenciador-produtos
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: webapi
+  template:
+    metadata:
+      labels:
+        app: gerenciador-produtos
+        service: webapi
+    spec:
+      containers:
+        - name: webapi
+          image: maqbr/productapi:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
+          env:
+            - name: ASPNETCORE_URLS
+              value: http://+:300500
