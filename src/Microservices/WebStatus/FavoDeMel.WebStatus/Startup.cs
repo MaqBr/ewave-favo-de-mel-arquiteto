@@ -75,9 +75,9 @@ namespace FavoDeMel.WebStatus
             var hcBuilder = services.AddHealthChecks();
 
             hcBuilder
-                .AddCheck("SqlServer - Catálogo",
+                .AddCheck("SqlServer - Catalogo",
                     new SqlServerCatalogoDbHealthCheck(dataSettings.CatalogoConnection))
-                .AddCheck("SqlServer - Catálogo",
+                .AddCheck("SqlServer - Venda",
                     new SqlServerVendaDbHealthCheck(dataSettings.VendaConnection))
                 .AddCheck("self", () => HealthCheckResult.Healthy(), tags: new[] { "essential" })
                 .AddProcessAllocatedMemoryHealthCheck(dataSettings.MemoryLimit, "memory", tags: new[] { "essential" })

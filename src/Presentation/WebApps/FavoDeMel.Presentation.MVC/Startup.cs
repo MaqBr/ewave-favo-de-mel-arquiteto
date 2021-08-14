@@ -116,8 +116,7 @@ namespace FavoDeMel.Presentation.MVC
         {
             JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
 
-            if (Debugger.IsAttached)
-                IdentityModelEventSource.ShowPII = true;//Somente em ambiente de desenvolvimento
+            IdentityModelEventSource.ShowPII = true;//Somente em ambiente de desenvolvimento
 
             services.AddAuthentication(options =>
             {
@@ -142,6 +141,8 @@ namespace FavoDeMel.Presentation.MVC
                         RoleClaimType = "role",
 
                     };
+                    options.MetadataAddress = $"{identityProvider.AuthorityUri}/.well-known/openid-configuration";
+                    options.RequireHttpsMetadata = false;
                 });
 
             return services;

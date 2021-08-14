@@ -6,6 +6,12 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://0.0.0.0:80
       - CatalogoDbConnection=Server=local-mssql,1433;Database=CatalogoDb;User Id=sa;Password=P@ssw0rd
+      - RABBITMQ__URL=local-rabbitmq
+      - RABBITMQ__USUARIO=guest
+      - RABBITMQ__SENHA=guest
+      - RABBITMQ__VHOST=/
+      - RABBITMQ__QUEUE=favoDeMelQueue
+      - RABBITMQ__RETRY=5
     ports:
       - "5110:80"
     volumes:
@@ -19,6 +25,12 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://0.0.0.0:80
       - VendaDbConnection=Server=local-mssql,1433;Database=VendaDb;User Id=sa;Password=P@ssw0rd
+      - RABBITMQ__URL=local-rabbitmq
+      - RABBITMQ__USUARIO=guest
+      - RABBITMQ__SENHA=guest
+      - RABBITMQ__VHOST=/
+      - RABBITMQ__QUEUE=favoDeMelQueue
+      - RABBITMQ__RETRY=5
     ports:
       - "5120:80"
     volumes:
@@ -70,13 +82,13 @@ services:
       - ui_path=/
       - ui_api_path=/api
       - ui_webhooks_path=/webhooks
-      - HealthChecksUI__HealthChecks__0__Name=Micoserviço(self) API Status 
+      - HealthChecksUI__HealthChecks__0__Name=API Status 
       - HealthChecksUI__HealthChecks__0__Uri=http://webstatus-api/healthz
-      - HealthChecksUI__HealthChecks__1__Name=Microserviço API Catálogo
+      - HealthChecksUI__HealthChecks__1__Name=API Catalogo
       - HealthChecksUI__HealthChecks__1__Uri=http://catalogo-api/healthz
-      - HealthChecksUI__HealthChecks__2__Name=Microserviço API Vendas
+      - HealthChecksUI__HealthChecks__2__Name=API Vendas
       - HealthChecksUI__HealthChecks__2__Uri=http://venda-api/healthz
-      - HealthChecksUI__HealthChecks__3__Name=Microserviço Identity SSO
+      - HealthChecksUI__HealthChecks__3__Name=API Identity SSO
       - HealthChecksUI__HealthChecks__3__Uri=http://identity-sso/healthz
     ports:
       - "5160:80"
@@ -90,8 +102,8 @@ services:
         RABBITMQ_DEFAULT_PASS: "guest"
         RABBITMQ_DEFAULT_VHOST: "/"
     ports:
-        - "15672:15672"
-        - "5672:5672"
+      - "15672:15672"
+      - "5672:5672"
     networks:
       - favodemel-network
 
