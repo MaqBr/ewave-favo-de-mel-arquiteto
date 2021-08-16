@@ -5,7 +5,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://0.0.0.0:80
-      - CatalogoDbConnection=Server=local-mssql,1433;Database=CatalogoDb;User Id=sa;Password=P@ssw0rd
+      - CatalogoDbConnection=Server=local-mssql;Database=CatalogoDb;User Id=sa;Password=P@ssw0rd
       - RABBITMQ__URL=local-rabbitmq
       - RABBITMQ__USUARIO=guest
       - RABBITMQ__SENHA=guest
@@ -24,7 +24,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://0.0.0.0:80
-      - VendaDbConnection=Server=local-mssql,1433;Database=VendaDb;User Id=sa;Password=P@ssw0rd
+      - VendaDbConnection=Server=local-mssql;Database=VendaDb;User Id=sa;Password=P@ssw0rd
       - RABBITMQ__URL=local-rabbitmq
       - RABBITMQ__USUARIO=guest
       - RABBITMQ__SENHA=guest
@@ -57,7 +57,7 @@ services:
   favodemel.identity:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__IdentityDbConnection=Server=local-mssql,1433;Database=IdentityDb;User Id=sa;Password=P@ssw0rd
+      - ConnectionStrings__IdentityDbConnection=Server=local-mssql;Database=IdentityDb;User Id=sa;Password=P@ssw0rd
       - AppSettings__Secret=MEUSEGREDOSUPERSECRETO
       - AppSettings__ExpiracaoHoras=2
       - AppSettings__Emissor=FavoMel.Identity
@@ -120,7 +120,7 @@ services:
     volumes:
       - mssql-data:/var/opt/mssql
     ports:
-      - '11433:1433'    
+      - '5433:1433'    
     expose:
       - 1433
     networks:
