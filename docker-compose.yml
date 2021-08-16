@@ -28,12 +28,14 @@ services:
       context: .
       dockerfile: src/Presentation/WebApps/FavoDeMel.Presentation.MVC/Dockerfile
 
-  favodemel.sso:
-    image: ${DOCKER_REGISTRY-}favodemelsso
-    container_name: identity-sso
+  favodemel.identity:
+    image: ${DOCKER_REGISTRY-}favodemelidentity
+    container_name: identity-api
     build:
       context: .
-      dockerfile: src/Microservices/Identity/FavoDeMel.SSO/Dockerfile
+      dockerfile: src/Microservices/Identity/FavoDeMel.Identity/Dockerfile
+    depends_on:
+      - favodemel.sqlserver
 
   favodemel.webstatus:
     image: ${DOCKER_REGISTRY-}favodemelwebstatus
@@ -42,7 +44,7 @@ services:
       context: .
       dockerfile: src/Microservices/WebStatus/FavoDeMel.WebStatus/Dockerfile
     depends_on: 
-      - favodemel.sso
+      - favodemel.identity
       - favodemel.venda.api
       - favodemel.catalogo.api
       - favodemel.rabbitmq
@@ -61,6 +63,9 @@ services:
   favodemel.sqlserver:
     image: mcr.microsoft.com/mssql/server:2017-latest
     container_name: local-mssql
+    build:
+      context: .
+      dockerfile: src/Scripts/Dockerfile
 
   favodemel.elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.9.2

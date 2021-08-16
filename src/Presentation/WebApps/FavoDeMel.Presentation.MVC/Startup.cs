@@ -141,7 +141,7 @@ namespace FavoDeMel.Presentation.MVC
                         RoleClaimType = "role",
 
                     };
-                    options.MetadataAddress = $"{identityProvider.AuthorityUri}/.well-known/openid-configuration";
+                    //options.MetadataAddress = $"{identityProvider.AuthorityUri}/.well-known/openid-configuration";
                     options.RequireHttpsMetadata = false;
                 });
 

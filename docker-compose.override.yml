@@ -45,7 +45,7 @@ services:
       - ASPNETCORE_URLS=http://0.0.0.0:80
       - MICROSERVICES__VENDA_BASE_URI=http://venda-api
       - MICROSERVICES__CATALOGO_BASE_URI=http://catalogo-api
-      - IDENTITYPROVIDER__AUTHORITYURI=https://identity-sso
+      - IDENTITYPROVIDER__AUTHORITYURI=http://identity-api
     ports:
       - "5130:80"
     volumes:
@@ -54,11 +54,17 @@ services:
     networks:
       - favodemel-network
 
-  favodemel.sso:
+  favodemel.identity:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__IdentityDbConnection=Server=local-mssql,1433;Database=IdentityDb;User Id=sa;Password=P@ssw0rd
+      - AppSettings__Secret=MEUSEGREDOSUPERSECRETO
+      - AppSettings__ExpiracaoHoras=2
+      - AppSettings__Emissor=FavoMel.Identity
+      - AppSettings__ValidoEm=http://localhost
     ports:
-      - "5140:80"
+      - "5000:80"
+      - "5001:443"
     networks:
       - favodemel-network
 
@@ -88,8 +94,8 @@ services:
       - HealthChecksUI__HealthChecks__1__Uri=http://catalogo-api/healthz
       - HealthChecksUI__HealthChecks__2__Name=API Vendas
       - HealthChecksUI__HealthChecks__2__Uri=http://venda-api/healthz
-      - HealthChecksUI__HealthChecks__3__Name=API Identity SSO
-      - HealthChecksUI__HealthChecks__3__Uri=http://identity-sso/healthz
+      - HealthChecksUI__HealthChecks__3__Name=API Identity
+      - HealthChecksUI__HealthChecks__3__Uri=http://identity-api/healthz
     ports:
       - "5160:80"
     networks:
