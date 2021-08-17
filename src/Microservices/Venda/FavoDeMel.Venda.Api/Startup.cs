@@ -133,7 +133,7 @@ namespace FavoDeMel.Venda.Api
             services.AddScoped<IRequestHandler<AdicionarItemComandaCommand, bool>, ComandaCommandHandler>();
             services.AddScoped<IRequestHandler<AtualizarItemComandaCommand, bool>, ComandaCommandHandler>();
             services.AddScoped<IRequestHandler<RemoverItemComandaCommand, bool>, ComandaCommandHandler>();
-            services.AddScoped<IRequestHandler<AplicarVoucherPedidoCommand, bool>, ComandaCommandHandler>();
+            services.AddScoped<IRequestHandler<AplicarVoucherComandaCommand, bool>, ComandaCommandHandler>();
             services.AddScoped<IRequestHandler<IniciarComandaCommand, bool>, ComandaCommandHandler>();
             services.AddScoped<IRequestHandler<FinalizarComandaCommand, bool>, ComandaCommandHandler>();
             services.AddScoped<IRequestHandler<CancelarComandaCommand, bool>, ComandaCommandHandler>();
@@ -146,7 +146,7 @@ namespace FavoDeMel.Venda.Api
         {
             var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
             //Exemplo de registro de subscriber
-            //eventBus.Subscribe<PedidoProdutoAdicionadoEvent, PedidoEventHandler>();
+            //eventBus.Subscribe<ComandaProdutoAdicionadoEvent,ComandaEventHandler>();
         }
     }
 
@@ -169,7 +169,7 @@ namespace FavoDeMel.Venda.Api
 
             services.AddSingleton<IEventBusSubscriptionsManager, InMemoryEventBusSubscriptionsManager>();
             //Exemplo de registro de subscriber
-            //services.AddTransient<PedidoEventHandler>();
+            //services.AddTransient<ComandaEventHandler>();
 
             return services;
         }

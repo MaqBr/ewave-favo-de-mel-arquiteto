@@ -19,7 +19,7 @@ namespace FavoDeMel.Venda.Application
         IRequestHandler<AdicionarItemComandaCommand, bool>,
         IRequestHandler<AtualizarItemComandaCommand, bool>,
         IRequestHandler<RemoverItemComandaCommand, bool>,
-        IRequestHandler<AplicarVoucherPedidoCommand, bool>,
+        IRequestHandler<AplicarVoucherComandaCommand, bool>,
         IRequestHandler<IniciarComandaCommand, bool>,
         IRequestHandler<FinalizarComandaCommand, bool>,
         IRequestHandler<CancelarComandaCommand, bool>,
@@ -56,10 +56,10 @@ namespace FavoDeMel.Venda.Application
             }
             else
             {
-                var pedidoItemExistente = comanda.ComandaItemExistente(comandaItem);
+                var comandaItemExistente = comanda.ComandaItemExistente(comandaItem);
                 comanda.AdicionarItem(comandaItem);
 
-                if (pedidoItemExistente)
+                if (comandaItemExistente)
                 {
                     _comandaRepository.AtualizarItem(comanda.ComandaItems.FirstOrDefault(p => p.ProdutoId == comandaItem.ProdutoId));
                 }
@@ -138,7 +138,7 @@ namespace FavoDeMel.Venda.Application
             return await _comandaRepository.UnitOfWork.Commit();
         }
 
-        public async Task<bool> Handle(AplicarVoucherPedidoCommand message, CancellationToken cancellationToken)
+        public async Task<bool> Handle(AplicarVoucherComandaCommand message, CancellationToken cancellationToken)
         {
             if (!ValidarComando(message)) return false;
 
@@ -169,7 +169,7 @@ namespace FavoDeMel.Venda.Application
                 return false;
             }
 
-            comanda.AdicionarEvento(new VoucherAplicadoPedidoEvent(message.ClienteId, comanda.Id, voucher.Id));
+            comanda.AdicionarEvento(new VoucherAplicadoComandaEvent(message.ClienteId, comanda.Id, voucher.Id));
 
             _comandaRepository.Atualizar(comanda);
 
@@ -181,13 +181,13 @@ namespace FavoDeMel.Venda.Application
             if (!ValidarComando(message)) return false;
 
             var comanda = await _comandaRepository.ObterComandaRascunhoPorClienteId(message.ClienteId);
-            comanda.IniciarPedido();
+            comanda.IniciarComanda();
 
             var itensList = new List<Item>();
             comanda.ComandaItems.ForEach(i => itensList.Add(new Item { Id = i.ProdutoId, Quantidade = i.Quantidade }));
-            var listaProdutosPedido = new ListaProdutosComanda { ComandaId = comanda.Id, Itens = itensList };
+            var listaProdutosComanda = new ListaProdutosComanda { ComandaId = comanda.Id, Itens = itensList };
 
-            comanda.AdicionarEvento(new PedidoIniciadoEvent(comanda.Id, comanda.ClienteId, listaProdutosPedido, comanda.ValorTotal, message.NomeCartao, message.NumeroCartao, message.ExpiracaoCartao, message.CvvCartao));
+            comanda.AdicionarEvento(new ComandaIniciadaEvent(comanda.Id, comanda.ClienteId, listaProdutosComanda, comanda.ValorTotal, message.NomeCartao, message.NumeroCartao, message.ExpiracaoCartao, message.CvvCartao));
 
             _comandaRepository.Atualizar(comanda);
             return await _comandaRepository.UnitOfWork.Commit();
@@ -203,7 +203,7 @@ namespace FavoDeMel.Venda.Application
                 return false;
             }
 
-            comanda.FinalizarPedido();
+            comanda.FinalizarComanda();
 
             comanda.AdicionarEvento(new ComandaFinalizadaEvent(message.ComandaId));
             //Publica em RabbitMQ para integração
@@ -221,11 +221,11 @@ namespace FavoDeMel.Venda.Application
                 return false;
             }
 
-            comanda.CancelarPedido();
+            comanda.CancelarComanda();
 
-            comanda.AdicionarEvento(new PedidoCanceladoEvent(message.ComandaId));
+            comanda.AdicionarEvento(new ComandaCanceladaEvent(message.ComandaId));
             //Publica em RabbitMQ para integração
-            _bus.Publish(new PedidoCanceladoEvent(message.ComandaId));
+            _bus.Publish(new ComandaCanceladaEvent(message.ComandaId));
             return await _comandaRepository.UnitOfWork.Commit();
         }
 

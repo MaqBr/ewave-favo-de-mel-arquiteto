@@ -7,8 +7,8 @@ namespace FavoDeMel.Catalogo.Domain
     public interface IEstoqueService : IDisposable
     {
         Task<bool> DebitarEstoque(Guid produtoId, int quantidade);
-        Task<bool> DebitarListaProdutosPedido(ListaProdutosComanda lista);
+        Task<bool> DebitarListaProdutosComanda(ListaProdutosComanda lista);
         Task<bool> ReporEstoque(Guid produtoId, int quantidade);
-        Task<bool> ReporListaProdutosPedido(ListaProdutosComanda lista);
+        Task<bool> ReporListaProdutosComanda(ListaProdutosComanda lista);
     }
 }

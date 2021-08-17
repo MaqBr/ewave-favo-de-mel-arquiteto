@@ -44,12 +44,12 @@ namespace FavoDeMel.Venda.Domain.Models
 
             Voucher = voucher;
             VoucherUtilizado = true;
-            CalcularValorPedido();
+            CalcularValorComanda();
 
             return validationResult;
         }
 
-        public void CalcularValorPedido()
+        public void CalcularValorComanda()
         {
             ValorTotal = ComandaItems.Sum(p => p.CalcularValor());
             CalcularValorTotalDesconto();
@@ -92,7 +92,7 @@ namespace FavoDeMel.Venda.Domain.Models
         {
             if (!item.EhValido()) return;
 
-            item.AssociarPedido(Id);
+            item.AssociarComanda(Id);
 
             if (ComandaItemExistente(item))
             {
@@ -106,7 +106,7 @@ namespace FavoDeMel.Venda.Domain.Models
             item.CalcularValor();
             _comandaItems.Add(item);
 
-            CalcularValorPedido();
+            CalcularValorComanda();
         }
 
         public void RemoverItem(ComandaItem item)
@@ -115,25 +115,25 @@ namespace FavoDeMel.Venda.Domain.Models
 
             var itemExistente = ComandaItems.FirstOrDefault(p => p.ProdutoId == item.ProdutoId);
 
-            if (itemExistente == null) throw new DomainException("O item não pertence ao pedido");
+            if (itemExistente == null) throw new DomainException("O item não pertence ao comanda");
             _comandaItems.Remove(itemExistente);
 
-            CalcularValorPedido();
+            CalcularValorComanda();
         }
 
         public void AtualizarItem(ComandaItem item)
         {
             if (!item.EhValido()) return;
-            item.AssociarPedido(Id);
+            item.AssociarComanda(Id);
 
             var itemExistente = ComandaItems.FirstOrDefault(p => p.ProdutoId == item.ProdutoId);
 
-            if (itemExistente == null) throw new DomainException("O item não pertence ao pedido");
+            if (itemExistente == null) throw new DomainException("O item não pertence ao comanda");
 
             _comandaItems.Remove(itemExistente);
             _comandaItems.Add(item);
 
-            CalcularValorPedido();
+            CalcularValorComanda();
         }
 
         public void AtualizarUnidades(ComandaItem item, int unidades)
@@ -153,17 +153,17 @@ namespace FavoDeMel.Venda.Domain.Models
             ComandaStatus = ComandaStatus.Rascunho;
         }
 
-        public void IniciarPedido()
+        public void IniciarComanda()
         {
             ComandaStatus = ComandaStatus.Iniciado;
         }
 
-        public void FinalizarPedido()
+        public void FinalizarComanda()
         {
             ComandaStatus = ComandaStatus.Pago;
         }
 
-        public void CancelarPedido()
+        public void CancelarComanda()
         {
             ComandaStatus = ComandaStatus.Cancelado;
         }
@@ -172,13 +172,13 @@ namespace FavoDeMel.Venda.Domain.Models
         {
             public static Comanda NovaComandaRascunho(Guid clienteId)
             {
-                var pedido = new Comanda
+                var comanda = new Comanda
                 {
                     ClienteId = clienteId,
                 };
 
-                pedido.TornarRascunho();
-                return pedido;
+                comanda.TornarRascunho();
+                return comanda;
             }
         }
     }

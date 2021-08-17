@@ -22,14 +22,14 @@ namespace FavoDeMel.Venda.Application
 
         public override bool EhValido()
         {
-            ValidationResult = new AtualizarItemPedidoValidation().Validate(this);
+            ValidationResult = new AtualizarItemComandaValidation().Validate(this);
             return ValidationResult.IsValid;
         }
     }
 
-    public class AtualizarItemPedidoValidation : AbstractValidator<AtualizarItemComandaCommand>
+    public class AtualizarItemComandaValidation : AbstractValidator<AtualizarItemComandaCommand>
     {
-        public AtualizarItemPedidoValidation()
+        public AtualizarItemComandaValidation()
         {
             RuleFor(c => c.ClienteId)
                 .NotEqual(Guid.Empty)

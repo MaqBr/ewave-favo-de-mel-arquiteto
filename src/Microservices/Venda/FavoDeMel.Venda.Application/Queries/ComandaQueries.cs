@@ -9,16 +9,16 @@ namespace FavoDeMel.Venda.Application.Queries
 {
     public class ComandaQueries : IComandaQueries
     {
-        private readonly IComandaRepository _pedidoRepository;
+        private readonly IComandaRepository _comandaRepository;
 
         public ComandaQueries(IComandaRepository comandaRepository)
         {
-            _pedidoRepository = comandaRepository;
+            _comandaRepository = comandaRepository;
         }
 
         public async Task<ComandaViewModel> ObterComandaCliente(Guid clienteId)
         {
-            var comanda = await _pedidoRepository.ObterComandaRascunhoPorClienteId(clienteId);
+            var comanda = await _comandaRepository.ObterComandaRascunhoPorClienteId(clienteId);
             if (comanda == null) return null;
 
             var carrinho = new ComandaViewModel
@@ -51,20 +51,20 @@ namespace FavoDeMel.Venda.Application.Queries
             return carrinho;
         }
 
-        public async Task<IEnumerable<ComandaViewModel>> ObterPedidosCliente(Guid clienteId)
+        public async Task<IEnumerable<ComandaViewModel>> ObterComandasCliente(Guid clienteId)
         {
-            var comandas = await _pedidoRepository.ObterListaPorClienteId(clienteId);
+            var comandas = await _comandaRepository.ObterListaPorClienteId(clienteId);
 
             comandas = comandas.Where(p => p.ComandaStatus == ComandaStatus.Pago || p.ComandaStatus == ComandaStatus.Cancelado)
                 .OrderByDescending(p => p.Codigo);
 
             if (!comandas.Any()) return null;
 
-            var pedidosView = new List<ComandaViewModel>();
+            var comandasView = new List<ComandaViewModel>();
 
             foreach (var comanda in comandas)
             {
-                pedidosView.Add(new ComandaViewModel
+                comandasView.Add(new ComandaViewModel
                 {
                     ComandaId = comanda.Id,
                     ValorTotal = comanda.ValorTotal,
@@ -74,23 +74,23 @@ namespace FavoDeMel.Venda.Application.Queries
                 });
             }
 
-            return pedidosView;
+            return comandasView;
         }
 
         public async Task<IEnumerable<ComandaViewModel>> ObterComandaStatus(ComandaStatus status)
         {
-            var comandas = await _pedidoRepository.ObterListaPorStatus(status);
+            var comandas = await _comandaRepository.ObterListaPorStatus(status);
 
             comandas = comandas.Where(p => p.ComandaStatus == status)
                 .OrderByDescending(p => p.Codigo);
 
             if (!comandas.Any()) return null;
 
-            var pedidosView = new List<ComandaViewModel>();
+            var comandasView = new List<ComandaViewModel>();
 
             foreach (var comanda in comandas)
             {
-                pedidosView.Add(new ComandaViewModel
+                comandasView.Add(new ComandaViewModel
                 {
                     ComandaId = comanda.Id,
                     ValorTotal = comanda.ValorTotal,
@@ -100,7 +100,7 @@ namespace FavoDeMel.Venda.Application.Queries
                 });
             }
 
-            return pedidosView;
+            return comandasView;
         }
     }
 }

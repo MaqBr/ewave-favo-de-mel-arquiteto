@@ -4,12 +4,12 @@ using FavoDeMel.Domain.Core.Messages;
 
 namespace FavoDeMel.Venda.Application
 {
-    public class AplicarVoucherPedidoCommand : Command
+    public class AplicarVoucherComandaCommand : Command
     {
         public Guid ClienteId { get; private set; }
         public string CodigoVoucher { get; private set; }
 
-        public AplicarVoucherPedidoCommand(Guid clienteId, string codigoVoucher)
+        public AplicarVoucherComandaCommand(Guid clienteId, string codigoVoucher)
         {
             ClienteId = clienteId;
             CodigoVoucher = codigoVoucher;
@@ -17,14 +17,14 @@ namespace FavoDeMel.Venda.Application
 
         public override bool EhValido()
         {
-            ValidationResult = new AplicarVoucherPedidoValidation().Validate(this);
+            ValidationResult = new AplicarVoucherComandaValidation().Validate(this);
             return ValidationResult.IsValid;
         }
     }
 
-    public class AplicarVoucherPedidoValidation : AbstractValidator<AplicarVoucherPedidoCommand>
+    public class AplicarVoucherComandaValidation : AbstractValidator<AplicarVoucherComandaCommand>
     {
-        public AplicarVoucherPedidoValidation()
+        public AplicarVoucherComandaValidation()
         {
             RuleFor(c => c.ClienteId)
                 .NotEqual(Guid.Empty)

@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace FavoDeMel.Venda.Domain.Models
+namespace FavoDeMel.Domain.Core.DomainObjects.DTO
 {
-    public class IniciarPedidoDTO
+    public class PagamentoComanda
     {
-        public Guid PedidoId { get; set; }
+        public Guid ComandaId { get; set; }
         public Guid ClienteId { get; set; }
         public decimal Total { get; set; }
         public string NomeCartao { get; set; }

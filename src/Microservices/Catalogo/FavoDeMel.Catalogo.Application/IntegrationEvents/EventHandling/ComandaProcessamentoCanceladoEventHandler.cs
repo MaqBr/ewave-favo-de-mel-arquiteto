@@ -4,11 +4,11 @@ using System.Threading.Tasks;
 
 namespace FavoDeMel.Catalogo.Application.IntegrationEvents.EventHandling
 {
-    public class PedidoProcessamentoCanceladoEventHandler : IIntegrationEventHandler<ComandaProcessamentoCanceladoEvent>
+    public class ComandaProcessamentoCanceladoEventHandler : IIntegrationEventHandler<ComandaProcessamentoCanceladoEvent>
     {
         public Task Handle(ComandaProcessamentoCanceladoEvent @event)
         {
-            var pedidoProcessamentoCancelado = @event;
+            var comandaProcessamentoCancelado = @event;
             
             //TODO: implementação após ACK
             return Task.CompletedTask;

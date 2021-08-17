@@ -46,86 +46,86 @@ namespace FavoDeMel.Presentation.MVC.Services
             return carrinho;
         }
 
-        public async Task AdicionarItemComanda(AdicionarItemComandaDTO itemPedido)
+        public async Task AdicionarItemComanda(AdicionarItemComandaDTO itemComanda)
         {
             var uri = API.Comanda.AdicionarItemComanda(_remoteServiceBaseUrl);
 
-            var pedidoContent = new StringContent(JsonConvert.SerializeObject(itemPedido),
+            var comandaContent = new StringContent(JsonConvert.SerializeObject(itemComanda),
                 System.Text.Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.PostAsync(uri, pedidoContent);
+            var response = await _httpClient.PostAsync(uri, comandaContent);
 
             if (response.StatusCode == System.Net.HttpStatusCode.InternalServerError)
             {
-                throw new Exception("Error ao adicionar o item do pedido produto.");
+                throw new Exception("Error ao adicionar o item do comanda produto.");
             }
 
             response.EnsureSuccessStatusCode();
         }
 
-        public async Task AtualizarItemComanda(AtualizarItemComandaDTO itemPedido)
+        public async Task AtualizarItemComanda(AtualizarItemComandaDTO itemComanda)
         {
             var uri = API.Comanda.AtualizarItemComanda(_remoteServiceBaseUrl);
 
-            var pedidoContent = new StringContent(JsonConvert.SerializeObject(itemPedido),
+            var comandaContent = new StringContent(JsonConvert.SerializeObject(itemComanda),
                 System.Text.Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.PutAsync(uri, pedidoContent);
+            var response = await _httpClient.PutAsync(uri, comandaContent);
 
             if (response.StatusCode == System.Net.HttpStatusCode.InternalServerError)
             {
-                throw new Exception("Error ao atualizar o item do pedido produto.");
+                throw new Exception("Error ao atualizar o item do comanda produto.");
             }
 
             response.EnsureSuccessStatusCode();
         }
 
-        public async Task RemoverItemComanda(RemoverItemComandaDTO itemPedido)
+        public async Task RemoverItemComanda(RemoverItemComandaDTO itemComanda)
         {
             var uri = API.Comanda.RemoverItemComanda(_remoteServiceBaseUrl);
 
-            var pedidoContent = new StringContent(JsonConvert.SerializeObject(itemPedido),
+            var comandaContent = new StringContent(JsonConvert.SerializeObject(itemComanda),
                 System.Text.Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.PostAsync(uri, pedidoContent);
+            var response = await _httpClient.PostAsync(uri, comandaContent);
 
             if (response.StatusCode == System.Net.HttpStatusCode.InternalServerError)
             {
-                throw new Exception("Error ao remover o item do pedido produto.");
+                throw new Exception("Error ao remover o item da comanda do produto.");
             }
 
             response.EnsureSuccessStatusCode();
         }
 
-        public async Task FinalizarComanda(FinalizarComandaDTO pedido)
+        public async Task FinalizarComanda(FinalizarComandaDTO comanda)
         {
             var uri = API.Comanda.FinalizarComanda(_remoteServiceBaseUrl);
 
-            var pedidoContent = new StringContent(JsonConvert.SerializeObject(pedido),
+            var comandaContent = new StringContent(JsonConvert.SerializeObject(comanda),
                 System.Text.Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.PostAsync(uri, pedidoContent);
+            var response = await _httpClient.PostAsync(uri, comandaContent);
 
             if (response.StatusCode == System.Net.HttpStatusCode.InternalServerError)
             {
-                throw new Exception("Error ao finalizar o pedido produto.");
+                throw new Exception("Error ao finalizar a comanda do produto.");
             }
 
             response.EnsureSuccessStatusCode();
         }
 
-        public async Task CancelarComanda(CancelarComandaDTO pedido)
+        public async Task CancelarComanda(CancelarComandaDTO comanda)
         {
             var uri = API.Comanda.CancelarComanda(_remoteServiceBaseUrl);
 
-            var pedidoContent = new StringContent(JsonConvert.SerializeObject(pedido),
+            var comandaContent = new StringContent(JsonConvert.SerializeObject(comanda),
                 System.Text.Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.PostAsync(uri, pedidoContent);
+            var response = await _httpClient.PostAsync(uri, comandaContent);
 
             if (response.StatusCode == System.Net.HttpStatusCode.InternalServerError)
             {
-                throw new Exception("Error ao cancelar o pedido produto.");
+                throw new Exception("Error ao cancelar o comanda do produto.");
             }
 
             response.EnsureSuccessStatusCode();

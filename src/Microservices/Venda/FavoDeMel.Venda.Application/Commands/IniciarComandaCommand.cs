@@ -6,7 +6,7 @@ namespace FavoDeMel.Venda.Application
 {
     public class IniciarComandaCommand : Command
     {
-        public Guid PedidoId { get; private set; }
+        public Guid ComandaId { get; private set; }
         public Guid ClienteId { get; private set; }
         public decimal Total { get; private set; }
         public string NomeCartao { get; private set; }
@@ -14,9 +14,9 @@ namespace FavoDeMel.Venda.Application
         public string ExpiracaoCartao { get; private set; }
         public string CvvCartao { get; private set; }
 
-        public IniciarComandaCommand(Guid pedidoId, Guid clienteId, decimal total, string nomeCartao, string numeroCartao, string expiracaoCartao, string cvvCartao)
+        public IniciarComandaCommand(Guid comandaId, Guid clienteId, decimal total, string nomeCartao, string numeroCartao, string expiracaoCartao, string cvvCartao)
         {
-            PedidoId = pedidoId;
+            ComandaId = comandaId;
             ClienteId = clienteId;
             Total = total;
             NomeCartao = nomeCartao;
@@ -27,22 +27,22 @@ namespace FavoDeMel.Venda.Application
 
         public override bool EhValido()
         {
-            ValidationResult = new IniciarPedidoValidation().Validate(this);
+            ValidationResult = new IniciarComandaValidation().Validate(this);
             return ValidationResult.IsValid;
         }
     }
 
-    public class IniciarPedidoValidation : AbstractValidator<IniciarComandaCommand>
+    public class IniciarComandaValidation : AbstractValidator<IniciarComandaCommand>
     {
-        public IniciarPedidoValidation()
+        public IniciarComandaValidation()
         {
             RuleFor(c => c.ClienteId)
                 .NotEqual(Guid.Empty)
                 .WithMessage("Id do cliente inválido");
 
-            RuleFor(c => c.PedidoId)
+            RuleFor(c => c.ComandaId)
                 .NotEqual(Guid.Empty)
-                .WithMessage("Id do pedido inválido");
+                .WithMessage("Id da comanda inválido");
 
             RuleFor(c => c.NomeCartao)
                 .NotEmpty()

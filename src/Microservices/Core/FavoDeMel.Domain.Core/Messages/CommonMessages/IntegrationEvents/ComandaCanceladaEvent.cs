@@ -3,11 +3,11 @@ using FavoDeMel.Domain.Core.Messages;
 
 namespace FavoDeMel.Domain.Core.Messages.CommonMessages.IntegrationEvents
 {
-    public class ComandaFinalizadaEvent : IntegrationEvent
+    public class ComandaCanceladaEvent : IntegrationEvent
     {
         public Guid ComandaId { get; private set; }
 
-        public ComandaFinalizadaEvent(Guid comandaId)
+        public ComandaCanceladaEvent(Guid comandaId)
         {
             ComandaId = comandaId;
             AggregateId = comandaId;

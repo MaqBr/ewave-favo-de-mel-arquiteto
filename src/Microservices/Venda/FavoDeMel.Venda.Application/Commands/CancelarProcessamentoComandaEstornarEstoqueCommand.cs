@@ -8,10 +8,10 @@ namespace FavoDeMel.Venda.Application
         public Guid ComandaId { get; private set; }
         public Guid ClienteId { get; private set; }
 
-        public CancelarProcessamentoComandaEstornarEstoqueCommand(Guid pedidoId, Guid clienteId)
+        public CancelarProcessamentoComandaEstornarEstoqueCommand(Guid comandaId, Guid clienteId)
         {
-            AggregateId = pedidoId;
-            ComandaId = pedidoId;
+            AggregateId = comandaId;
+            ComandaId = comandaId;
             ClienteId = clienteId;
         }
     }

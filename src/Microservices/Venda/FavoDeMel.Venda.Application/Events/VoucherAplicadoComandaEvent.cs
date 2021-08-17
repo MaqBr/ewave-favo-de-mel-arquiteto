@@ -3,17 +3,17 @@ using FavoDeMel.Domain.Core.Messages;
 
 namespace FavoDeMel.Venda.Application.Events
 {
-    public class VoucherAplicadoPedidoEvent : Event
+    public class VoucherAplicadoComandaEvent : Event
     {
         public Guid ClienteId { get; private set; }
-        public Guid PedidoId { get; private set; }
+        public Guid ComandaId { get; private set; }
         public Guid VoucherId { get; private set; }
 
-        public VoucherAplicadoPedidoEvent(Guid clienteId, Guid pedidoId, Guid voucherId)
+        public VoucherAplicadoComandaEvent(Guid clienteId, Guid comandaId, Guid voucherId)
         {
-            AggregateId = pedidoId;
+            AggregateId = comandaId;
             ClienteId = clienteId;
-            PedidoId = pedidoId;
+            ComandaId = comandaId;
             VoucherId = voucherId;
         }
     }

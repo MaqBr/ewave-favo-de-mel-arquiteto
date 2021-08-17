@@ -7,7 +7,7 @@ namespace FavoDeMel.Venda.Domain.Models
 {
     public class CancelarComandaDTO
     {
-        public Guid PedidoId { get; set; }
+        public Guid ComandaId { get; set; }
         public Guid ClienteId { get; set; }
     }
 }

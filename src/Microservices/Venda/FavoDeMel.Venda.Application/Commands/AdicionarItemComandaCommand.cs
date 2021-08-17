@@ -23,14 +23,14 @@ namespace FavoDeMel.Venda.Application
 
         public override bool EhValido()
         {
-            ValidationResult = new AdicionarItemPedidoValidation().Validate(this);
+            ValidationResult = new AdicionarItemComandaValidation().Validate(this);
             return ValidationResult.IsValid;
         }
     }
 
-    public class AdicionarItemPedidoValidation : AbstractValidator<AdicionarItemComandaCommand>
+    public class AdicionarItemComandaValidation : AbstractValidator<AdicionarItemComandaCommand>
     {
-        public AdicionarItemPedidoValidation()
+        public AdicionarItemComandaValidation()
         {
             RuleFor(c => c.ClienteId)
                 .NotEqual(Guid.Empty)

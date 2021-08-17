@@ -9,11 +9,11 @@ namespace FavoDeMel.Venda.Application.Events
         public Guid ClienteId { get; private set; }
         public Guid ComandaId { get; private set; }
 
-        public ComandaRascunhoIniciadoEvent(Guid clienteId, Guid pedidoId)
+        public ComandaRascunhoIniciadoEvent(Guid clienteId, Guid comandaId)
         {
-            AggregateId = pedidoId;
+            AggregateId = comandaId;
             ClienteId = clienteId;
-            ComandaId = pedidoId;
+            ComandaId = comandaId;
         }
     }
 }

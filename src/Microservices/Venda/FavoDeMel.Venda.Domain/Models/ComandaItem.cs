@@ -26,7 +26,7 @@ namespace FavoDeMel.Venda.Domain.Models
 
         protected ComandaItem() { }
 
-        internal void AssociarPedido(Guid comandaId)
+        internal void AssociarComanda(Guid comandaId)
         {
             ComandaId = comandaId;
         }

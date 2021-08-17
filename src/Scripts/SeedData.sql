@@ -92,7 +92,7 @@ BEGIN
 	ALTER TABLE [dbo].[Vouchers]
 		ADD CONSTRAINT [PK_Vouchers] PRIMARY KEY CLUSTERED ([Id] ASC);
 
-	CREATE TABLE [dbo].[Pedidos] (
+	CREATE TABLE [dbo].[Comandas] (
 		[Id]               UNIQUEIDENTIFIER NOT NULL,
 		[Codigo]           INT              NOT NULL,
 		[ClienteId]        UNIQUEIDENTIFIER NOT NULL,
@@ -101,22 +101,22 @@ BEGIN
 		[Desconto]         DECIMAL (18, 2)  NOT NULL,
 		[ValorTotal]       DECIMAL (18, 2)  NOT NULL,
 		[DataCadastro]     DATETIME2 (7)    NOT NULL,
-		[PedidoStatus]     INT              NOT NULL
+		[ComandaStatus]     INT              NOT NULL
 	);
 
-	CREATE NONCLUSTERED INDEX [IX_Pedidos_VoucherId]
-		ON [dbo].[Pedidos]([VoucherId] ASC);
+	CREATE NONCLUSTERED INDEX [IX_Comandas_VoucherId]
+		ON [dbo].[Comandas]([VoucherId] ASC);
 
-	ALTER TABLE [dbo].[Pedidos]
-		ADD CONSTRAINT [PK_Pedidos] PRIMARY KEY CLUSTERED ([Id] ASC);
+	ALTER TABLE [dbo].[Comandas]
+		ADD CONSTRAINT [PK_Comandas] PRIMARY KEY CLUSTERED ([Id] ASC);
 
-	ALTER TABLE [dbo].[Pedidos]
-		ADD CONSTRAINT [FK_Pedidos_Vouchers_VoucherId] FOREIGN KEY ([VoucherId]) REFERENCES [dbo].[Vouchers] ([Id]);
+	ALTER TABLE [dbo].[Comandas]
+		ADD CONSTRAINT [FK_Comandas_Vouchers_VoucherId] FOREIGN KEY ([VoucherId]) REFERENCES [dbo].[Vouchers] ([Id]);
 
 
-	CREATE TABLE [dbo].[PedidoItems] (
+	CREATE TABLE [dbo].[ComandaItems] (
 		[Id]            UNIQUEIDENTIFIER NOT NULL,
-		[PedidoId]      UNIQUEIDENTIFIER NOT NULL,
+		[ComandaId]      UNIQUEIDENTIFIER NOT NULL,
 		[ProdutoId]     UNIQUEIDENTIFIER NOT NULL,
 		[ProdutoNome]   NVARCHAR (MAX)   NULL,
 		[Quantidade]    INT              NOT NULL,
@@ -124,22 +124,22 @@ BEGIN
 		[ItemStatus]    INT              NOT NULL
 	);
 
-	CREATE NONCLUSTERED INDEX [IX_PedidoItems_PedidoId]
-		ON [dbo].[PedidoItems]([PedidoId] ASC);
+	CREATE NONCLUSTERED INDEX [IX_ComandaItems_PedidoId]
+		ON [dbo].[ComandaItems]([ComandaId] ASC);
 
-	ALTER TABLE [dbo].[PedidoItems]
-		ADD CONSTRAINT [PK_PedidoItems] PRIMARY KEY CLUSTERED ([Id] ASC);
+	ALTER TABLE [dbo].[ComandaItems]
+		ADD CONSTRAINT [PK_ComandaItems] PRIMARY KEY CLUSTERED ([Id] ASC);
 
-	ALTER TABLE [dbo].[PedidoItems]
-		ADD CONSTRAINT [FK_PedidoItems_Pedidos_PedidoId] FOREIGN KEY ([PedidoId]) REFERENCES [dbo].[Pedidos] ([Id]);
+	ALTER TABLE [dbo].[ComandaItems]
+		ADD CONSTRAINT [FK_ComandaItems_Pedidos_PedidoId] FOREIGN KEY ([ComandaId]) REFERENCES [dbo].[Comandas] ([Id]);
 
 
-	INSERT [dbo].[Pedidos] ([Id], [Codigo], [ClienteId], [VoucherId], [VoucherUtilizado], [Desconto], [ValorTotal], [DataCadastro], [PedidoStatus]) VALUES (N'44c7ff2b-e6e6-42ad-a669-2da3a1757793', 1, N'9faf55b5-5088-42dd-8c55-5f8698b8295c', NULL, 0, CAST(0.00 AS Decimal(18, 2)), CAST(80.00 AS Decimal(18, 2)), CAST(N'2021-08-11T00:00:00.0000000' AS DateTime2), 0)
-	INSERT [dbo].[Pedidos] ([Id], [Codigo], [ClienteId], [VoucherId], [VoucherUtilizado], [Desconto], [ValorTotal], [DataCadastro], [PedidoStatus]) VALUES (N'4755fb51-eb13-4684-871e-f15c0f120f7d', 2, N'9faf55b5-5088-42dd-8c55-5f8698b8295c', NULL, 0, CAST(0.00 AS Decimal(18, 2)), CAST(40.00 AS Decimal(18, 2)), CAST(N'2021-08-11T00:00:00.0000000' AS DateTime2), 0)
-	INSERT [dbo].[PedidoItems] ([Id], [PedidoId], [ProdutoId], [ProdutoNome], [Quantidade], [ValorUnitario], [ItemStatus]) VALUES (N'417e22db-5f46-47ee-98f9-691fa0eb1ba7', N'44c7ff2b-e6e6-42ad-a669-2da3a1757793', N'aa1c2bb3-cc7b-4011-b5e7-2521a5c0b9aa', N'Talharim (Nero Di Seppia - Tinta de Lula)', 1, CAST(20.00 AS Decimal(18, 2)), 1)
-	INSERT [dbo].[PedidoItems] ([Id], [PedidoId], [ProdutoId], [ProdutoNome], [Quantidade], [ValorUnitario], [ItemStatus]) VALUES (N'5a309721-e801-4c11-8f18-bb0c48b4b83e', N'44c7ff2b-e6e6-42ad-a669-2da3a1757793', N'c463ce4d-b4aa-4284-8d9c-41ef71eb4878', N'Nhoque de Mandioquinha', 1, CAST(20.00 AS Decimal(18, 2)), 1)
-	INSERT [dbo].[PedidoItems] ([Id], [PedidoId], [ProdutoId], [ProdutoNome], [Quantidade], [ValorUnitario], [ItemStatus]) VALUES (N'10714014-454d-42ee-bd88-762d1b8827d4', N'44c7ff2b-e6e6-42ad-a669-2da3a1757793', N'4e86d76c-7e1d-4381-90a5-57016e92667a', N'Parpadelle com tomatinho', 1, CAST(20.00 AS Decimal(18, 2)), 1)
-	INSERT [dbo].[PedidoItems] ([Id], [PedidoId], [ProdutoId], [ProdutoNome], [Quantidade], [ValorUnitario], [ItemStatus]) VALUES (N'd3b3c1fa-9938-4809-b7c2-8d7495ff4672', N'44c7ff2b-e6e6-42ad-a669-2da3a1757793', N'14764628-97c9-4152-b163-8114ae89f3ba', N'Nhoque de Mandioquinha sem farinha', 1, CAST(20.00 AS Decimal(18, 2)), 1)
+	INSERT [dbo].[Comandas] ([Id], [Codigo], [ClienteId], [VoucherId], [VoucherUtilizado], [Desconto], [ValorTotal], [DataCadastro], [ComandaStatus]) VALUES (N'44c7ff2b-e6e6-42ad-a669-2da3a1757793', 1, N'9faf55b5-5088-42dd-8c55-5f8698b8295c', NULL, 0, CAST(0.00 AS Decimal(18, 2)), CAST(80.00 AS Decimal(18, 2)), CAST(N'2021-08-11T00:00:00.0000000' AS DateTime2), 0)
+	INSERT [dbo].[Comandas] ([Id], [Codigo], [ClienteId], [VoucherId], [VoucherUtilizado], [Desconto], [ValorTotal], [DataCadastro], [ComandaStatus]) VALUES (N'4755fb51-eb13-4684-871e-f15c0f120f7d', 2, N'9faf55b5-5088-42dd-8c55-5f8698b8295c', NULL, 0, CAST(0.00 AS Decimal(18, 2)), CAST(40.00 AS Decimal(18, 2)), CAST(N'2021-08-11T00:00:00.0000000' AS DateTime2), 0)
+	INSERT [dbo].[ComandaItems] ([Id], [ComandaId], [ProdutoId], [ProdutoNome], [Quantidade], [ValorUnitario], [ItemStatus]) VALUES (N'417e22db-5f46-47ee-98f9-691fa0eb1ba7', N'44c7ff2b-e6e6-42ad-a669-2da3a1757793', N'aa1c2bb3-cc7b-4011-b5e7-2521a5c0b9aa', N'Talharim (Nero Di Seppia - Tinta de Lula)', 1, CAST(20.00 AS Decimal(18, 2)), 1)
+	INSERT [dbo].[ComandaItems] ([Id], [ComandaId], [ProdutoId], [ProdutoNome], [Quantidade], [ValorUnitario], [ItemStatus]) VALUES (N'5a309721-e801-4c11-8f18-bb0c48b4b83e', N'44c7ff2b-e6e6-42ad-a669-2da3a1757793', N'c463ce4d-b4aa-4284-8d9c-41ef71eb4878', N'Nhoque de Mandioquinha', 1, CAST(20.00 AS Decimal(18, 2)), 1)
+	INSERT [dbo].[ComandaItems] ([Id], [ComandaId], [ProdutoId], [ProdutoNome], [Quantidade], [ValorUnitario], [ItemStatus]) VALUES (N'10714014-454d-42ee-bd88-762d1b8827d4', N'44c7ff2b-e6e6-42ad-a669-2da3a1757793', N'4e86d76c-7e1d-4381-90a5-57016e92667a', N'Parpadelle com tomatinho', 1, CAST(20.00 AS Decimal(18, 2)), 1)
+	INSERT [dbo].[ComandaItems] ([Id], [ComandaId], [ProdutoId], [ProdutoNome], [Quantidade], [ValorUnitario], [ItemStatus]) VALUES (N'd3b3c1fa-9938-4809-b7c2-8d7495ff4672', N'44c7ff2b-e6e6-42ad-a669-2da3a1757793', N'14764628-97c9-4152-b163-8114ae89f3ba', N'Nhoque de Mandioquinha sem farinha', 1, CAST(20.00 AS Decimal(18, 2)), 1)
 
 END
 

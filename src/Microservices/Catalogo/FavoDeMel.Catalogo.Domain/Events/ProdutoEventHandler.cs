@@ -8,7 +8,7 @@ namespace FavoDeMel.Catalogo.Domain.Events
 {
     public class ProdutoEventHandler : 
         INotificationHandler<ProdutoAbaixoEstoqueEvent>,
-        INotificationHandler<PedidoIniciadoEvent>,
+        INotificationHandler<ComandaIniciadaEvent>,
         INotificationHandler<ComandaProcessamentoCanceladoEvent>
     {
         private readonly IProdutoRepository _produtoRepository;
@@ -29,14 +29,14 @@ namespace FavoDeMel.Catalogo.Domain.Events
             await _produtoRepository.ObterPorId(mensagem.AggregateId);
         }
 
-        public async Task Handle(PedidoIniciadoEvent message, CancellationToken cancellationToken)
+        public async Task Handle(ComandaIniciadaEvent message, CancellationToken cancellationToken)
         {
-            var result = await _estoqueService.DebitarListaProdutosPedido(message.ProdutosPedido);
+            var result = await _estoqueService.DebitarListaProdutosComanda(message.ProdutosComanda);
         }
 
         public async Task Handle(ComandaProcessamentoCanceladoEvent message, CancellationToken cancellationToken)
         {
-            await _estoqueService.ReporListaProdutosPedido(message.ProdutosPedido);
+            await _estoqueService.ReporListaProdutosComanda(message.ProdutosComanda);
         }
     }
 }

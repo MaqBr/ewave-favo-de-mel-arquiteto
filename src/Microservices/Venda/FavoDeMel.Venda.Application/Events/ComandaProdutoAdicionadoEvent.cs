@@ -7,15 +7,15 @@ namespace FavoDeMel.Venda.Application.Events
     public class ComandaProdutoAdicionadoEvent : IntegrationEvent
     {
         public Guid ClienteId { get; private set; }
-        public Guid PedidoId { get; private set; }
+        public Guid ComandaId { get; private set; }
         public Guid ProdutoId { get; private set; }
         public int Quantidade { get; private set; }
 
-        public ComandaProdutoAdicionadoEvent(Guid clienteId, Guid pedidoId, Guid produtoId, int quantidade)
+        public ComandaProdutoAdicionadoEvent(Guid clienteId, Guid comandaId, Guid produtoId, int quantidade)
         {
-            AggregateId = pedidoId;
+            AggregateId = comandaId;
             ClienteId = clienteId;
-            PedidoId = pedidoId;
+            ComandaId = comandaId;
             ProdutoId = produtoId;
             Quantidade = quantidade;
         }

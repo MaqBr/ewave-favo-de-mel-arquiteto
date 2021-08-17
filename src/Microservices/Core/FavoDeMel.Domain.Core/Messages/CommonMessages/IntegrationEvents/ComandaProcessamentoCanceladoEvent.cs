@@ -5,16 +5,16 @@ namespace FavoDeMel.Domain.Core.Messages.CommonMessages.IntegrationEvents
 {
     public class ComandaProcessamentoCanceladoEvent : IntegrationEvent
     {
-        public Guid PedidoId { get; private set; }
+        public Guid ComandaId { get; private set; }
         public Guid ClienteId { get; private set; }
-        public ListaProdutosComanda ProdutosPedido { get; private set; }
+        public ListaProdutosComanda ProdutosComanda { get; private set; }
 
-        public ComandaProcessamentoCanceladoEvent(Guid pedidoId, Guid clienteId, ListaProdutosComanda produtosPedido)
+        public ComandaProcessamentoCanceladoEvent(Guid comandaId, Guid clienteId, ListaProdutosComanda produtosComanda)
         {
-            AggregateId = pedidoId;
-            PedidoId = pedidoId;
+            AggregateId = comandaId;
+            ComandaId = comandaId;
             ClienteId = clienteId;
-            ProdutosPedido = produtosPedido;
+            ProdutosComanda = produtosComanda;
         }
     }
 }
