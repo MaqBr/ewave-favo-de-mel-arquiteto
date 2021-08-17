@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using FavoDeMel.Catalogo.Application.Services;
 using FavoDeMel.Catalogo.Application.ViewModels;
@@ -25,12 +26,14 @@ namespace FavoDeMel.Catalogo.Api.Controllers
 
         [HttpGet]
         [Route("vitrine")]
-        public async Task<object> ObterTodos()
+        [ProducesResponseType(typeof(DadosPaginadoDTO<ProdutoViewModel>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> ObterTodos([FromQuery] int pageSize = 10, [FromQuery] int pageIndex = 0)
         {
             try
             {
-                var produtos = await _produtoService.ObterTodos();
-                return new JsonResult(produtos);
+                var produtos = await _produtoService.ObterTodos(pageSize, pageIndex);
+                return Ok(produtos);
             }
             catch (Exception ex)
             {

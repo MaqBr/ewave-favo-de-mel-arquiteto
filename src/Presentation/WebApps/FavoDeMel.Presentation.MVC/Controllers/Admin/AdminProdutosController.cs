@@ -15,12 +15,12 @@ namespace FavoDeMel.Presentation.MVC.Controllers.Admin
             _produtoAppService = produtoAppService;
         }
 
-        [HttpGet]
-        [Route("admin-produtos")]
-        public async Task<IActionResult> Index()
-        {
-            return View(await _produtoAppService.ObterTodos());
-        }
+        //[HttpGet]
+        //[Route("admin-produtos")]
+        //public async Task<IActionResult> Index()
+        //{
+        //    return View(await _produtoAppService.ObterTodos());
+        //}
 
         [Route("novo-produto")]
         public async Task<IActionResult> NovoProduto()
@@ -68,21 +68,21 @@ namespace FavoDeMel.Presentation.MVC.Controllers.Admin
             return View("Estoque", await _produtoAppService.ObterPorId(id));
         }
 
-        [HttpPost]
-        [Route("produtos-atualizar-estoque")]
-        public async Task<IActionResult> AtualizarEstoque(Guid id, int quantidade)
-        {
-            if (quantidade > 0)
-            {
-                await _produtoAppService.ReporEstoque(new Models.DTO.AtualizarEstoqueDTO { ProdutoId = id, Quantidade = quantidade });
-            }
-            else
-            {
-                await _produtoAppService.DebitarEstoque(new Models.DTO.AtualizarEstoqueDTO { ProdutoId = id, Quantidade = quantidade });
-            }
+        //[HttpPost]
+        //[Route("produtos-atualizar-estoque")]
+        //public async Task<IActionResult> AtualizarEstoque(Guid id, int quantidade)
+        //{
+        //    if (quantidade > 0)
+        //    {
+        //        await _produtoAppService.ReporEstoque(new Models.DTO.AtualizarEstoqueDTO { ProdutoId = id, Quantidade = quantidade });
+        //    }
+        //    else
+        //    {
+        //        await _produtoAppService.DebitarEstoque(new Models.DTO.AtualizarEstoqueDTO { ProdutoId = id, Quantidade = quantidade });
+        //    }
 
-            return View("Index", await _produtoAppService.ObterTodos());
-        }
+        //    return View("Index", await _produtoAppService.ObterTodos());
+        //}
 
         private async Task<ProdutoViewModel> PopularCategorias(ProdutoViewModel produto)
         {

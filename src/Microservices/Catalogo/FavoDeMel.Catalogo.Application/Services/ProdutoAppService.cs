@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using FavoDeMel.Catalogo.Application.ViewModels;
 using FavoDeMel.Catalogo.Domain;
+using FavoDeMel.Catalogo.Domain.Models.DTO;
 using FavoDeMel.Domain.Core.DomainObjects;
 
 namespace FavoDeMel.Catalogo.Application.Services
@@ -36,6 +37,15 @@ namespace FavoDeMel.Catalogo.Application.Services
         public async Task<IEnumerable<ProdutoViewModel>> ObterTodos()
         {
             return _mapper.Map<IEnumerable<ProdutoViewModel>>(await _produtoRepository.ObterTodos());
+        }
+
+        public async Task<DadosPaginadoDTO<ProdutoViewModel>> ObterTodos(int pageSize = 10, int pageIndex = 0)
+        {
+
+            var model = await _produtoRepository.ObterTodos(pageSize, pageIndex);
+            var viewModel = _mapper.Map<DadosPaginadoDTO<ProdutoViewModel>>(model);
+
+            return viewModel;
         }
 
         public async Task<IEnumerable<CategoriaViewModel>> ObterCategorias()

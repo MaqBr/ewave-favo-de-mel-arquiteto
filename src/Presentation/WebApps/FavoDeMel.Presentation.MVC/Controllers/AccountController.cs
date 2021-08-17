@@ -1,32 +1,52 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace FavoDeMel.Presentation.MVC.Controllers
 {
-    [Route("conta")]
     public class AccountController : Controller
     {
-        [HttpGet]
-        [Authorize]
-        [Route("entrar")]
-        public IActionResult Login(string returnUrl = null)
-        {
-            if (!string.IsNullOrWhiteSpace(returnUrl))
-                return Redirect(returnUrl);
+        private readonly ILogger<AccountController> _logger;
 
-            return RedirectToAction("Index", "Home");
+        public AccountController(ILogger<AccountController> logger)
+        {
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        [Authorize, Route("minha-conta")]
-        public IActionResult MinhaConta()
+        public async Task<IActionResult> SignIn(string returnUrl)
         {
+            var user = User as ClaimsPrincipal;
+            var token = await HttpContext.GetTokenAsync("access_token");
+
+            _logger.LogInformation("----- User {@User} authenticated into {AppName}", user);
+
+            if (token != null)
+            {
+                ViewData["access_token"] = token;
+            }
+
+            // "Catalog" because UrlHelper doesn't support nameof() for controllers
+            // https://github.com/aspnet/Mvc/issues/5853
+            //return RedirectToAction(nameof(ProdutoController.Index), "Catalog");
             return View();
         }
 
-        [Route("sair")]
-        public IActionResult Sair()
+        public async Task<IActionResult> Signout()
         {
-            return SignOut("Cookies", "oidc");
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            await HttpContext.SignOutAsync(OpenIdConnectDefaults.AuthenticationScheme);
+
+            // "Catalog" because UrlHelper doesn't support nameof() for controllers
+            // https://github.com/aspnet/Mvc/issues/5853
+            //var homeUrl = Url.Action(nameof(CatalogController.Index), "Catalog");
+            return new SignOutResult(OpenIdConnectDefaults.AuthenticationScheme,
+                new AuthenticationProperties { RedirectUri = "homeUrl" });
         }
     }
 }

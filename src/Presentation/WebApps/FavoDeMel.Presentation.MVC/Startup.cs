@@ -6,6 +6,7 @@ using FavoDeMel.Domain.Core.Extensions;
 using FavoDeMel.Domain.Core.Messages.CommonMessages.Notifications;
 using FavoDeMel.Domain.Core.Model.Configuration;
 using FavoDeMel.Presentation.MVC.Services;
+using FavoDeMel.Presentation.MVC.ViewModels;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -59,6 +60,7 @@ namespace FavoDeMel.Presentation.MVC
             services.AddSingleton<IEventSourcingRepository, EventSourcingRepository>();
             services.AddScoped<IMediatorHandler, MediatorHandler>();
             services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();
+            services.AddTransient<IIdentityParser<ApplicationUser>, IdentityParser>();
 
         }
 

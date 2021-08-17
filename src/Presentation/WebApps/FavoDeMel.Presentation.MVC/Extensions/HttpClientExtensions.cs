@@ -4,7 +4,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 
-namespace Microsoft.eShopOnContainers.WebMVC.Extensions
+namespace FavoDeMel.Presentation.MVC.Extensions
 {
     public static class HttpClientExtensions
     {

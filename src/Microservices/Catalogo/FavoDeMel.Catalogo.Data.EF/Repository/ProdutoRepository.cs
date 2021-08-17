@@ -1,5 +1,6 @@
 ﻿using FavoDeMel.Catalogo.Data.EF.Context;
 using FavoDeMel.Catalogo.Domain;
+using FavoDeMel.Catalogo.Domain.Models.DTO;
 using FavoDeMel.Domain.Core.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -23,6 +24,23 @@ namespace FavoDeMel.Catalogo.Data.EF.Repository
         {
             return await _context.Produtos.AsNoTracking().ToListAsync();
         }
+
+        public async Task<DadosPaginadoDTO<Produto>> ObterTodos(int pageSize = 10, int pageIndex = 0)
+        {
+            var total = await _context.Produtos
+                .LongCountAsync();
+
+            var itemsPorPagina = await _context.Produtos
+                    .OrderBy(c => c.Nome)
+                    .Skip(pageSize * pageIndex)
+                    .Take(pageSize)
+                    .ToListAsync();
+
+            var model = new DadosPaginadoDTO<Produto>(pageIndex, pageSize, total, itemsPorPagina);
+
+            return model;
+        }
+
 
         public async Task<Produto> ObterPorId(Guid id)
         {

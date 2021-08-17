@@ -1,6 +1,13 @@
 ﻿@model FavoDeMel.Presentation.MVC.CatalogoViewModels.ViewModels.ProdutoViewModel
+@using FavoDeMel.Presentation.MVC.Services
+@using FavoDeMel.Presentation.MVC.ViewModels
+
+@inject IIdentityParser<ApplicationUser> UserManager
+
 @{
-    ViewData["Title"] = "Produto Detalhe";
+    ViewData["Title"] = "Informações do Produto";
+    var headerList = new List<Header>() {
+          new Header() { Controller = "Vitrine", Text = "Voltar" }};
 }
 
 <style>
@@ -140,32 +147,49 @@
         }
     }
 </style>
+
+<section class="esh-catalog-filters">
+    <div class="container">
+        <partial name="_Header" model="headerList" />
+    </div>
+</section>
+
 <div class="container">
-    
+
+    <h3>@ViewData["Title"]</h3>
+
+    <div class="form-group">
+
+        @if (User.Identity.IsAuthenticated)
+        {
+            <label for="email"><b>Garçom:</b></label>
+            <p>@User.Identity.Name</p>
+        }
+    </div>
+
     <vc:summary />
 
     <div class="row">
         <div class="col-xs-4 item-photo">
-
-            <img width="400" height="400" src="~/images/@Model.Imagem"/>
+            <img width="400" height="400" src="~/images/@Model.Imagem" />
         </div>
         <div class="col-xs-5" style="border: 20px solid white">
             <h3>@Model.Nome</h3>
 
             <h6 class="title-price"><small>VALOR UNITÁRIO</small></h6>
-            <h3 style="margin-top: 0px;">@Model.Valor.ToString("C")</h3>
+            <h3 style="margin-top: 0px;">@Model.Valor.ToString("N2")</h3>
 
             <p>Apenas @Model.QuantidadeEstoque disponíveis</p>
             <p>@Model.Descricao</p>
             <form method="post" asp-controller="Carrinho" asp-action="AdicionarItem">
 
-                <input type="hidden" id="Id" name="Id" value="@Model.Id"/>
+                <input type="hidden" id="Id" name="Id" value="@Model.Id" />
 
                 <div class="section" style="padding-bottom: 20px;">
                     <h6 class="title-attr"><small>QUANTIDADE</small></h6>
                     <div>
                         <div class="btn-minus"><span style="font-size: 15px">-</span></div>
-                        <input id="quantidade" name="quantidade" style="font-size: 15px" type="text" value="1"/>
+                        <input id="quantidade" name="quantidade" style="font-size: 15px" type="text" value="1" />
                         <div class="btn-plus"><span style="font-size: 15px">+</span></div>
                     </div>
                 </div>
@@ -183,14 +207,14 @@
 @section Scripts
 {
     <script>
-        $(document).ready(function(){
+        $(document).ready(function () {
             //-- Click on detail
-            $("ul.menu-items > li").on("click",function(){
+            $("ul.menu-items > li").on("click", function () {
                 $("ul.menu-items > li").removeClass("active");
                 $(this).addClass("active");
             })
 
-            $(".attr,.attr2").on("click",function(){
+            $(".attr,.attr2").on("click", function () {
                 var clase = $(this).attr("class");
 
                 $("." + clase).removeClass("active");
@@ -198,20 +222,20 @@
             })
 
             //-- Click on QUANTITY
-            $(".btn-minus").on("click",function(){
+            $(".btn-minus").on("click", function () {
                 var now = $(".section > div > input").val();
-                if ($.isNumeric(now)){
-                    if (parseInt(now) -1 > 0){ now--;}
+                if ($.isNumeric(now)) {
+                    if (parseInt(now) - 1 > 0) { now--; }
                     $(".section > div > input").val(now);
-                }else{
+                } else {
                     $(".section > div > input").val("1");
                 }
             })
-            $(".btn-plus").on("click",function(){
+            $(".btn-plus").on("click", function () {
                 var now = $(".section > div > input").val();
-                if ($.isNumeric(now)){
-                    $(".section > div > input").val(parseInt(now)+1);
-                }else{
+                if ($.isNumeric(now)) {
+                    $(".section > div > input").val(parseInt(now) + 1);
+                } else {
                     $(".section > div > input").val("1");
                 }
             })

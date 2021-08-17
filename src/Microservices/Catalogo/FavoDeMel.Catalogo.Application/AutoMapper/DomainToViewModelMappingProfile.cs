@@ -4,6 +4,7 @@ using System.Text;
 using AutoMapper;
 using FavoDeMel.Catalogo.Application.ViewModels;
 using FavoDeMel.Catalogo.Domain;
+using FavoDeMel.Catalogo.Domain.Models.DTO;
 
 namespace FavoDeMel.Catalogo.Application.AutoMapper
 {
@@ -17,6 +18,7 @@ namespace FavoDeMel.Catalogo.Application.AutoMapper
                 .ForMember(d => d.Profundidade, o => o.MapFrom(s => s.Dimensoes.Profundidade));
 
             CreateMap<Categoria, CategoriaViewModel>();
+            CreateMap<DadosPaginadoDTO<Produto>, DadosPaginadoDTO<ProdutoViewModel>>();
         }
     }
 }

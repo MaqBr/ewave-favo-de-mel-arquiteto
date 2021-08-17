@@ -7,7 +7,6 @@ namespace WebMVC.Infrastructure
     {
         public static class Pedido
         {
-
             public static string FinalizarPedido(string baseUri)
             {
                 return $"{baseUri}/api/venda/finalizar";
@@ -48,7 +47,6 @@ namespace WebMVC.Infrastructure
 
         public static class Produto
         {
-
             public static string ObterCategorias(string baseUri)
             {
                 return $"{baseUri}/api/produto/categorias";
@@ -64,9 +62,31 @@ namespace WebMVC.Infrastructure
                 return $"{baseUri}/api/produto/produto-detalhe/{id}";
             }
 
-            public static string ObterTodos(string baseUri)
+            public static string ObterTodos(string baseUri, int pagina, int itensPagina, int? filtroMarca, int? filtroCategoria)
             {
-                return $"{baseUri}/api/produto/vitrine";
+                var filtros = "";
+
+                if (filtroCategoria.HasValue)
+                {
+                    var filtroMarcaQs = (filtroMarca.HasValue) ? filtroMarca.Value.ToString() : string.Empty;
+                    filtros = $"/categoria/{filtroCategoria.Value}/marca/{filtroMarcaQs}";
+
+                }
+                else if (filtroMarca.HasValue)
+                {
+                    var filtroMarcaQs = (filtroMarca.HasValue) ? filtroMarca.Value.ToString() : string.Empty;
+                    filtros = $"/categoria/marca/{filtroMarcaQs}";
+                }
+                else
+                {
+                    filtros = string.Empty;
+                }
+
+
+                //TODO: Criar API para filtro de marcas e categorias
+                filtros = "";
+
+                return $"{baseUri}/api/produto{filtros}/vitrine?pageIndex={pagina}&pageSize={itensPagina}";
             }
 
             public static string Adicionar(string baseUri)

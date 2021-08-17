@@ -1,92 +1,56 @@
-﻿@model IEnumerable<FavoDeMel.Presentation.MVC.CatalogoViewModels.ViewModels.ProdutoViewModel>
+﻿@model FavoDeMel.Presentation.MVC.ViewModels.CatalogoViewModels.IndexViewModel
 
 @{
-    ViewData["Title"] = "Vitrine";
+    ViewData["Title"] = "Catálogo de produtos";
 }
-<style>
-    h4 {
-        font-weight: 600;
-    }
+<section class="esh-catalog-hero">
+    <div class="container">
+    </div>
+</section>
 
-    p {
-        font-size: 12px;
-        margin-top: 5px;
-    }
+<section class="esh-catalog-filters">
+    <div class="container">
+        <div class="row">
+            <div class="col-8">
+                <form asp-action="Index" asp-controller="Vitrine" method="post">
+                    <label class="esh-catalog-label" data-title="Tipo">
+                        <select asp-for="@Model.FiltroTipo" asp-items="@Model.Tipos" class="esh-catalog-filter"></select>
+                    </label>
+                    <label class="esh-catalog-label" data-title="Categoria">
+                        <select asp-for="@Model.FiltroMarca" asp-items="@Model.Marcas" class="esh-catalog-filter"></select>
+                    </label>
+                    <input class="esh-catalog-send" type="image" src="~/images/arrow-right.svg" />
+                </form>
+            </div>
+            <div class="col-4">
+                <a class="esh-catalog-dashboard-garcom" asp-area="" asp-controller="Carrinho" asp-action="IndexGarcom"><span class="fa fa-shopping-cart"></span>Painel Garçom</a>
+                <a class="esh-catalog-dashboard-cozinha" asp-area="" asp-controller="Carrinho" asp-action="IndexCozinha"><span class="fa fa-shopping-cart"></span> Painel Cozinha</a>
+            </div>
+        </div>
+    </div>
+</section>
 
-    .price {
-        font-size: 30px;
-        margin: 0 auto;
-        color: #333;
-    }
-
-    .right {
-        float: right;
-        border-bottom: 2px solid #4B8E4B;
-    }
-
-    .thumbnail {
-        opacity: 0.70;
-        -webkit-transition: all 0.5s;
-        transition: all 0.5s;
-    }
-
-        .thumbnail:hover {
-            opacity: 1.00;
-            box-shadow: 0px 0px 10px #4bc6ff;
-        }
-
-    .line {
-        margin-bottom: 5px;
-    }
-
-    @@media screen and (max-width: 770px) {
-        .right {
-            float: left;
-            width: 100%;
-        }
-    }
-
-    .product_view .modal-dialog {
-        max-width: 800px;
-        width: 100%;
-    }
-
-    .pre-cost {
-        text-decoration: line-through;
-        color: #a5a5a5;
-    }
-
-    .space-ten {
-        padding: 10px 0;
-    }
-</style>
 <div class="container">
 
-    <h1>Cardápio de Produtos</h1>
-    <br />
-    <div class="row">
-        <!-- BEGIN PRODUCTS -->
-        @{
-            foreach (var produto in Model.OrderBy(p=>p.CategoriaId))
+    @if (Model.CatalogoItens.Count() > 0)
+    {
+    <partial name="_paginacao" for="PaginacaoInfo" />
+
+    <div class="esh-catalog-items row">
+        @foreach (var catalogoItem in Model.CatalogoItens)
             {
-            <div class="col-md-3 col-sm-6">
-                <span class="thumbnail">
-                    <a asp-controller="Vitrine" asp-action="ProdutoDetalhe" asp-route-id="@produto.Id"><img width="200" height="200" src="~/images/@produto.Imagem" /></a>
-                    <h4>@produto.Nome</h4>
-                    <p>Apenas @produto.QuantidadeEstoque disponíveis</p>
-                    <p>@produto.Descricao</p>
-                    <hr class="line">
-                    <div class="row">
-                        <div class="col-md-6 col-sm-6">
-                            <p class="price">@produto.Valor.ToString("C")</p>
-                        </div>
-                    </div>
-                </span>
-            </div>
+        <div class="esh-catalog-item col-md-4">
+            <partial name="_produto" model="catalogoItem" />
+        </div>
             }
-        }
-
-        <!-- END PRODUCTS -->
     </div>
-</div>
 
+    <partial name="_paginacao" for="PaginacaoInfo" />
+    }
+    else
+    {
+    <div class="esh-catalog-items row">
+        NENHUM RESULTADO NO CRITÉRIO DA CONSULTA
+    </div>
+    }
+</div>

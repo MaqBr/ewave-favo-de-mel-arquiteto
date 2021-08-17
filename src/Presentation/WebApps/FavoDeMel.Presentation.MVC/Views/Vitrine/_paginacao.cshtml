@@ -1,0 +1,32 @@
+﻿@model FavoDeMel.Presentation.MVC.ViewModels.Pagination.PaginacaoInfo
+
+<div class="esh-pager">
+    <div class="container">
+        <article class="esh-pager-wrapper row">
+            <nav>
+                <a class="esh-pager-item esh-pager-item--navigable @Model.Previous"
+                    id="Anterior"                    
+                    asp-controller="Vitrine"
+                    asp-action="Index"
+                    asp-route-page="@(Model.ActualPage -1)"
+                    aria-label="Anterior">
+                    Anterior
+                </a>
+
+                <span class="esh-pager-item">
+                    Exibindo @Model.ItemsPerPage de @Model.TotalItems produtos - página @(Model.ActualPage + 1) - @Model.TotalPages
+                </span>
+
+                <a class="esh-pager-item esh-pager-item--navigable @Model.Next"
+                    id="Proximo"                    
+                    asp-controller="Vitrine"
+                    asp-action="Index"
+                    asp-route-page="@(Model.ActualPage + 1)"
+                    aria-label="Proximo">
+                    Próximo
+                </a>
+            </nav>
+        </article>
+    </div>
+</div>
+

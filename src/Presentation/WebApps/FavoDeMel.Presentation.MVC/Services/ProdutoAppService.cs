@@ -7,6 +7,7 @@ using FavoDeMel.Domain.Core.Extensions;
 using FavoDeMel.Domain.Core.Model.Configuration;
 using FavoDeMel.Presentation.MVC.CatalogoViewModels.ViewModels;
 using FavoDeMel.Presentation.MVC.Models.DTO;
+using FavoDeMel.Presentation.MVC.ViewModels;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -62,15 +63,15 @@ namespace FavoDeMel.Presentation.MVC.Services
 
         }
 
-        public async Task<IEnumerable<ProdutoViewModel>> ObterTodos()
+        public async Task<Catalogo> ObterTodos(int pagina, int itensPagina, int? filtroMarca, int? filtroTipo)
         {
-            var uri = API.Produto.ObterTodos(_remoteServiceBaseUrl);
+            var uri = API.Produto.ObterTodos(_remoteServiceBaseUrl, pagina, itensPagina, filtroMarca, filtroTipo);
 
             var responseString = await _httpClient.GetStringAsync(uri);
 
-            var produtos = JsonConvert.DeserializeObject<List<ProdutoViewModel>>(responseString);
+            var produto = JsonConvert.DeserializeObject<Catalogo>(responseString);
 
-            return produtos;
+            return produto;
         }
 
         public async Task<IEnumerable<CategoriaViewModel>> ObterCategorias()
