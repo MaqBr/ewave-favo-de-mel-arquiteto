@@ -20,7 +20,7 @@ namespace FavoDeMel.Venda.Domain.Models
         public bool Utilizado { get; private set; }
 
         // EF Rel.
-        public ICollection<Pedido> Pedidos { get; set; }
+        public ICollection<Comanda> Pedidos { get; set; }
 
         internal ValidationResult ValidarSeAplicavel()
         {

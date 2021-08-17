@@ -16,29 +16,29 @@ namespace FavoDeMel.Venda.Api.Controllers
     public class VendaController : ControllerBase
     {
 
-        private readonly IPedidoQueries _pedidoQueries;
+        private readonly IComandaQueries _comandaQueries;
         private readonly ILogger<VendaController> _logger;
         private readonly IMediatorHandler _mediatorHandler;
 
-        public VendaController(IPedidoQueries pedidoQueries, 
+        public VendaController(IComandaQueries comandaQueries, 
             ILogger<VendaController> logger,
             IMediatorHandler mediatorHandler)
         {
             _logger = logger;
-            _pedidoQueries = pedidoQueries;
+            _comandaQueries = comandaQueries;
             _mediatorHandler = mediatorHandler;
 
         }
         [HttpPost]
         [Route("item/adicionar")]
-        public async Task<IActionResult> AdicionarItem([FromBody] AdicionarItemPedidoDTO itemPedido)
+        public async Task<IActionResult> AdicionarItem([FromBody] AdicionarItemComandaDTO itemComanda)
         {
-            if (itemPedido == null) return BadRequest();
+            if (itemComanda == null) return BadRequest();
 
             try
             {
-                var command = new AdicionarItemPedidoCommand(itemPedido.ClienteId,
-                    itemPedido.ProdutoId, itemPedido.Nome, itemPedido.Quantidade, itemPedido.ValorUnitario);
+                var command = new AdicionarItemComandaCommand(itemComanda.ClienteId,
+                    itemComanda.ProdutoId, itemComanda.Nome, itemComanda.Quantidade, itemComanda.ValorUnitario);
 
                 await _mediatorHandler.EnviarComando(command);
 
@@ -47,22 +47,22 @@ namespace FavoDeMel.Venda.Api.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Houve um erro ao adicionar o item no carrinho {itemPedido}", itemPedido);
-                throw new Exception($"Houve um erro ao adicionar o item no carrinho: {ex.Message}");
+                _logger.LogError(ex, "Houve um erro ao adicionar o item na comanda {itemComanda}", itemComanda);
+                throw new Exception($"Houve um erro ao adicionar o item na comanda: {ex.Message}");
             }
 
         }
 
         [HttpPut]
         [Route("item/atualizar")]
-        public async Task<IActionResult> AtualizarItem([FromBody] AtualizarItemPedidoDTO itemPedido)
+        public async Task<IActionResult> AtualizarItem([FromBody] AtualizarItemComandaDTO itemComanda)
         {
-            if (itemPedido == null) return BadRequest();
+            if (itemComanda == null) return BadRequest();
 
             try
             {
-                var command = new AtualizarItemPedidoCommand(itemPedido.ClienteId,
-                    itemPedido.ProdutoId, itemPedido.Quantidade, itemPedido.ItemStatus);
+                var command = new AtualizarItemComandaCommand(itemComanda.ClienteId,
+                    itemComanda.ProdutoId, itemComanda.Quantidade, itemComanda.ItemStatus);
 
                 await _mediatorHandler.EnviarComando(command);
 
@@ -71,22 +71,22 @@ namespace FavoDeMel.Venda.Api.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Houve um erro ao atualizar o item no carrinho {itemPedido}", itemPedido);
-                throw new Exception($"Houve um erro ao atualizar o item no carrinho: {ex.Message}");
+                _logger.LogError(ex, "Houve um erro ao atualizar o item na comanda {itemComanda}", itemComanda);
+                throw new Exception($"Houve um erro ao atualizar o item na comanda: {ex.Message}");
             }
 
         }
 
         [HttpPost]
         [Route("item/remover")]
-        public async Task<IActionResult> RemoverItem([FromBody] RemoverItemPedidoDTO itemPedido)
+        public async Task<IActionResult> RemoverItem([FromBody] RemoverItemComandaDTO itemComanda)
         {
-            if (itemPedido == null) return BadRequest();
+            if (itemComanda == null) return BadRequest();
 
             try
             {
-                var command = new RemoverItemPedidoCommand(itemPedido.ClienteId,
-                    itemPedido.ProdutoId);
+                var command = new RemoverItemComandaCommand(itemComanda.ClienteId,
+                    itemComanda.ProdutoId);
 
                 await _mediatorHandler.EnviarComando(command);
 
@@ -95,8 +95,8 @@ namespace FavoDeMel.Venda.Api.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Houve um erro ao remover o item do carrinho {itemPedido}", itemPedido);
-                throw new Exception($"Houve um erro ao remover o item do carrinho: {ex.Message}");
+                _logger.LogError(ex, "Houve um erro ao remover o item da comanda {itemComanda}", itemComanda);
+                throw new Exception($"Houve um erro ao remover o item da comanda: {ex.Message}");
             }
 
 
@@ -104,13 +104,13 @@ namespace FavoDeMel.Venda.Api.Controllers
 
         [HttpPost]
         [Route("finalizar")]
-        public async Task<IActionResult> FinalizarPedido(FinalizarPedidoDTO pedido)
+        public async Task<IActionResult> FinalizarComanda(FinalizarComandaDTO comanda)
         {
             try
             {
-                var carrinho = await _pedidoQueries.ObterCarrinhoCliente(pedido.ClienteId);
+                var resultado = await _comandaQueries.ObterComandaCliente(comanda.ClienteId);
 
-                var command = new FinalizarPedidoCommand(carrinho.PedidoId, pedido.ClienteId);
+                var command = new FinalizarComandaCommand(resultado.ComandaId, resultado.ClienteId);
 
                 await _mediatorHandler.EnviarComando(command);
 
@@ -118,21 +118,21 @@ namespace FavoDeMel.Venda.Api.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Houve um erro ao finalizar o pedido {pedido}", pedido);
-                throw new Exception($"Houve um erro ao finalizar o pedido: {ex.Message}");
+                _logger.LogError(ex, "Houve um erro ao finalizar a comanda {comanda}", comanda);
+                throw new Exception($"Houve um erro ao finalizar a comanda: {ex.Message}");
             }
 
         }
 
         [HttpPost]
         [Route("cancelar")]
-        public async Task<IActionResult> CancelarPedido(CancelarPedidoDTO pedido)
+        public async Task<IActionResult> CancelarComanda(CancelarComandaDTO comanda)
         {
             try
             {
-                var carrinho = await _pedidoQueries.ObterCarrinhoCliente(pedido.ClienteId);
+                var resultado = await _comandaQueries.ObterComandaCliente(comanda.ClienteId);
 
-                var command = new CancelarPedidoCommand(carrinho.PedidoId, pedido.ClienteId);
+                var command = new CancelarComandaCommand(resultado.ComandaId, resultado.ClienteId);
 
                 await _mediatorHandler.EnviarComando(command);
 
@@ -140,19 +140,19 @@ namespace FavoDeMel.Venda.Api.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Houve um erro ao cancelar o pedido {pedido}", pedido);
-                throw new Exception($"Houve um erro ao cancelar o pedido: {ex.Message}");
+                _logger.LogError(ex, "Houve um erro ao cancelar a comanda {comanda}", comanda);
+                throw new Exception($"Houve um erro ao cancelar a comanda: {ex.Message}");
             }
 
         }
 
         [HttpGet]
         [Route("cliente/{clienteId}")]
-        public async Task<CarrinhoViewModel> ObterCarrinhoCliente(Guid clienteId)
+        public async Task<ComandaViewModel> ObterComandaCliente(Guid clienteId)
         {
             try
             {
-                var result = await _pedidoQueries.ObterCarrinhoCliente(clienteId);
+                var result = await _comandaQueries.ObterComandaCliente(clienteId);
                 return result;
             }
             catch (Exception ex)
@@ -165,11 +165,11 @@ namespace FavoDeMel.Venda.Api.Controllers
 
         [HttpGet]
         [Route("status/{status}")]
-        public async Task<IEnumerable<PedidoViewModel>> ObterPedidoStatus(PedidoStatus status)
+        public async Task<IEnumerable<ComandaViewModel>> ObterComandaStatus(ComandaStatus status)
         {
             try
             {
-                var result = await _pedidoQueries.ObterPedidosStatus(status);
+                var result = await _comandaQueries.ObterComandaStatus(status);
                 return result;
             }
             catch (Exception ex)

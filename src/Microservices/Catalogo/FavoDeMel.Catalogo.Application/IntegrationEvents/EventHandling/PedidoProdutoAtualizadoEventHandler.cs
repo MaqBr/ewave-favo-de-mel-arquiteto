@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 
 namespace FavoDeMel.Catalogo.Application.IntegrationEvents.EventHandling
 {
-    public class PedidoProdutoAtualizadoEventHandler : IIntegrationEventHandler<PedidoProdutoAtualizadoEvent>
+    public class PedidoProdutoAtualizadoEventHandler : IIntegrationEventHandler<ComandaProdutoAtualizadoEvent>
     {
-        public Task Handle(PedidoProdutoAtualizadoEvent @event)
+        public Task Handle(ComandaProdutoAtualizadoEvent @event)
         {
             var pedidoProdutoAtualizado = @event;
             

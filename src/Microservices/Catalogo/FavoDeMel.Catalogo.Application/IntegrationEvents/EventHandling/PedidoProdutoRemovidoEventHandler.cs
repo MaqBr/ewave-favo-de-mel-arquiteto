@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 
 namespace FavoDeMel.Catalogo.Application.IntegrationEvents.EventHandling
 {
-    public class PedidoProdutoRemovidoEventHandler : IIntegrationEventHandler<PedidoProdutoRemovidoEvent>
+    public class PedidoProdutoRemovidoEventHandler : IIntegrationEventHandler<ComandaProdutoRemovidoEvent>
     {
-        public Task Handle(PedidoProdutoRemovidoEvent @event)
+        public Task Handle(ComandaProdutoRemovidoEvent @event)
         {
             var itemRemovido = @event;
             

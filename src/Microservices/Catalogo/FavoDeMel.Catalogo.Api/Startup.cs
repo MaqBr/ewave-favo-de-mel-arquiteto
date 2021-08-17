@@ -163,10 +163,10 @@ namespace FavoDeMel.Catalogo.Api
             }
 
             //Notifications
-            services.AddScoped<INotificationHandler<PedidoRascunhoIniciadoEvent>, PedidoEventHandler>();
+            services.AddScoped<INotificationHandler<ComandaRascunhoIniciadoEvent>, ComandaEventHandler>();
             services.AddScoped<INotificationHandler<ProdutoAbaixoEstoqueEvent>, ProdutoEventHandler>();
             services.AddScoped<INotificationHandler<PedidoIniciadoEvent>, ProdutoEventHandler>();
-            services.AddScoped<INotificationHandler<PedidoProcessamentoCanceladoEvent>, ProdutoEventHandler>();
+            services.AddScoped<INotificationHandler<ComandaProcessamentoCanceladoEvent>, ProdutoEventHandler>();
 
             //Queries Commands
             services.AddTransient<IRequestHandler<ObterTodosProdutosQuery, IEnumerable<ProdutoViewModel>>, ObterTodosProdutosQueryHandler>();
@@ -201,12 +201,12 @@ namespace FavoDeMel.Catalogo.Api
         private void ConfigureEventBus(IApplicationBuilder app)
         {
             var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
-            eventBus.Subscribe<PedidoItemAdicionadoEvent, PedidoItemAdicionadoEventHandler>();
-            eventBus.Subscribe<PedidoProdutoRemovidoEvent, PedidoProdutoRemovidoEventHandler>();
-            eventBus.Subscribe<PedidoFinalizadoEvent, PedidoFinalizadoEventHandler>();
+            eventBus.Subscribe<ComandaItemAdicionadoEvent, PedidoItemAdicionadoEventHandler>();
+            eventBus.Subscribe<ComandaProdutoRemovidoEvent, PedidoProdutoRemovidoEventHandler>();
+            eventBus.Subscribe<ComandaFinalizadaEvent, PedidoFinalizadoEventHandler>();
             eventBus.Subscribe<PedidoCanceladoEvent, PedidoCanceladoEventHandler>();
-            eventBus.Subscribe<PedidoProcessamentoCanceladoEvent, PedidoProcessamentoCanceladoEventHandler>();
-            eventBus.Subscribe<PedidoProdutoAtualizadoEvent, PedidoProdutoAtualizadoEventHandler>();
+            eventBus.Subscribe<ComandaProcessamentoCanceladoEvent, PedidoProcessamentoCanceladoEventHandler>();
+            eventBus.Subscribe<ComandaProdutoAtualizadoEvent, PedidoProdutoAtualizadoEventHandler>();
         }
 
     }

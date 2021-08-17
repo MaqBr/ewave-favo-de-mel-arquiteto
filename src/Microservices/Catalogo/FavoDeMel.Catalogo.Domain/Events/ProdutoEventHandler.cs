@@ -9,7 +9,7 @@ namespace FavoDeMel.Catalogo.Domain.Events
     public class ProdutoEventHandler : 
         INotificationHandler<ProdutoAbaixoEstoqueEvent>,
         INotificationHandler<PedidoIniciadoEvent>,
-        INotificationHandler<PedidoProcessamentoCanceladoEvent>
+        INotificationHandler<ComandaProcessamentoCanceladoEvent>
     {
         private readonly IProdutoRepository _produtoRepository;
         private readonly IEstoqueService _estoqueService;
@@ -34,7 +34,7 @@ namespace FavoDeMel.Catalogo.Domain.Events
             var result = await _estoqueService.DebitarListaProdutosPedido(message.ProdutosPedido);
         }
 
-        public async Task Handle(PedidoProcessamentoCanceladoEvent message, CancellationToken cancellationToken)
+        public async Task Handle(ComandaProcessamentoCanceladoEvent message, CancellationToken cancellationToken)
         {
             await _estoqueService.ReporListaProdutosPedido(message.ProdutosPedido);
         }

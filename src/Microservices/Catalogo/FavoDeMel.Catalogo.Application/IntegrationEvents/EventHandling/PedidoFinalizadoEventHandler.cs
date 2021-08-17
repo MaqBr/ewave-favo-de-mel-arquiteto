@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 
 namespace FavoDeMel.Catalogo.Application.IntegrationEvents.EventHandling
 {
-    public class PedidoFinalizadoEventHandler : IIntegrationEventHandler<PedidoFinalizadoEvent>
+    public class PedidoFinalizadoEventHandler : IIntegrationEventHandler<ComandaFinalizadaEvent>
     {
-        public Task Handle(PedidoFinalizadoEvent @event)
+        public Task Handle(ComandaFinalizadaEvent @event)
         {
             var pedidoFinalizado = @event;
             

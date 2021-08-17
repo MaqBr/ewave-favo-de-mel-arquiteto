@@ -8,7 +8,7 @@ namespace FavoDeMel.Venda.Data.Migrations
         {
             migrationBuilder.AddColumn<int>(
                 name: "ItemStatus",
-                table: "PedidoItems",
+                table: "ComandaItems",
                 type: "int",
                 nullable: false,
                 defaultValue: 0);
@@ -18,7 +18,7 @@ namespace FavoDeMel.Venda.Data.Migrations
         {
             migrationBuilder.DropColumn(
                 name: "ItemStatus",
-                table: "PedidoItems");
+                table: "ComandaItems");
         }
     }
 }

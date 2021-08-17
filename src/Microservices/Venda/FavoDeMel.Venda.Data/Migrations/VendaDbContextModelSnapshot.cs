@@ -22,7 +22,7 @@ namespace FavoDeMel.Venda.Data.Migrations
             modelBuilder.HasSequence<int>("MinhaSequencia")
                 .StartsAt(1000L);
 
-            modelBuilder.Entity("FavoDeMel.Venda.Domain.Models.Pedido", b =>
+            modelBuilder.Entity("FavoDeMel.Venda.Domain.Models.Comanda", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -40,7 +40,7 @@ namespace FavoDeMel.Venda.Data.Migrations
                     b.Property<decimal>("Desconto")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("PedidoStatus")
+                    b.Property<int>("ComandaStatus")
                         .HasColumnType("int");
 
                     b.Property<decimal>("ValorTotal")
@@ -56,10 +56,10 @@ namespace FavoDeMel.Venda.Data.Migrations
 
                     b.HasIndex("VoucherId");
 
-                    b.ToTable("Pedidos");
+                    b.ToTable("Comandas");
                 });
 
-            modelBuilder.Entity("FavoDeMel.Venda.Domain.Models.PedidoItem", b =>
+            modelBuilder.Entity("FavoDeMel.Venda.Domain.Models.ComandaItem", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -68,7 +68,7 @@ namespace FavoDeMel.Venda.Data.Migrations
                     b.Property<int>("ItemStatus")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("PedidoId")
+                    b.Property<Guid>("ComandaId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("ProdutoId")
@@ -85,9 +85,9 @@ namespace FavoDeMel.Venda.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PedidoId");
+                    b.HasIndex("ComandaId");
 
-                    b.ToTable("PedidoItems");
+                    b.ToTable("ComandaItems");
                 });
 
             modelBuilder.Entity("FavoDeMel.Venda.Domain.Models.Voucher", b =>
@@ -131,33 +131,33 @@ namespace FavoDeMel.Venda.Data.Migrations
                     b.ToTable("Vouchers");
                 });
 
-            modelBuilder.Entity("FavoDeMel.Venda.Domain.Models.Pedido", b =>
+            modelBuilder.Entity("FavoDeMel.Venda.Domain.Models.Comanda", b =>
                 {
                     b.HasOne("FavoDeMel.Venda.Domain.Models.Voucher", "Voucher")
-                        .WithMany("Pedidos")
+                        .WithMany("Comandas")
                         .HasForeignKey("VoucherId");
 
                     b.Navigation("Voucher");
                 });
 
-            modelBuilder.Entity("FavoDeMel.Venda.Domain.Models.PedidoItem", b =>
+            modelBuilder.Entity("FavoDeMel.Venda.Domain.Models.ComandaItem", b =>
                 {
-                    b.HasOne("FavoDeMel.Venda.Domain.Models.Pedido", "Pedido")
-                        .WithMany("PedidoItems")
-                        .HasForeignKey("PedidoId")
+                    b.HasOne("FavoDeMel.Venda.Domain.Models.Comanda", "Comanda")
+                        .WithMany("ComandaItems")
+                        .HasForeignKey("ComandaId")
                         .IsRequired();
 
-                    b.Navigation("Pedido");
+                    b.Navigation("Comanda");
                 });
 
-            modelBuilder.Entity("FavoDeMel.Venda.Domain.Models.Pedido", b =>
+            modelBuilder.Entity("FavoDeMel.Venda.Domain.Models.Comanda", b =>
                 {
-                    b.Navigation("PedidoItems");
+                    b.Navigation("ComandaItems");
                 });
 
             modelBuilder.Entity("FavoDeMel.Venda.Domain.Models.Voucher", b =>
                 {
-                    b.Navigation("Pedidos");
+                    b.Navigation("Comandas");
                 });
 #pragma warning restore 612, 618
         }

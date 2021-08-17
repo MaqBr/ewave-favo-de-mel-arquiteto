@@ -33,7 +33,7 @@ namespace FavoDeMel.Venda.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Pedidos",
+                name: "Comandas",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -58,7 +58,7 @@ namespace FavoDeMel.Venda.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PedidoItems",
+                name: "ComandaItems",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -74,29 +74,29 @@ namespace FavoDeMel.Venda.Data.Migrations
                     table.ForeignKey(
                         name: "FK_PedidoItems_Pedidos_PedidoId",
                         column: x => x.PedidoId,
-                        principalTable: "Pedidos",
+                        principalTable: "Comandas",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_PedidoItems_PedidoId",
-                table: "PedidoItems",
-                column: "PedidoId");
+                table: "ComandaItems",
+                column: "ComandaId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Pedidos_VoucherId",
-                table: "Pedidos",
+                table: "Comandas",
                 column: "VoucherId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "PedidoItems");
+                name: "ComandaItems");
 
             migrationBuilder.DropTable(
-                name: "Pedidos");
+                name: "Comandas");
 
             migrationBuilder.DropTable(
                 name: "Vouchers");

@@ -224,6 +224,10 @@ UpgradeLog*.htm
 *.mdf
 *.ldf
 
+# Text files and cache files
+*.txt
+*.cache
+
 # Business Intelligence projects
 *.rdl.data
 *.bim.layout

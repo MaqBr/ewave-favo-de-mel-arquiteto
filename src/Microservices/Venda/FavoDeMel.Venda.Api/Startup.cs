@@ -126,19 +126,19 @@ namespace FavoDeMel.Venda.Api
         {
             DependencyContainer.RegisterServices(services);
 
-            services.AddScoped<IPedidoRepository, PedidoRepository>();
-            services.AddScoped<IPedidoQueries, PedidoQueries>();
+            services.AddScoped<IComandaRepository, ComandaRepository>();
+            services.AddScoped<IComandaQueries, ComandaQueries>();
             services.AddScoped<VendaDbContext>();
 
-            services.AddScoped<IRequestHandler<AdicionarItemPedidoCommand, bool>, PedidoCommandHandler>();
-            services.AddScoped<IRequestHandler<AtualizarItemPedidoCommand, bool>, PedidoCommandHandler>();
-            services.AddScoped<IRequestHandler<RemoverItemPedidoCommand, bool>, PedidoCommandHandler>();
-            services.AddScoped<IRequestHandler<AplicarVoucherPedidoCommand, bool>, PedidoCommandHandler>();
-            services.AddScoped<IRequestHandler<IniciarPedidoCommand, bool>, PedidoCommandHandler>();
-            services.AddScoped<IRequestHandler<FinalizarPedidoCommand, bool>, PedidoCommandHandler>();
-            services.AddScoped<IRequestHandler<CancelarPedidoCommand, bool>, PedidoCommandHandler>();
-            services.AddScoped<IRequestHandler<CancelarProcessamentoPedidoCommand, bool>, PedidoCommandHandler>();
-            services.AddScoped<IRequestHandler<CancelarProcessamentoPedidoEstornarEstoqueCommand, bool>, PedidoCommandHandler>();
+            services.AddScoped<IRequestHandler<AdicionarItemComandaCommand, bool>, ComandaCommandHandler>();
+            services.AddScoped<IRequestHandler<AtualizarItemComandaCommand, bool>, ComandaCommandHandler>();
+            services.AddScoped<IRequestHandler<RemoverItemComandaCommand, bool>, ComandaCommandHandler>();
+            services.AddScoped<IRequestHandler<AplicarVoucherPedidoCommand, bool>, ComandaCommandHandler>();
+            services.AddScoped<IRequestHandler<IniciarComandaCommand, bool>, ComandaCommandHandler>();
+            services.AddScoped<IRequestHandler<FinalizarComandaCommand, bool>, ComandaCommandHandler>();
+            services.AddScoped<IRequestHandler<CancelarComandaCommand, bool>, ComandaCommandHandler>();
+            services.AddScoped<IRequestHandler<CancelarProcessamentoComandaCommand, bool>, ComandaCommandHandler>();
+            services.AddScoped<IRequestHandler<CancelarProcessamentoComandaEstornarEstoqueCommand, bool>, ComandaCommandHandler>();
 
         }
 

@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 
 namespace FavoDeMel.Catalogo.Application.IntegrationEvents.EventHandling
 {
-    public class PedidoProcessamentoCanceladoEventHandler : IIntegrationEventHandler<PedidoProcessamentoCanceladoEvent>
+    public class PedidoProcessamentoCanceladoEventHandler : IIntegrationEventHandler<ComandaProcessamentoCanceladoEvent>
     {
-        public Task Handle(PedidoProcessamentoCanceladoEvent @event)
+        public Task Handle(ComandaProcessamentoCanceladoEvent @event)
         {
             var pedidoProcessamentoCancelado = @event;
             

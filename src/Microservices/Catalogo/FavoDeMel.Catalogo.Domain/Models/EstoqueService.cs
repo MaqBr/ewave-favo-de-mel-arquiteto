@@ -26,7 +26,7 @@ namespace FavoDeMel.Catalogo.Domain
             return await _produtoRepository.UnitOfWork.Commit();
         }
 
-        public async Task<bool> DebitarListaProdutosPedido(ListaProdutosPedido lista)
+        public async Task<bool> DebitarListaProdutosPedido(ListaProdutosComanda lista)
         {
             foreach (var item in lista.Itens)
             {
@@ -60,7 +60,7 @@ namespace FavoDeMel.Catalogo.Domain
             return true;
         }
 
-        public async Task<bool> ReporListaProdutosPedido(ListaProdutosPedido lista)
+        public async Task<bool> ReporListaProdutosPedido(ListaProdutosComanda lista)
         {
             foreach (var item in lista.Itens)
             {
