@@ -1,4 +1,4 @@
-﻿@model FavoDeMel.Presentation.MVC.CatalogoViewModels.Venda.ViewModels.CarrinhoViewModel
+﻿@model FavoDeMel.Presentation.MVC.CatalogoViewModels.Venda.ViewModels.ComandaViewModel
 @using FavoDeMel.Presentation.MVC.Services
 @using FavoDeMel.Presentation.MVC.ViewModels
 
@@ -62,7 +62,7 @@
                                         </td>
 
                                         <td class="col-sm-3 col-md-2" style="text-align: center">
-                                            <form method="post" asp-controller="Carrinho" asp-action="AtualizarItem">
+                                            <form method="post" asp-controller="Comanda" asp-action="AtualizarItem">
                                                 <input type="hidden" id="Id" name="Id" value="@item.ProdutoId" />
                                                 <input type="hidden" id="quantidade" name="quantidade" value="@item.Quantidade" />
                                                 <div class="row" style="float: left">
@@ -77,7 +77,7 @@
                                         </td>
 
                                         <td class="col-sm-3 col-md-3">
-                                            <form method="post" asp-controller="Carrinho" asp-action="RemoverItem">
+                                            <form method="post" asp-controller="Comanda" asp-action="RemoverItem">
                                                 <input type="hidden" id="Id" name="Id" value="@item.ProdutoId" />
                                                 <button type="submit" class="btn btn-danger">
                                                     <span class="fas fa-trash-alt"></span>
@@ -92,11 +92,11 @@
                             <tr>
                                 <td>
 
-                                    <a asp-controller="Carrinho" asp-action="ResumoDaCompra" class="btn btn-success">
+                                    <a asp-controller="Comanda" asp-action="ResumoDaCompra" class="btn btn-success">
                                         <span class="fas fa-play"></span><br /> Finalizar Comanda
                                     </a>
 
-                                    <a asp-controller="Carrinho" asp-action="ResumoDaCompraCancelar" class="btn btn-danger">
+                                    <a asp-controller="Comanda" asp-action="ResumoDaCompraCancelar" class="btn btn-danger">
                                         <span class="fas fa-trash-alt"></span><br /> Cancelar Comanda
                                     </a>
                                 </td>

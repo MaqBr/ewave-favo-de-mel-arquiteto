@@ -1,6 +1,6 @@
 ﻿namespace FavoDeMel.Presentation.MVC.CatalogoViewModels.Venda.ViewModels
 {
-    public class CarrinhoPagamentoViewModel
+    public class ComandaPagamentoViewModel
     {
         public string NomeCartao { get; set; }
         public string NumeroCartao { get; set; }

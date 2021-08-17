@@ -15,14 +15,14 @@ using WebMVC.Infrastructure;
 
 namespace FavoDeMel.Presentation.MVC.Services
 {
-    public class PedidoAppService : IPedidoAppService
+    public class ComandaAppService : IComandaAppService
     {
         private readonly AppSettings _appSettings;
         private readonly HttpClient _httpClient;
         private readonly ILogger<ProdutoAppService> _logger;
         private readonly string _remoteServiceBaseUrl;
         private IConfiguration _configuration;
-        public PedidoAppService(HttpClient httpClient, 
+        public ComandaAppService(HttpClient httpClient, 
             ILogger<ProdutoAppService> logger,
             IConfiguration configuration)
         {
@@ -34,32 +34,21 @@ namespace FavoDeMel.Presentation.MVC.Services
             
         }
 
-        public async Task<CarrinhoViewModel> ObterCarrinhoCliente(Guid clienteId)
+        public async Task<ComandaViewModel> ObterComandaCliente(Guid clienteId)
         {
             
-            var uri = API.Pedido.ObterCarrinhoCliente(_remoteServiceBaseUrl, clienteId);
+            var uri = API.Comanda.ObterComandaCliente(_remoteServiceBaseUrl, clienteId);
 
             var responseString = await _httpClient.GetStringAsync(uri);
 
-            var carrinho = JsonConvert.DeserializeObject<CarrinhoViewModel>(responseString);
+            var carrinho = JsonConvert.DeserializeObject<ComandaViewModel>(responseString);
 
             return carrinho;
         }
 
-        public async Task<IEnumerable<PedidoViewModel>> ObterPedidosCliente(Guid clienteId)
+        public async Task AdicionarItemComanda(AdicionarItemComandaDTO itemPedido)
         {
-            var uri = API.Pedido.ObterPedidosCliente(_remoteServiceBaseUrl, clienteId);
-
-            var responseString = await _httpClient.GetStringAsync(uri);
-
-            var pedidos = JsonConvert.DeserializeObject<IEnumerable<PedidoViewModel>>(responseString);
-
-            return pedidos;
-        }
-
-        public async Task AdicionarItemPedido(AdicionarItemPedidoDTO itemPedido)
-        {
-            var uri = API.Pedido.AdicionarItemPedido(_remoteServiceBaseUrl);
+            var uri = API.Comanda.AdicionarItemComanda(_remoteServiceBaseUrl);
 
             var pedidoContent = new StringContent(JsonConvert.SerializeObject(itemPedido),
                 System.Text.Encoding.UTF8, "application/json");
@@ -74,9 +63,9 @@ namespace FavoDeMel.Presentation.MVC.Services
             response.EnsureSuccessStatusCode();
         }
 
-        public async Task AtualizarItemPedido(AtualizarItemPedidoDTO itemPedido)
+        public async Task AtualizarItemComanda(AtualizarItemComandaDTO itemPedido)
         {
-            var uri = API.Pedido.AtualizarItemPedido(_remoteServiceBaseUrl);
+            var uri = API.Comanda.AtualizarItemComanda(_remoteServiceBaseUrl);
 
             var pedidoContent = new StringContent(JsonConvert.SerializeObject(itemPedido),
                 System.Text.Encoding.UTF8, "application/json");
@@ -91,9 +80,9 @@ namespace FavoDeMel.Presentation.MVC.Services
             response.EnsureSuccessStatusCode();
         }
 
-        public async Task RemoverItemPedido(RemoverItemPedidoDTO itemPedido)
+        public async Task RemoverItemComanda(RemoverItemComandaDTO itemPedido)
         {
-            var uri = API.Pedido.RemoverItemPedido(_remoteServiceBaseUrl);
+            var uri = API.Comanda.RemoverItemComanda(_remoteServiceBaseUrl);
 
             var pedidoContent = new StringContent(JsonConvert.SerializeObject(itemPedido),
                 System.Text.Encoding.UTF8, "application/json");
@@ -108,9 +97,9 @@ namespace FavoDeMel.Presentation.MVC.Services
             response.EnsureSuccessStatusCode();
         }
 
-        public async Task FinalizarPedido(FinalizarPedidoDTO pedido)
+        public async Task FinalizarComanda(FinalizarComandaDTO pedido)
         {
-            var uri = API.Pedido.FinalizarPedido(_remoteServiceBaseUrl);
+            var uri = API.Comanda.FinalizarComanda(_remoteServiceBaseUrl);
 
             var pedidoContent = new StringContent(JsonConvert.SerializeObject(pedido),
                 System.Text.Encoding.UTF8, "application/json");
@@ -125,9 +114,9 @@ namespace FavoDeMel.Presentation.MVC.Services
             response.EnsureSuccessStatusCode();
         }
 
-        public async Task CancelarPedido(CancelarPedidoDTO pedido)
+        public async Task CancelarComanda(CancelarComandaDTO pedido)
         {
-            var uri = API.Pedido.CancelarPedido(_remoteServiceBaseUrl);
+            var uri = API.Comanda.CancelarComanda(_remoteServiceBaseUrl);
 
             var pedidoContent = new StringContent(JsonConvert.SerializeObject(pedido),
                 System.Text.Encoding.UTF8, "application/json");

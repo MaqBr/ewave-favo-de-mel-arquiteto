@@ -3,7 +3,7 @@ using System;
 
 namespace FavoDeMel.Presentation.MVC.CatalogoViewModels.Venda.ViewModels
 {
-    public class CarrinhoItemViewModel
+    public class ComandaItemViewModel
     {
         public Guid ProdutoId { get; set; }
         public string ProdutoNome { get; set; }

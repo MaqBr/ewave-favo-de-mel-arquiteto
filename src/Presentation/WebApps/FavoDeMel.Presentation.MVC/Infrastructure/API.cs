@@ -5,41 +5,41 @@ namespace WebMVC.Infrastructure
 {
     public static class API
     {
-        public static class Pedido
+        public static class Comanda
         {
-            public static string FinalizarPedido(string baseUri)
+            public static string FinalizarComanda(string baseUri)
             {
-                return $"{baseUri}/api/venda/finalizar";
+                return $"{baseUri}/api/comanda/finalizar";
             }
 
-            public static string CancelarPedido(string baseUri)
+            public static string CancelarComanda(string baseUri)
             {
-                return $"{baseUri}/api/venda/cancelar";
+                return $"{baseUri}/api/comanda/cancelar";
             }
 
-            public static string ObterCarrinhoCliente(string baseUri, Guid clienteId)
+            public static string ObterComandaCliente(string baseUri, Guid clienteId)
             {
-                return $"{baseUri}/api/venda/meu-carrinho/{clienteId}";
+                return $"{baseUri}/api/comanda/cliente/{clienteId}";
             }
 
-            public static string ObterPedidosCliente(string baseUri, Guid clienteId)
+            public static string ObterComandaStatus(string baseUri, int status)
             {
-                return $"{baseUri}/api/venda/meu-carrinho/{clienteId}";
+                return $"{baseUri}/api/comanda/status/{status}";
             }
 
-            public static string AdicionarItemPedido(string baseUri)
+            public static string AdicionarItemComanda(string baseUri)
             {
-                return $"{baseUri}/api/venda/meu-carrinho/item/adicionar";
+                return $"{baseUri}/api/comanda/item/adicionar";
             }
 
-            public static string AtualizarItemPedido(string baseUri)
+            public static string AtualizarItemComanda(string baseUri)
             {
-                return $"{baseUri}/api/venda/meu-carrinho/item/atualizar";
+                return $"{baseUri}/api/comanda/item/atualizar";
             }
 
-            public static string RemoverItemPedido(string baseUri)
+            public static string RemoverItemComanda(string baseUri)
             {
-                return $"{baseUri}/api/venda/meu-carrinho/item/remover";
+                return $"{baseUri}/api/comanda/item/remover";
             }
 
             

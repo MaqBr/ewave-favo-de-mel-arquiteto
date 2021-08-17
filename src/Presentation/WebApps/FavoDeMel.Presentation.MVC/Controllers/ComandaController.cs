@@ -12,17 +12,17 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FavoDeMel.Presentation.MVC.Controllers
 {
-    public class CarrinhoController : ControllerBase
+    public class ComandaController : ControllerBase
     {
         private readonly IProdutoAppService _produtoAppService;
-        private readonly IPedidoAppService _pedidoAppService;
+        private readonly IComandaAppService _pedidoAppService;
         private string returnView => User.Identity.IsAuthenticated && User.Identity.Name.Equals("cozinha")
             ? "IndexCozinha" : "IndexGarcom";
 
-        public CarrinhoController(INotificationHandler<DomainNotification> notifications,
+        public ComandaController(INotificationHandler<DomainNotification> notifications,
                                   IProdutoAppService produtoAppService, 
                                   IMediatorHandler mediatorHandler, 
-                                  IPedidoAppService pedidoAppService,
+                                  IComandaAppService pedidoAppService,
                                   IHttpContextAccessor httpContextAccessor
             ) : base(notifications, mediatorHandler, httpContextAccessor)
         {
@@ -33,10 +33,10 @@ namespace FavoDeMel.Presentation.MVC.Controllers
         [Route("vizualizar-comanda/garcom")]
         public async Task<IActionResult> IndexGarcom()
         {
-            var model = await _pedidoAppService.ObterCarrinhoCliente(ClienteId);
+            var model = await _pedidoAppService.ObterComandaCliente(ClienteId);
 
             if(model == null)
-                model = new CarrinhoViewModel { ClienteId = ClienteId };
+                model = new ComandaViewModel { ClienteId = ClienteId };
 
             return View(model);
         }
@@ -44,9 +44,9 @@ namespace FavoDeMel.Presentation.MVC.Controllers
         [Route("vizualizar-comanda/cozinha")]
         public async Task<IActionResult> IndexCozinha()
         {
-            var model = await _pedidoAppService.ObterCarrinhoCliente(ClienteId);
+            var model = await _pedidoAppService.ObterComandaCliente(ClienteId);
             if (model == null)
-                model = new CarrinhoViewModel { ClienteId = ClienteId };
+                model = new ComandaViewModel { ClienteId = ClienteId };
 
             return View(model);
         }
@@ -65,7 +65,7 @@ namespace FavoDeMel.Presentation.MVC.Controllers
             }
 
             await _pedidoAppService
-                .AdicionarItemPedido(new AdicionarItemPedidoDTO { 
+                .AdicionarItemComanda(new AdicionarItemComandaDTO { 
                     ClienteId = ClienteId, 
                     ProdutoId = produto.Id, 
                     Nome = produto.Nome, 
@@ -90,7 +90,7 @@ namespace FavoDeMel.Presentation.MVC.Controllers
             if (produto == null) return BadRequest();
 
             await _pedidoAppService
-                    .RemoverItemPedido(new RemoverItemPedidoDTO
+                    .RemoverItemComanda(new RemoverItemComandaDTO
                     {
                         ClienteId = ClienteId,
                         ProdutoId = id,
@@ -101,7 +101,7 @@ namespace FavoDeMel.Presentation.MVC.Controllers
                 return RedirectToAction(returnView);
             }
             
-            return View("Index", await _pedidoAppService.ObterCarrinhoCliente(ClienteId));
+            return View("Index", await _pedidoAppService.ObterComandaCliente(ClienteId));
         }
 
         [HttpPost]
@@ -112,7 +112,7 @@ namespace FavoDeMel.Presentation.MVC.Controllers
             if (produto == null) return BadRequest();
 
             await _pedidoAppService
-                    .AtualizarItemPedido(new AtualizarItemPedidoDTO
+                    .AtualizarItemComanda(new AtualizarItemComandaDTO
                     {
                         ClienteId = ClienteId,
                         ProdutoId = produto.Id,
@@ -125,32 +125,32 @@ namespace FavoDeMel.Presentation.MVC.Controllers
                 return RedirectToAction(returnView);
             }
 
-            return View("Index", await _pedidoAppService.ObterCarrinhoCliente(ClienteId));
+            return View("Index", await _pedidoAppService.ObterComandaCliente(ClienteId));
         }
 
         [Route("resumo-da-compra/finalizar")]
         public async Task<IActionResult> ResumoDaCompra()
         {
-            return View(await _pedidoAppService.ObterCarrinhoCliente(ClienteId));
+            return View(await _pedidoAppService.ObterComandaCliente(ClienteId));
         }
 
         [Route("resumo-da-compra/cancelar")]
         public async Task<IActionResult> ResumoDaCompraCancelar()
         {
-            return View(await _pedidoAppService.ObterCarrinhoCliente(ClienteId));
+            return View(await _pedidoAppService.ObterComandaCliente(ClienteId));
         }
 
         [HttpPost]
-        [Route("finalizar-pedido")]
-        public async Task<IActionResult> FinalizarPedido(CarrinhoViewModel carrinhoViewModel)
+        [Route("finalizar-comanda")]
+        public async Task<IActionResult> FinalizarComanda(ComandaViewModel comandaViewModel)
         {
-            var carrinho = await _pedidoAppService.ObterCarrinhoCliente(ClienteId);
+            var carrinho = await _pedidoAppService.ObterComandaCliente(ClienteId);
 
             await _pedidoAppService
-                    .FinalizarPedido(new FinalizarPedidoDTO
+                    .FinalizarComanda(new FinalizarComandaDTO
                     {
 
-                        PedidoId = carrinho.PedidoId,
+                        ComandaId = carrinho.ComandaId,
                         ClienteId = ClienteId
 
                     });
@@ -160,19 +160,19 @@ namespace FavoDeMel.Presentation.MVC.Controllers
                  return RedirectToAction("Index", "Vitrine");
              }
 
-             return View("ResumoDaCompra", await _pedidoAppService.ObterCarrinhoCliente(ClienteId));
+             return View("ResumoDaCompra", await _pedidoAppService.ObterComandaCliente(ClienteId));
         }
 
         [HttpPost]
-        [Route("cancelar-pedido")]
-        public async Task<IActionResult> CancelarPedido(CarrinhoViewModel carrinhoViewModel)
+        [Route("cancelar-comanda")]
+        public async Task<IActionResult> CancelarComanda(ComandaViewModel comandaViewModel)
         {
-            var carrinho = await _pedidoAppService.ObterCarrinhoCliente(ClienteId);
+            var carrinho = await _pedidoAppService.ObterComandaCliente(ClienteId);
 
             await _pedidoAppService
-                    .CancelarPedido(new CancelarPedidoDTO
+                    .CancelarComanda(new CancelarComandaDTO
                     {
-                        PedidoId = carrinho.PedidoId,
+                        ComandaId = carrinho.ComandaId,
                         ClienteId = ClienteId
                     });
 
@@ -181,7 +181,7 @@ namespace FavoDeMel.Presentation.MVC.Controllers
                 return RedirectToAction("Index", "Vitrine");
             }
 
-            return View("ResumoDaCompraCancelar", await _pedidoAppService.ObterCarrinhoCliente(ClienteId));
+            return View("ResumoDaCompraCancelar", await _pedidoAppService.ObterComandaCliente(ClienteId));
         }
     }
 }

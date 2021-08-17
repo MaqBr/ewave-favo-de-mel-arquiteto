@@ -115,7 +115,7 @@ namespace FavoDeMel.Presentation.MVC
             //add http client services
             services.AddHttpClient<IProdutoAppService, ProdutoAppService>()
                 .SetHandlerLifetime(TimeSpan.FromMinutes(5));
-            services.AddHttpClient<IPedidoAppService, PedidoAppService>()
+            services.AddHttpClient<IComandaAppService, ComandaAppService>()
                 .SetHandlerLifetime(TimeSpan.FromMinutes(5));
 
             return services;

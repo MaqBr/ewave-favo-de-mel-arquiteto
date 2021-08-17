@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using FavoDeMel.Domain.Core.Communication.Mediator;
 using FavoDeMel.Venda.Application;
@@ -10,7 +11,7 @@ using Microsoft.Extensions.Logging;
 
 namespace FavoDeMel.Venda.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/comanda")]
     [ApiController]
     public class VendaController : ControllerBase
     {
@@ -28,26 +29,8 @@ namespace FavoDeMel.Venda.Api.Controllers
             _mediatorHandler = mediatorHandler;
 
         }
-
-        [HttpGet]
-        [Route("meu-carrinho/{id}")]
-        public async Task<CarrinhoViewModel> ObterCarrinhoCliente(Guid id)
-        {
-            try
-            {
-                var result = await _pedidoQueries.ObterCarrinhoCliente(id);
-                return result;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Houve um erro ao obter os dados");
-                throw new Exception($"Houve um erro ao obter os dados: {ex.Message}");
-            }
-
-        }
-
         [HttpPost]
-        [Route("meu-carrinho/item/adicionar")]
+        [Route("item/adicionar")]
         public async Task<IActionResult> AdicionarItem([FromBody] AdicionarItemPedidoDTO itemPedido)
         {
             if (itemPedido == null) return BadRequest();
@@ -71,7 +54,7 @@ namespace FavoDeMel.Venda.Api.Controllers
         }
 
         [HttpPut]
-        [Route("meu-carrinho/item/atualizar")]
+        [Route("item/atualizar")]
         public async Task<IActionResult> AtualizarItem([FromBody] AtualizarItemPedidoDTO itemPedido)
         {
             if (itemPedido == null) return BadRequest();
@@ -95,7 +78,7 @@ namespace FavoDeMel.Venda.Api.Controllers
         }
 
         [HttpPost]
-        [Route("meu-carrinho/item/remover")]
+        [Route("item/remover")]
         public async Task<IActionResult> RemoverItem([FromBody] RemoverItemPedidoDTO itemPedido)
         {
             if (itemPedido == null) return BadRequest();
@@ -163,6 +146,39 @@ namespace FavoDeMel.Venda.Api.Controllers
 
         }
 
+        [HttpGet]
+        [Route("cliente/{clienteId}")]
+        public async Task<CarrinhoViewModel> ObterCarrinhoCliente(Guid clienteId)
+        {
+            try
+            {
+                var result = await _pedidoQueries.ObterCarrinhoCliente(clienteId);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Houve um erro ao obter os dados");
+                throw new Exception($"Houve um erro ao obter os dados: {ex.Message}");
+            }
+
+        }
+
+        [HttpGet]
+        [Route("status/{status}")]
+        public async Task<IEnumerable<PedidoViewModel>> ObterPedidoStatus(PedidoStatus status)
+        {
+            try
+            {
+                var result = await _pedidoQueries.ObterPedidosStatus(status);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Houve um erro ao obter os dados");
+                throw new Exception($"Houve um erro ao obter os dados: {ex.Message}");
+            }
+
+        }
 
     }
 }

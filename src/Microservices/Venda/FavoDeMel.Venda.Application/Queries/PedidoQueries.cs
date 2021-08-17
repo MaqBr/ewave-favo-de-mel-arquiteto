@@ -76,5 +76,31 @@ namespace FavoDeMel.Venda.Application.Queries
 
             return pedidosView;
         }
+
+        public async Task<IEnumerable<PedidoViewModel>> ObterPedidosStatus(PedidoStatus status)
+        {
+            var pedidos = await _pedidoRepository.ObterListaPorStatus(status);
+
+            pedidos = pedidos.Where(p => p.PedidoStatus == status)
+                .OrderByDescending(p => p.Codigo);
+
+            if (!pedidos.Any()) return null;
+
+            var pedidosView = new List<PedidoViewModel>();
+
+            foreach (var pedido in pedidos)
+            {
+                pedidosView.Add(new PedidoViewModel
+                {
+                    Id = pedido.Id,
+                    ValorTotal = pedido.ValorTotal,
+                    PedidoStatus = (int)pedido.PedidoStatus,
+                    Codigo = pedido.Codigo,
+                    DataCadastro = pedido.DataCadastro
+                });
+            }
+
+            return pedidosView;
+        }
     }
 }

@@ -1,4 +1,4 @@
-﻿@model FavoDeMel.Presentation.MVC.CatalogoViewModels.Venda.ViewModels.CarrinhoViewModel
+﻿@model FavoDeMel.Presentation.MVC.CatalogoViewModels.Venda.ViewModels.ComandaViewModel
 @using FavoDeMel.Presentation.MVC.Services
 @using FavoDeMel.Presentation.MVC.ViewModels
 
@@ -68,7 +68,7 @@
                                         </td>
                                         <td class="col-sm-2 col-md-2" style="text-align: center">
 
-                                            <form method="post" asp-controller="Carrinho" asp-action="AtualizarItem">
+                                            <form method="post" asp-controller="Comanda" asp-action="AtualizarItem">
                                                 <input type="hidden" id="Id" name="Id" value="@item.ProdutoId" />
                                                 <input type="hidden" id="itemStatus" name="itemStatus" value="@item.ItemStatus" />
                                                 <div class="row" style="float: left">
@@ -85,7 +85,7 @@
                                         <td class="col-sm-1 col-md-1 text-center"><strong>@item.ValorTotal.ToString("C")</strong></td>
 
                                         <td class="col-sm-1 col-md-1">
-                                            <form method="post" asp-controller="Carrinho" asp-action="RemoverItem">
+                                            <form method="post" asp-controller="Comanda" asp-action="RemoverItem">
                                                 <input type="hidden" id="Id" name="Id" value="@item.ProdutoId" />
                                                 <button type="submit" class="btn btn-danger">
                                                     <span class="fas fa-trash-alt"></span> Remover
@@ -131,7 +131,7 @@
                                     </a>
                                 </td>
                                 <td>
-                                    <a asp-controller="Carrinho" asp-action="ResumoDaCompra" class="btn btn-success">
+                                    <a asp-controller="Comanda" asp-action="ResumoDaCompra" class="btn btn-success">
                                         <span class="fas fa-play"></span><br /> Finalizar Comanda
                                     </a>
                                 </td>

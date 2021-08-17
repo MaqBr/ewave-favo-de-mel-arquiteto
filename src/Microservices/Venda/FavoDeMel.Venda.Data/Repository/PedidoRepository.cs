@@ -26,6 +26,11 @@ namespace FavoDeMel.Venda.Data.Repository
             return await _context.Pedidos.FindAsync(id);
         }
 
+        public async Task<IEnumerable<Pedido>> ObterListaPorStatus(PedidoStatus status)
+        {
+            return await _context.Pedidos.AsNoTracking().Where(p => p.PedidoStatus == status).ToListAsync();
+        }
+
         public async Task<IEnumerable<Pedido>> ObterListaPorClienteId(Guid clienteId)
         {
             return await _context.Pedidos.AsNoTracking().Where(p => p.ClienteId == clienteId).ToListAsync();

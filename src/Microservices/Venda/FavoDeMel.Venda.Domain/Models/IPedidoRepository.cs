@@ -9,6 +9,7 @@ namespace FavoDeMel.Venda.Domain.Models
     {
         Task<Pedido> ObterPorId(Guid id);
         Task<IEnumerable<Pedido>> ObterListaPorClienteId(Guid clienteId);
+        Task<IEnumerable<Pedido>> ObterListaPorStatus(PedidoStatus status);
         Task<Pedido> ObterPedidoRascunhoPorClienteId(Guid clienteId);
         void Adicionar(Pedido pedido);
         void Atualizar(Pedido pedido);
