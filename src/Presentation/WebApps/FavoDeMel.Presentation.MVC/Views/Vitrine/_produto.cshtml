@@ -2,13 +2,12 @@
 
     <img class="esh-catalog-thumbnail" src="~/images/@Model.Imagem" />
     <a class="esh-catalog-button" asp-controller="Vitrine" asp-action="ProdutoDetalhe" asp-route-id="@Model.Id">[ + COMANDA ]</a>
-    @*<input class="esh-catalog-button @((!User.Identity.IsAuthenticated) ? "is-disabled" : "")" type="submit" value="[ + COMANDA ]" />*@
-
+    
     <div class="esh-catalog-name">
         <span>@Model.Nome</span>
     </div>
     <div class="esh-catalog-price">
-        <span>@Model.Valor.ToString("N2")</span>
+        <span>@Model.Valor.ToString("C")</span>
     </div>
     <input type="hidden" asp-for="@Model.Id" name="id" />
 

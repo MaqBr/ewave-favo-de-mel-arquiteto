@@ -1,8 +1,9 @@
 ﻿.esh-catalog-hero {
-  background-image: url("../../images/main_banner.png");
-  background-size: cover;
-  height: 100px;
-  width: 100%;
+    background-color: #333333;
+    background-size: cover;
+    height: 60px;
+    width: 100%;
+    margin-bottom: 30px;
 }
 
 .esh-catalog-title {
@@ -167,7 +168,4 @@
   text-align: center;
 }
 
-.esh-catalog-price::before {
-  content: '$';
-}
 

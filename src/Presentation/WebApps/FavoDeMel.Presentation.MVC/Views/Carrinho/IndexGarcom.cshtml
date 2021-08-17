@@ -10,14 +10,10 @@
           new Header() { Controller = "Vitrine", Text = "Voltar" }};
 }
 
-<section class="esh-catalog-filters">
-    <div class="container">
-        <partial name="_Header" model="headerList" />
-    </div>
-</section>
+<partial name="_Header" model="headerList" />
 
 <div class="container">
-    <h1>@ViewData["Title"]</h1>
+    <h3>@ViewData["Title"]</h3>
     <div class="form-group">
         <label for="email"><b>Cliente:</b></label>
         <p>@Model.ClienteId</p>
@@ -85,8 +81,8 @@
                                                 </div>
                                             </form>
                                         </td>
-                                        <td class="col-sm-1 col-md-1 text-center"><strong>@item.ValorUnitario.ToString("N2")</strong></td>
-                                        <td class="col-sm-1 col-md-1 text-center"><strong>@item.ValorTotal.ToString("N2")</strong></td>
+                                        <td class="col-sm-1 col-md-1 text-center"><strong>@item.ValorUnitario.ToString("C")</strong></td>
+                                        <td class="col-sm-1 col-md-1 text-center"><strong>@item.ValorTotal.ToString("C")</strong></td>
 
                                         <td class="col-sm-1 col-md-1">
                                             <form method="post" asp-controller="Carrinho" asp-action="RemoverItem">
@@ -105,14 +101,14 @@
                                 <td> </td>
                                 <td> </td>
                                 <td><h5>Subtotal</h5></td>
-                                <td class="text-right"><h5><strong>@Model.SubTotal.ToString("N2")</strong></h5></td>
+                                <td class="text-right"><h5><strong>@Model.SubTotal.ToString("C")</strong></h5></td>
                             </tr>
                             <tr>
                                 <td> </td>
                                 <td colspan="2">
                                 </td>
                                 <td><h5>Desconto</h5></td>
-                                <td class="text-right"><h5><strong>@Model.ValorDesconto.ToString("N2")</strong></h5></td>
+                                <td class="text-right"><h5><strong>@Model.ValorDesconto.ToString("C")</strong></h5></td>
                             </tr>
                             <tr>
                                 <td> </td>
@@ -122,7 +118,7 @@
                                     <h3>Total</h3>
                                 </td>
                                 <td class="text-right">
-                                    <h3><strong>@Model.ValorTotal.ToString("N2")</strong></h3>
+                                    <h3><strong>@Model.ValorTotal.ToString("C")</strong></h3>
                                 </td>
                             </tr>
                             <tr>

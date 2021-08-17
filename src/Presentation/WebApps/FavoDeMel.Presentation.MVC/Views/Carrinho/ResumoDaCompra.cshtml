@@ -1,7 +1,16 @@
 ﻿@model FavoDeMel.Presentation.MVC.CatalogoViewModels.Venda.ViewModels.CarrinhoViewModel
+@using FavoDeMel.Presentation.MVC.Services
+@using FavoDeMel.Presentation.MVC.ViewModels
+
+@inject IIdentityParser<ApplicationUser> UserManager
+
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Resumo da comanda";
+    var headerList = new List<Header>() {
+          new Header() { Controller = "Vitrine", Text = "Voltar" }};
 }
+
+<partial name="_Header" model="headerList" />
 
 <div class="container">
 
@@ -14,7 +23,7 @@
             {
                 <div class="col-md-4 order-md-2 mb-4">
                     <h4 class="d-flex justify-content-between align-items-center mb-3">
-                        <span class="text-muted">Resumo da Compra</span>
+                        <span class="text-muted">@ViewData["Title"]</span>
                         <span class="badge badge-secondary badge-pill">@Model.Items.Count</span>
                     </h4>
                     <ul class="list-group mb-3">
@@ -64,7 +73,7 @@
             }
             else
             {
-                <div><p>Carrinho Vazio</p></div>
+                <div><p>COMANDA VAZIA</p></div>
             }
         }
 

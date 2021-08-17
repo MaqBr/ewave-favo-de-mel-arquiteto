@@ -10,14 +10,10 @@
           new Header() { Controller = "Vitrine", Text = "Voltar" }};
 }
 
-<section class="esh-catalog-filters">
-    <div class="container">
-        <partial name="_Header" model="headerList" />
-    </div>
-</section>
+<partial name="_Header" model="headerList" />
 
 <div class="container">
-    <h1>@ViewData["Title"]</h1>
+    <h3>@ViewData["Title"]</h3>
     <div class="form-group">
         <label for="email"><b>Cliente:</b></label>
         <p>@Model.ClienteId</p>

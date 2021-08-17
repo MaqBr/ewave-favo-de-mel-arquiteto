@@ -148,11 +148,7 @@
     }
 </style>
 
-<section class="esh-catalog-filters">
-    <div class="container">
-        <partial name="_Header" model="headerList" />
-    </div>
-</section>
+<partial name="_Header" model="headerList" />
 
 <div class="container">
 
@@ -177,7 +173,7 @@
             <h3>@Model.Nome</h3>
 
             <h6 class="title-price"><small>VALOR UNITÁRIO</small></h6>
-            <h3 style="margin-top: 0px;">@Model.Valor.ToString("N2")</h3>
+            <h3 style="margin-top: 0px;">@Model.Valor.ToString("C")</h3>
 
             <p>Apenas @Model.QuantidadeEstoque disponíveis</p>
             <p>@Model.Descricao</p>

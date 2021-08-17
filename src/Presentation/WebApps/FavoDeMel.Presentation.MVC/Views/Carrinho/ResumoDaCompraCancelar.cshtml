@@ -1,7 +1,17 @@
 ﻿@model FavoDeMel.Presentation.MVC.CatalogoViewModels.Venda.ViewModels.CarrinhoViewModel
+
+@using FavoDeMel.Presentation.MVC.Services
+@using FavoDeMel.Presentation.MVC.ViewModels
+
+@inject IIdentityParser<ApplicationUser> UserManager
+
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Resumo da comanda";
+    var headerList = new List<Header>() {
+          new Header() { Controller = "Vitrine", Text = "Voltar" }};
 }
+
+<partial name="_Header" model="headerList" />
 
 <div class="container">
 
@@ -64,7 +74,7 @@
             }
             else
             {
-                <div><p>Carrinho Vazio</p></div>
+                <div><p>COMANDA VAZIA</p></div>
             }
         }
 
