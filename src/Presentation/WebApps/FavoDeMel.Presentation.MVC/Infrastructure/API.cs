@@ -111,5 +111,13 @@ namespace WebMVC.Infrastructure
 
         }
 
+        public static class Usuario
+        {
+            public static string Autenticar(string baseUri)
+            {
+                return $"{baseUri}/api/conta/entrar";
+            }
+        }
+
     }
 }

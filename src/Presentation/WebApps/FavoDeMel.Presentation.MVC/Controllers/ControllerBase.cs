@@ -7,12 +7,14 @@ using FavoDeMel.Domain.Core.Communication.Mediator;
 using FavoDeMel.Domain.Core.Messages.CommonMessages.Notifications;
 using MediatR;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 
 namespace FavoDeMel.Presentation.MVC.Controllers
 {
+    [Authorize]
     public abstract class ControllerBase : Controller
     {
        

@@ -45,7 +45,7 @@ services:
       - ASPNETCORE_URLS=http://0.0.0.0:80
       - MICROSERVICES__VENDA_BASE_URI=http://venda-api
       - MICROSERVICES__CATALOGO_BASE_URI=http://catalogo-api
-      - IDENTITYPROVIDER__AUTHORITYURI=http://identity-api
+      - MICROSERVICES__IDENTITY_BASE_URI=http://identity-api
     ports:
       - "5130:80"
     volumes:

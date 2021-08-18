@@ -24,6 +24,7 @@ namespace FavoDeMel.Domain.Core.Model.Configuration
             {
                 public const string VENDA_BASE_URI = "MICROSERVICES:VENDA_BASE_URI";
                 public const string CATALOGO_BASE_URI = "MICROSERVICES:CATALOGO_BASE_URI";
+                public const string IDENTITY_BASE_URI = "MICROSERVICES:IDENTITY_BASE_URI";
             }
 
             public static class ConnectionStrings

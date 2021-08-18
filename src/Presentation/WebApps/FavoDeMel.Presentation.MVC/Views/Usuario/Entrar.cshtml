@@ -1,0 +1,48 @@
+﻿@model FavoDeMel.Presentation.MVC.ViewModels.AccountViewModels.UsuarioViewModel
+
+@{
+    ViewData["Title"] = "Autenticação";
+}
+
+<style>
+    span{
+        color: red;
+        float: left;
+        margin-top: 1%;
+        margin-left: 1%;
+    }
+</style>
+
+<br>
+<center>
+    <h1>Login</h1>
+    <br>
+    <br>
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationSummary(true)
+
+        <fieldset style="width: 40%;">
+            <br />
+            <input type="text" class="form-control" name="Email" placeholder="Digite seu e-mail" />
+            @Html.ValidationMessageFor(model => model.Email)
+            <br />
+            <br />
+            <br />
+            <input type="password" class="form-control" name="Password" placeholder="Digite sua senha" />
+            @Html.ValidationMessageFor(model => model.Password)
+            <br />
+            <br />
+            <br />
+            <button type="submit" class="btn btn-primary" style="background-color: mediumseagreen; border: none;">Logar</button>
+            <br /><br /><br />
+
+            @if (ViewBag.Erro != null)
+            {
+                <h3 style="padding: 20px; color: white; background-color: dimgray">
+                    @ViewBag.Erro
+                </h3>
+            }
+        </fieldset>
+    }
+</center>

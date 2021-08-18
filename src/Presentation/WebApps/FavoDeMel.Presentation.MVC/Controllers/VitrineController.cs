@@ -1,20 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using FavoDeMel.Domain.Core.Communication.Mediator;
+using FavoDeMel.Domain.Core.Messages.CommonMessages.Notifications;
 using FavoDeMel.Presentation.MVC.Services;
 using FavoDeMel.Presentation.MVC.ViewModels.CatalogoViewModels;
 using FavoDeMel.Presentation.MVC.ViewModels.Pagination;
+using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FavoDeMel.Presentation.MVC.Controllers
 {
-    public class VitrineController : Controller
+    public class VitrineController : ControllerBase
     {
         private readonly IProdutoAppService _produtoAppService;
 
-        public VitrineController(IProdutoAppService produtoAppService)
+        public VitrineController(INotificationHandler<DomainNotification> notifications, 
+                                  IMediatorHandler mediatorHandler,
+                                  IHttpContextAccessor httpContextAccessor,
+                                  IProdutoAppService produtoAppService)
+            : base(notifications, mediatorHandler, httpContextAccessor)
         {
             _produtoAppService = produtoAppService;
         }

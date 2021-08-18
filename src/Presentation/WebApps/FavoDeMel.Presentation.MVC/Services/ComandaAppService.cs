@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net.Http;
-using System.Text.Json;
 using System.Threading.Tasks;
 using FavoDeMel.Domain.Core.Extensions;
 using FavoDeMel.Domain.Core.Model.Configuration;
@@ -9,7 +7,6 @@ using FavoDeMel.Presentation.MVC.CatalogoViewModels.Venda.ViewModels;
 using FavoDeMel.Presentation.MVC.Models.DTO;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using WebMVC.Infrastructure;
 

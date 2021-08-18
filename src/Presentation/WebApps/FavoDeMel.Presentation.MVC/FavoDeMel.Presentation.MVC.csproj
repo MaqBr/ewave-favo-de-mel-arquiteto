@@ -32,7 +32,6 @@
     <Folder Include="Infrastructure\" />
     <Folder Include="Extensions\" />
     <Folder Include="Services\ModelDTOs\" />
-    <Folder Include="Views\Account\" />
   </ItemGroup>
 
   <ItemGroup>

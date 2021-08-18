@@ -70,7 +70,7 @@ END
 
 GO
 
-IF (OBJECT_ID(N'Pedidos') IS NULL)
+IF (OBJECT_ID(N'Comandas') IS NULL)
 BEGIN
 
 	USE [VendaDb]
