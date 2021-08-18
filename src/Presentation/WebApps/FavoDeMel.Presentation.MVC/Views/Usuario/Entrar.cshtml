@@ -4,45 +4,54 @@
     ViewData["Title"] = "Autenticação";
 }
 
-<style>
-    span{
-        color: red;
-        float: left;
-        margin-top: 1%;
-        margin-left: 1%;
-    }
-</style>
-
-<br>
-<center>
-    <h1>Login</h1>
-    <br>
-    <br>
-    @using (Html.BeginForm())
-    {
-        @Html.ValidationSummary(true)
-
-        <fieldset style="width: 40%;">
-            <br />
-            <input type="text" class="form-control" name="Email" placeholder="Digite seu e-mail" />
-            @Html.ValidationMessageFor(model => model.Email)
-            <br />
-            <br />
-            <br />
-            <input type="password" class="form-control" name="Password" placeholder="Digite sua senha" />
-            @Html.ValidationMessageFor(model => model.Password)
-            <br />
-            <br />
-            <br />
-            <button type="submit" class="btn btn-primary" style="background-color: mediumseagreen; border: none;">Logar</button>
-            <br /><br /><br />
-
-            @if (ViewBag.Erro != null)
-            {
-                <h3 style="padding: 20px; color: white; background-color: dimgray">
-                    @ViewBag.Erro
-                </h3>
-            }
-        </fieldset>
-    }
-</center>
+<div class="brand-header-block">
+    <ul class="container">
+        <li class="active" style="margin-right: 65px;">AUTENTICAÇÃO</li>
+    </ul>
+</div>
+<div class="container account-login-container">
+    <div class="row">
+        <div class="col-md-12">
+            <section>
+                <form asp-controller="Usuario" asp-action="Autenticar" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
+                    <input type="hidden" asp-for="ReturnUrl" />
+                    <h4>INFORME OS SEUS DADOS DE ACESSO</h4>
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Email" class="control-label form-label"></label>
+                        <input asp-for="Email" class="form-control form-input form-input-center" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Password" class="control-label form-label"></label>
+                        <input asp-for="Password" class="form-control form-input form-input-center" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label asp-for="Lembrar">
+                                <input asp-for="Lembrar" />
+                                @Html.DisplayNameFor(m => m.Lembrar)
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-default btn-brand btn-brand-big">&nbsp;ENTRAR&nbsp;</button>
+                    </div>
+                    <p>
+                        Atenção: entre com uma das credenciais abaixo para demostração:
+                    </p>
+                    <p>
+                        Usuário Garçom: <b>garcom@teste.com</b>
+                    </p>
+                    <p>
+                        Usuário Cozinha: <b>cozinha@teste.com</b>
+                    </p>
+                    <p>
+                        Senha: <b>Teste@123</b>
+                    </p>
+                </form>
+            </section>
+        </div>
+    </div>
+</div>

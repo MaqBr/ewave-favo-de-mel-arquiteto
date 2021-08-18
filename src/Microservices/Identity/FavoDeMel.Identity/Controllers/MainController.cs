@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Linq;
+using FavoDeMel.Domain.Core.CommonMessages.Notifications;
+using FavoDeMel.Domain.Core.Communication.Mediator;
+using FavoDeMel.Domain.Core.Messages.CommonMessages.Notifications;
 using FavoDeMel.Identity.Businnes;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
@@ -10,13 +14,19 @@ namespace FavoDeMel.IdentityControllers
     public abstract class MainController : ControllerBase
     {
         public readonly IUser AppUser;
+        private readonly DomainNotificationHandler _notifications;
+        private readonly IMediatorHandler _mediatorHandler;
 
         protected Guid UsuarioId { get; set; }
         protected bool UsuarioAutenticado { get; set; }
 
-        protected MainController(IUser appUser)
+        protected MainController(IUser appUser, 
+            INotificationHandler<DomainNotification> notifications, 
+            IMediatorHandler mediatorHandler)
         {
             AppUser = appUser;
+            _notifications = (DomainNotificationHandler)notifications;
+            _mediatorHandler = mediatorHandler;
 
             if (appUser.IsAuthenticated())
             {
@@ -27,8 +37,7 @@ namespace FavoDeMel.IdentityControllers
 
         protected bool OperacaoValida()
         {
-            //return !_notificador.TemNotificacao();
-            return true;
+            return !_notifications.TemNotificacao();
         }
 
         protected ActionResult CustomResponse(object result = null)
@@ -45,8 +54,8 @@ namespace FavoDeMel.IdentityControllers
             return BadRequest(new
             {
                 success = false,
-                //errors = _notificador.ObterNotificacoes().Select(n => n.Mensagem)
-            });
+                errors = _notifications.ObterNotificacoes().Select(c => c.Value).ToList()
+        });
         }
 
         protected ActionResult CustomResponse(ModelStateDictionary modelState)
@@ -61,13 +70,13 @@ namespace FavoDeMel.IdentityControllers
             foreach (var erro in erros)
             {
                 var errorMsg = erro.Exception == null ? erro.ErrorMessage : erro.Exception.Message;
-                NotificarErro(errorMsg);
+                NotificarErro("API Auth", errorMsg);
             }
         }
 
-        protected void NotificarErro(string mensagem)
+        protected void NotificarErro(string codigo, string mensagem)
         {
-            //_notificador.Handle(new Notificacao(mensagem));
+            _mediatorHandler.PublicarNotificacao(new DomainNotification(codigo, mensagem));
         }
     }
 }

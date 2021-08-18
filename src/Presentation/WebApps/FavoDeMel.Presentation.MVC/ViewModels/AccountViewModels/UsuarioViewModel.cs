@@ -6,15 +6,17 @@ namespace FavoDeMel.Presentation.MVC.ViewModels.AccountViewModels
     public class UsuarioViewModel
     {
         [Required(ErrorMessage = "O e-mail deve ser inserido.")]
+        [Display(Name = "E-mail")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "A senha deve ser inserida.")]
+        [DataType(DataType.Password)]
+        [Display(Name = "Senha")]
         public string Password { get; set; }
 
-        public bool Success { get; set; }
-
-        public LoginResponseViewModel Data { get; set; }
-
+        [Display(Name = "Lembrar?")]
+        public bool Lembrar { get; set; }
+        public string ReturnUrl { get; set; }
     }
 
     public class UserTokenViewModel

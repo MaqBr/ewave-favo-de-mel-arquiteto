@@ -22,18 +22,22 @@ namespace FavoDeMel.Presentation.MVC.Controllers
             _authAppService = authAppService;
         }
 
-        public IActionResult Entrar()
+        [HttpGet]
+        public IActionResult Entrar(string returnUrl)
         {
             if (User.Identity.IsAuthenticated)
             {
                 return RedirectToAction("Index", "Vitrine");
             }
 
+            ViewData["ReturnUrl"] = returnUrl;
+
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Entrar(UsuarioViewModel usuario)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Autenticar(UsuarioViewModel usuario)
         {
             try
             {
@@ -48,7 +52,7 @@ namespace FavoDeMel.Presentation.MVC.Controllers
                     }
                     else
                     {
-                        ViewBag.Erro = "E-mail e / ou senha incorretos!";
+                        ModelState.AddModelError("", "E-mail ou senha incorretos. Verifique os dados e tente novamente.");
                     }
                 }
             }
@@ -56,7 +60,10 @@ namespace FavoDeMel.Presentation.MVC.Controllers
             {
                 ViewBag.Erro = "Ocorreu algum erro na autententicação. Por favor, tente novamente...";
             }
-            return View();
+
+            ViewData["ReturnUrl"] = usuario.ReturnUrl;
+
+            return View("Entrar");
         }
 
         private async void Login(UsuarioAutenticadoViewModel usuarioAutenticado)
@@ -86,7 +93,7 @@ namespace FavoDeMel.Presentation.MVC.Controllers
         public async Task<IActionResult> Sair()
         {
             await HttpContext.SignOutAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction("Entrar", "Usuario");
         }
 
 

@@ -7,17 +7,25 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using FavoDeMel.IdentityConfiguration;
+using FavoDeMel.Infra.IoC;
+using MediatR;
+using Microsoft.AspNetCore.Http;
+using FavoDeMel.Identity.Businnes;
+using FavoDeMel.IdentityExtensions;
+using FavoDeMel.Domain.Core.Extensions;
 
 namespace FavoDeMel.Identity
 {
     public class Startup
     {
+        public IConfiguration _configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            _configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -26,9 +34,10 @@ namespace FavoDeMel.Identity
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "FavoDeMel Identity", Version = "v1" });
             });
-            services.AddIdentityConfiguration(Configuration);
+            services.AddIdentityConfiguration(_configuration);
             services.AddHealthChecks();
-            services.RegisterServices();
+            services.AddMediatR(typeof(Startup));
+            RegisterServices(services);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -72,5 +81,13 @@ namespace FavoDeMel.Identity
                 endpoints.MapControllers();
             });
         }
+
+        private void RegisterServices(IServiceCollection services)
+        {
+            DependencyContainer.RegisterServices(services);
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped<IUser, AspNetUser>();
+        }
+
     }
 }

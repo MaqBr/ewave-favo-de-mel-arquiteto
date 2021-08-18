@@ -4,10 +4,13 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using FavoDeMel.Domain.Core.Communication.Mediator;
+using FavoDeMel.Domain.Core.Messages.CommonMessages.Notifications;
 using FavoDeMel.Identity.Businnes;
 using FavoDeMel.IdentityControllers;
 using FavoDeMel.IdentityExtensions;
 using FavoDeMel.IdentityViewModels;
+using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -27,7 +30,10 @@ namespace DevIO.Api.V1.Controllers
         public AuthController(SignInManager<IdentityUser> signInManager, 
                               UserManager<IdentityUser> userManager,
                               IOptions<AppSettings> appSettings,
-                              IUser user, ILogger<AuthController> logger) : base(user)
+                              INotificationHandler<DomainNotification> notifications,
+                              IMediatorHandler mediatorHandler,
+                              IUser user, ILogger<AuthController> logger) 
+            : base(user, notifications, mediatorHandler)
         {
             _signInManager = signInManager;
             _userManager = userManager;
@@ -35,7 +41,6 @@ namespace DevIO.Api.V1.Controllers
             _appSettings = appSettings.Value;
         }
 
-        //[EnableCors("Development")]
         [HttpPost("nova-conta")]
         public async Task<ActionResult> Registrar(RegisterUserViewModel registerUser)
         {
@@ -56,7 +61,7 @@ namespace DevIO.Api.V1.Controllers
             }
             foreach (var error in result.Errors)
             {
-                NotificarErro(error.Description);
+                NotificarErro(error.Code, error.Description);
             }
 
             return CustomResponse(registerUser);
@@ -76,11 +81,12 @@ namespace DevIO.Api.V1.Controllers
             }
             if (result.IsLockedOut)
             {
-                NotificarErro("Usuário temporariamente bloqueado por tentativas inválidas");
+                NotificarErro("API Auth - Lockedout", "Usuário temporariamente bloqueado por tentativas inválidas");
                 return CustomResponse(loginUser);
             }
 
-            NotificarErro("Usuário ou Senha incorretos");
+            NotificarErro("API Auth - LoginIncorrect", "Usuário ou Senha incorretos");
+
             return CustomResponse(loginUser);
         }
 
