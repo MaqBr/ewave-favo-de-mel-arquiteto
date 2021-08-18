@@ -28,7 +28,8 @@
 }
 
 .esh-identity-drop {
-  background: #FFFFFF;
+  background: #333333;
+  color:#ffffff;
   height: 10px;
   width: 10rem;
   overflow: hidden;
@@ -41,9 +42,11 @@
 }
 
 .esh-identity:hover .esh-identity-drop {
-  border: 1px solid #EEEEEE;
-  height: 10rem;
-  transition: height 0.35s;
+    background: #333333;
+    border: 1px solid #EEEEEE;
+    color: #ffffff;
+    height: 10rem;
+    transition: height 0.35s;
 }
 
 .esh-identity-item {

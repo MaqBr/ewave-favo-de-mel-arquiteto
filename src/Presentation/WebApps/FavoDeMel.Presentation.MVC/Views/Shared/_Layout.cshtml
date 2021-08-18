@@ -3,10 +3,11 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Microsoft.eShopOnContainers.WebMVC</title>
+    <title>@ViewData["Title"] - Restaurante Favodemel v1</title>
 
     <environment names="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
         <link rel="stylesheet" href="~/css/app.css" />
         <link rel="stylesheet" href="~/css/app.component.css" />
         <link rel="stylesheet" href="~/css/shared/components/header/header.css" />
@@ -31,7 +32,18 @@
     </environment>
 </head>
 <body>
-    <header class="esh-app-header"></header>
+    <header class="esh-app-header">
+        <div class="container">
+            <article class="row">
+                <section class="col-lg-7 col-md-6 col-12">
+                        <a class="navbar-brand" routerLink="catalog" asp-area="" asp-controller="Vitrine" asp-action="Index">
+                            <img src="~/images/brand_dark.png" />
+                        </a>
+                </section>
+                @await Html.PartialAsync("_LoginPartial")
+            </article>
+        </div>
+    </header>
     @RenderBody()
     <footer class="esh-app-footer">
         <div class="container">

@@ -6,24 +6,16 @@
 
 <section class="esh-catalog-filters">
     <div class="container">
-        <div class="row">
-            <div class="col-8">
-                <form asp-action="Index" asp-controller="Vitrine" method="post">
-                    <label class="esh-catalog-label" data-title="Tipo">
-                        <select asp-for="@Model.FiltroTipo" asp-items="@Model.Tipos" class="esh-catalog-filter"></select>
-                    </label>
-                    <label class="esh-catalog-label" data-title="Categoria">
-                        <select asp-for="@Model.FiltroMarca" asp-items="@Model.Marcas" class="esh-catalog-filter"></select>
-                    </label>
-                    <input class="esh-catalog-send" type="image" src="~/images/arrow-right.svg" />
-                </form>
-            </div>
-            <div class="col-4">
-                <a class="esh-catalog-dashboard-garcom" asp-area="" asp-controller="Comanda" asp-action="IndexGarcom"><span class="fa fa-shopping-cart"></span>Painel Garçom</a>
-                <a class="esh-catalog-dashboard-cozinha" asp-area="" asp-controller="Comanda" asp-action="IndexCozinha"><span class="fa fa-shopping-cart"></span> Painel Cozinha</a>
-            </div>
+            <form asp-action="Index" asp-controller="Vitrine" method="post">
+                <label class="esh-catalog-label" data-title="Tipo">
+                    <select asp-for="@Model.FiltroTipo" asp-items="@Model.Tipos" class="esh-catalog-filter"></select>
+                </label>
+                <label class="esh-catalog-label" data-title="Categoria">
+                    <select asp-for="@Model.FiltroMarca" asp-items="@Model.Marcas" class="esh-catalog-filter"></select>
+                </label>
+                <input class="esh-catalog-send" type="image" src="~/images/arrow-right.svg" />
+            </form>
         </div>
-    </div>
 </section>
 
 <div class="container">

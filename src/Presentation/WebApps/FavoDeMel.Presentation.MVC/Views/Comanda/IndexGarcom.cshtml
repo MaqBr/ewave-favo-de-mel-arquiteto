@@ -76,7 +76,7 @@
                                                 </div>
                                                 <div class="row" style="float: right">
                                                     <button type="submit" class="btn btn-success">
-                                                        <span class="fas fa-sync"></span>
+                                                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
                                                     </button>
                                                 </div>
                                             </form>
@@ -88,7 +88,7 @@
                                             <form method="post" asp-controller="Comanda" asp-action="RemoverItem">
                                                 <input type="hidden" id="Id" name="Id" value="@item.ProdutoId" />
                                                 <button type="submit" class="btn btn-danger">
-                                                    <span class="fas fa-trash-alt"></span> Remover
+                                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                                 </button>
                                             </form>
                                         </td>
@@ -126,13 +126,13 @@
                                 <td> </td>
                                 <td> </td>
                                 <td>
-                                    <a asp-controller="Vitrine" asp-action="Index" class="btn btn-dark">
-                                        <span class="fa fa-shopping-cart"></span>Adicionar Itens
+                                    <a asp-controller="Vitrine" asp-action="Index" class="btn btn-success">
+                                        <span class="glyphicon glyphicon-remove-circle"></span> Adicionar
                                     </a>
                                 </td>
                                 <td>
                                     <a asp-controller="Comanda" asp-action="ResumoDaCompra" class="btn btn-success">
-                                        <span class="fas fa-play"></span><br /> Finalizar Comanda
+                                        <span class="glyphicon glyphicon-ok-circle"></span> Finalizar
                                     </a>
                                 </td>
                             </tr>
@@ -143,8 +143,8 @@
                 {
                     <div><p>Comanda Vazia</p></div>
                     <div>
-                        <a asp-controller="Vitrine" asp-action="Index" class="btn btn-dark">
-                            <span class="fa fa-shopping-cart"></span>Adicionar Itens
+                        <a asp-controller="Vitrine" asp-action="Index" class="btn btn-success">
+                            <span class="glyphicon glyphicon-plus-sign"></span>Adicionar
                         </a>
                     </div>
                 }

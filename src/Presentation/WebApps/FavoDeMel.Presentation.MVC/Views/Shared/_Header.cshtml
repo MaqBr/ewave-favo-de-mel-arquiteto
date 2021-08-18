@@ -1,14 +1,12 @@
 @model IEnumerable<FavoDeMel.Presentation.MVC.ViewModels.Header>
-
-<section class="esh-catalog-hero">
+<div class="esh-header">
     <div class="container">
-        <img class="esh-app-footer-brand" src="/images/brand_dark.png">
         @foreach (var header in @Model)
         {
             <a class="esh-header-back" asp-area="" asp-controller="@header.Controller" asp-action="Index">@header.Text</a>
         }
     </div>
-</section>
+</div>
 
 
 

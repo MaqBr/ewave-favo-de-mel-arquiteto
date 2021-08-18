@@ -1,13 +1,19 @@
 ﻿@model FavoDeMel.Presentation.MVC.ViewModels.AccountViewModels.UsuarioViewModel
+@using FavoDeMel.Presentation.MVC.Services
+@using FavoDeMel.Presentation.MVC.ViewModels
+
+@inject IIdentityParser<ApplicationUser> UserManager
 
 @{
     ViewData["Title"] = "Autenticação";
+    var headerList = new List<Header>();
 }
 
+<partial name="_Header" model="headerList" />
+
 <div class="brand-header-block">
-    <ul class="container">
-        <li class="active" style="margin-right: 65px;">AUTENTICAÇÃO</li>
-    </ul>
+    Este sistema está na versão 1.0 e tem com objetivo principal apresentar a solução da prova de arquiteto de software EWAVE.<br>
+    Para maiores informações da documentação, acesse: <a href="https://github.com/MaqBr/ewave-favo-de-mel-arquiteto" target="_blank">https://github.com/MaqBr/ewave-favo-de-mel-arquiteto</a>
 </div>
 <div class="container account-login-container">
     <div class="row">

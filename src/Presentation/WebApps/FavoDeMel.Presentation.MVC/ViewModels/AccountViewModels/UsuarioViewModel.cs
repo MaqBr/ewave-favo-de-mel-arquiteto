@@ -29,6 +29,7 @@ namespace FavoDeMel.Presentation.MVC.ViewModels.AccountViewModels
     public class UsuarioAutenticadoViewModel
     {
         public bool Success { get; set; }
+        public bool Lembrar { get; set; }
         public LoginResponseViewModel Data { get; set; }
     }
 

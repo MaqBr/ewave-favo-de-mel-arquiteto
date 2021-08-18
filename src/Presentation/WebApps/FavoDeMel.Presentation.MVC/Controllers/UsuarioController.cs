@@ -47,6 +47,7 @@ namespace FavoDeMel.Presentation.MVC.Controllers
 
                     if(usuarioAutenticado.Success)
                     {
+                        usuarioAutenticado.Lembrar = usuario.Lembrar;
                         Login(usuarioAutenticado);
                         return RedirectToAction("Index", "Vitrine");
                     }
@@ -68,8 +69,7 @@ namespace FavoDeMel.Presentation.MVC.Controllers
 
         private async void Login(UsuarioAutenticadoViewModel usuarioAutenticado)
         {
-            //TODO: obter token e claims
-            var claimsUser = usuarioAutenticado.Data.UserToken.Claims;
+            var tokenLifetime = usuarioAutenticado.Data.ExpiresIn;
 
             var claims = new List<Claim>
             {
@@ -82,14 +82,19 @@ namespace FavoDeMel.Presentation.MVC.Controllers
             var propriedadesDeAutenticacao = new AuthenticationProperties
             {
                 AllowRefresh = true,
-                ExpiresUtc = DateTime.Now.ToLocalTime().AddHours(2),
+                ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(tokenLifetime),
                 IsPersistent = true
+            };
+
+            if (usuarioAutenticado.Lembrar)
+            {
+                var permanentTokenLifetime = 365;
+                propriedadesDeAutenticacao.ExpiresUtc = DateTimeOffset.UtcNow.AddDays(permanentTokenLifetime);
             };
 
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimPrincipal, propriedadesDeAutenticacao);
         }
-
-
+        [HttpPost]
         public async Task<IActionResult> Sair()
         {
             await HttpContext.SignOutAsync();

@@ -39,8 +39,7 @@
                             <tr>
                                 <th>Produto</th>
                                 <th>Quantidade</th>
-                                <th>Situação</th>
-                                <th> </th>
+                                <th colspan="2">Situação</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -61,7 +60,7 @@
                                             @item.Quantidade
                                         </td>
 
-                                        <td class="col-sm-3 col-md-2" style="text-align: center">
+                                        <td class="col-sm-3 col-md-2" style="text-align: center" colspan="2">
                                             <form method="post" asp-controller="Comanda" asp-action="AtualizarItem">
                                                 <input type="hidden" id="Id" name="Id" value="@item.ProdutoId" />
                                                 <input type="hidden" id="quantidade" name="quantidade" value="@item.Quantidade" />
@@ -70,17 +69,14 @@
                                                 </div>
                                                 <div class="row" style="float: right">
                                                     <button type="submit" class="btn btn-success">
-                                                        <span class="fas fa-sync"></span>
+                                                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
                                                     </button>
                                                 </div>
                                             </form>
-                                        </td>
-
-                                        <td class="col-sm-3 col-md-3">
                                             <form method="post" asp-controller="Comanda" asp-action="RemoverItem">
                                                 <input type="hidden" id="Id" name="Id" value="@item.ProdutoId" />
                                                 <button type="submit" class="btn btn-danger">
-                                                    <span class="fas fa-trash-alt"></span>
+                                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                                 </button>
                                             </form>
                                         </td>
@@ -89,18 +85,17 @@
                             }
 
 
-                            <tr>
-                                <td>
+                        <tr>
+                            <td colspan="4" class="text-right">
+                                <a asp-controller="Comanda" asp-action="ResumoDaCompra" class="btn btn-success">
+                                    <span class="glyphicon glyphicon-ok-circle"></span> Finalizar
+                                </a>
 
-                                    <a asp-controller="Comanda" asp-action="ResumoDaCompra" class="btn btn-success">
-                                        <span class="fas fa-play"></span><br /> Finalizar Comanda
-                                    </a>
-
-                                    <a asp-controller="Comanda" asp-action="ResumoDaCompraCancelar" class="btn btn-danger">
-                                        <span class="fas fa-trash-alt"></span><br /> Cancelar Comanda
-                                    </a>
-                                </td>
-                            </tr>
+                                <a asp-controller="Comanda" asp-action="ResumoDaCompraCancelar" class="btn btn-danger">
+                                    <span class="glyphicon glyphicon-remove-circle"></span> Cancelar
+                                </a>
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
                 }
