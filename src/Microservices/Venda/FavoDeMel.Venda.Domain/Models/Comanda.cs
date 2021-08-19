@@ -9,7 +9,6 @@ namespace FavoDeMel.Venda.Domain.Models
     public class Comanda : Entity, IAggregateRoot
     {
         public string Codigo { get; private set; }
-        public Guid ClienteId { get; private set; }
         public Guid? VoucherId { get; private set; }
         public Guid? MesaId { get; set; }
         public bool VoucherUtilizado { get; private set; }
@@ -24,9 +23,9 @@ namespace FavoDeMel.Venda.Domain.Models
         public Voucher Voucher { get; private set; }
         public Mesa Mesa { get; private set; }
         
-        public Comanda(Guid clienteId, bool voucherUtilizado, decimal desconto, decimal valorTotal)
+        public Comanda(Guid mesaId, bool voucherUtilizado, decimal desconto, decimal valorTotal)
         {
-            ClienteId = clienteId;
+            MesaId = mesaId;
             VoucherUtilizado = voucherUtilizado;
             Desconto = desconto;
             ValorTotal = valorTotal;
@@ -171,23 +170,22 @@ namespace FavoDeMel.Venda.Domain.Models
 
         public static class ComandaFactory
         {
-            public static Comanda NovaComandaRascunho(Guid clienteId)
+            public static Comanda NovaComandaRascunho(Guid mesaId)
             {
                 var comanda = new Comanda
                 {
-                    ClienteId = clienteId,
+                    MesaId = mesaId,
                 };
 
                 comanda.TornarRascunho();
                 return comanda;
             }
 
-            public static Comanda NovaComanda(Guid comandaId, Guid mesaId, Guid clienteId, string codigo)
+            public static Comanda NovaComanda(Guid comandaId, Guid mesaId, string codigo)
             {
                 var comanda = new Comanda
                 {
                     Id = comandaId,
-                    ClienteId = clienteId,
                     MesaId = mesaId,
                     ComandaStatus = ComandaStatus.Rascunho,
                     DataCadastro = DateTime.Now,

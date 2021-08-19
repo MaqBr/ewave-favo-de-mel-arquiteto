@@ -1,7 +1,4 @@
-﻿using FavoDeMel.Presentation.MVC.CatalogoViewModels.ViewModels;
-using FavoDeMel.Presentation.MVC.Models.DTO;
-using FavoDeMel.Presentation.MVC.ViewModels;
-using FavoDeMel.Presentation.MVC.ViewModels.MesaViewModel;
+﻿using FavoDeMel.Presentation.MVC.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

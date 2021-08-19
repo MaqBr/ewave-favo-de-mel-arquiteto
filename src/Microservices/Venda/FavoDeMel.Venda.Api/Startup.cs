@@ -129,6 +129,8 @@ namespace FavoDeMel.Venda.Api
             services.AddScoped<IComandaRepository, ComandaRepository>();
             services.AddScoped<IMesaRepository, MesaRepository>();
             services.AddScoped<IComandaQueries, ComandaQueries>();
+            services.AddScoped<IMesaQueries, MesaQueries>();
+            
             services.AddScoped<VendaDbContext>();
 
             services.AddScoped<IRequestHandler<AdicionarItemComandaCommand, bool>, ComandaCommandHandler>();

@@ -6,7 +6,7 @@ namespace FavoDeMel.Domain.Core.Messages.CommonMessages.IntegrationEvents
     public class ComandaIniciadaEvent : IntegrationEvent
     {
         public Guid ComandaId { get; private set; }
-        public Guid ClienteId { get; private set; }
+        public Guid MesaId { get; private set; }
         public decimal Total { get; private set; }
         public ListaProdutosComanda ProdutosComanda { get; private set; }
         public string NomeCartao { get; private set; }
@@ -14,11 +14,11 @@ namespace FavoDeMel.Domain.Core.Messages.CommonMessages.IntegrationEvents
         public string ExpiracaoCartao { get; private set; }
         public string CvvCartao { get; private set; }
 
-        public ComandaIniciadaEvent(Guid comandaId, Guid clienteId, ListaProdutosComanda itens, decimal total, string nomeCartao, string numeroCartao, string expiracaoCartao, string cvvCartao)
+        public ComandaIniciadaEvent(Guid comandaId, Guid mesaId, ListaProdutosComanda itens, decimal total, string nomeCartao, string numeroCartao, string expiracaoCartao, string cvvCartao)
         {
             AggregateId = comandaId;
             ComandaId = comandaId;
-            ClienteId = clienteId;
+            MesaId = mesaId;
             ProdutosComanda = itens;
             Total = total;
             NomeCartao = nomeCartao;

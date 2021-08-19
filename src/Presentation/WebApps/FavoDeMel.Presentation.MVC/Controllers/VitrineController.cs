@@ -16,22 +16,25 @@ namespace FavoDeMel.Presentation.MVC.Controllers
     public class VitrineController : ControllerBase
     {
         private readonly IProdutoAppService _produtoAppService;
+        private readonly IMesaAppService _mesaAppService;
 
         public VitrineController(INotificationHandler<DomainNotification> notifications, 
                                   IMediatorHandler mediatorHandler,
                                   IHttpContextAccessor httpContextAccessor,
-                                  IProdutoAppService produtoAppService)
+                                  IProdutoAppService produtoAppService,
+                                  IMesaAppService mesaAppService)
             : base(notifications, mediatorHandler, httpContextAccessor)
         {
             _produtoAppService = produtoAppService;
+            _mesaAppService = mesaAppService;
         }
 
-        [Route("")]
         [Route("vitrine")]
-        public async Task<IActionResult> Index(int? filtroMarca, int? filtroTipo, int? pagina)
+        public async Task<IActionResult> Index(Guid mesaId, int? filtroMarca, int? filtroTipo, int? pagina)
         {
             var itemsPage = 9;
             var catalogo = await _produtoAppService.ObterTodos(pagina ?? 0, itemsPage, filtroMarca, filtroTipo);
+            var mesa = await _mesaAppService.ObterPorId(mesaId);
 
             var marcas = new List<SelectListItem>
             {
@@ -48,8 +51,9 @@ namespace FavoDeMel.Presentation.MVC.Controllers
             var vm = new IndexViewModel()
             {
                 CatalogoItens = catalogo.Data,
-                Marcas = marcas, 
+                Marcas = marcas,
                 Tipos = tipos,
+                Mesa = mesa,
                 FiltroMarca = filtroMarca ?? 0,
                 FiltroTipo = filtroTipo ?? 0,
                 PaginacaoInfo = new PaginacaoInfo()
@@ -70,9 +74,15 @@ namespace FavoDeMel.Presentation.MVC.Controllers
 
         [HttpGet]
         [Route("ProdutoDetalhe/{id}")]
-        public async Task<IActionResult> ProdutoDetalhe(Guid id)
+        public async Task<IActionResult> ProdutoDetalhe(Guid id, Guid mesaId)
         {
-            return View(await _produtoAppService.ObterPorId(id));
+
+            var vm = await _produtoAppService.ObterPorId(id);
+            vm.Mesa = await _mesaAppService.ObterPorId(mesaId);
+
+            if (vm.Mesa == null) return BadRequest();
+
+            return View(vm);
         }
     }
 }

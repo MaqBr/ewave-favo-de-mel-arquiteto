@@ -7,7 +7,6 @@ namespace FavoDeMel.Venda.Application.Queries.ViewModels
     public class ComandaViewModel
     {
         public Guid ComandaId { get; set; }
-        public Guid ClienteId { get; set; }
         public Guid? MesaId { get; set; }
         public string Codigo { get; set; }
         public decimal SubTotal { get; set; }

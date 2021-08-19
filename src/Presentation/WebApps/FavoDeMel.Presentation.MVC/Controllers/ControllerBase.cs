@@ -22,7 +22,6 @@ namespace FavoDeMel.Presentation.MVC.Controllers
         private readonly IMediatorHandler _mediatorHandler;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        protected Guid ClienteId = Guid.Parse("9faf55b5-5088-42dd-8c55-5f8698b8295c");
 
         protected ControllerBase(INotificationHandler<DomainNotification> notifications, 
                                  IMediatorHandler mediatorHandler, IHttpContextAccessor httpContextAccessor)
@@ -30,14 +29,6 @@ namespace FavoDeMel.Presentation.MVC.Controllers
             _notifications = (DomainNotificationHandler)notifications;
             _mediatorHandler = mediatorHandler;
             _httpContextAccessor = httpContextAccessor;
-        }
-
-        protected async Task<string> ObterTokenAutenticacao()
-        {
-            var token = await _httpContextAccessor
-                .HttpContext.GetTokenAsync("access_token");
-
-            return token;
         }
 
         protected bool OperacaoValida()

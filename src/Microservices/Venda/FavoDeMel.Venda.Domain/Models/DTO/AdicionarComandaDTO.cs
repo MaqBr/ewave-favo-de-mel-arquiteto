@@ -9,7 +9,6 @@ namespace FavoDeMel.Venda.Domain.Models
     public class AdicionarComandaDTO
     {
         public Guid MesaId { get; set; }
-        public Guid ClienteId { get; set; }
         public string Codigo { get; set; }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FavoDeMel.Presentation.MVC.ViewModels.MesaViewModel
+namespace FavoDeMel.Presentation.MVC.ViewModels
 {
     public class MesaViewModel
     {

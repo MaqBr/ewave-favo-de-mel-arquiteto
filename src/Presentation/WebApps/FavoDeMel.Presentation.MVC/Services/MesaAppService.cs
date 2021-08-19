@@ -6,10 +6,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using FavoDeMel.Domain.Core.Extensions;
 using FavoDeMel.Domain.Core.Model.Configuration;
-using FavoDeMel.Presentation.MVC.CatalogoViewModels.ViewModels;
-using FavoDeMel.Presentation.MVC.Models.DTO;
 using FavoDeMel.Presentation.MVC.ViewModels;
-using FavoDeMel.Presentation.MVC.ViewModels.MesaViewModel;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -34,39 +31,41 @@ namespace FavoDeMel.Presentation.MVC.Services
             _httpClient = httpClient;
             _logger = logger;
             _appSettings = configuration.GetAppSettings();
-            _remoteServiceBaseUrl = $"{_appSettings.Microservices.CatalogoBaseUrl}";
+            _remoteServiceBaseUrl = $"{_appSettings.Microservices.VendaBaseUrl}";
         }
 
 
         public async Task<IEnumerable<MesaViewModel>> ObterTodos()
         {
+            var uri = API.Mesa.ObterTodos(_remoteServiceBaseUrl);
 
-            //Mock
-            var mesas = new List<MesaViewModel>
-            {
-                new MesaViewModel { MesaId = Guid.NewGuid(), Numero = 1, DataCriacao = DateTime.Now, Situacao = SituacaoMesa.Livre },
-                new MesaViewModel { MesaId = Guid.NewGuid(), Numero = 2, DataCriacao = DateTime.Now, Situacao = SituacaoMesa.Livre },
-                new MesaViewModel { MesaId = Guid.NewGuid(), Numero = 3, DataCriacao = DateTime.Now, Situacao = SituacaoMesa.Livre },
-                new MesaViewModel { MesaId = Guid.NewGuid(), Numero = 4, DataCriacao = DateTime.Now, Situacao = SituacaoMesa.Livre },
-                new MesaViewModel { MesaId = Guid.NewGuid(), Numero = 5, DataCriacao = DateTime.Now, Situacao = SituacaoMesa.Livre },
-                new MesaViewModel { MesaId = Guid.NewGuid(), Numero = 6, DataCriacao = DateTime.Now, Situacao = SituacaoMesa.Livre },
-                new MesaViewModel { MesaId = Guid.NewGuid(), Numero = 7, DataCriacao = DateTime.Now, Situacao = SituacaoMesa.Livre },
-                new MesaViewModel { MesaId = Guid.NewGuid(), Numero = 8, DataCriacao = DateTime.Now, Situacao = SituacaoMesa.Livre },
-                new MesaViewModel { MesaId = Guid.NewGuid(), Numero = 9, DataCriacao = DateTime.Now, Situacao = SituacaoMesa.Livre },
-                new MesaViewModel { MesaId = Guid.NewGuid(), Numero = 10, DataCriacao = DateTime.Now, Situacao = SituacaoMesa.Livre }
+            var responseString = await _httpClient.GetStringAsync(uri);
 
-            };
+            var mesas = JsonConvert.DeserializeObject<IEnumerable<MesaViewModel>>(responseString);
 
-            return mesas;
+            return mesas.OrderBy(x=> x.Numero);
         }
 
         public async Task<MesaViewModel> ObterPorId(Guid id)
         {
-            //Mock
-            var mesa = await ObterTodos();
-            var resultado = mesa.FirstOrDefault();
-            return resultado;
-        }
 
+            var mesas = await ObterTodos();
+
+            var returnMesa = mesas.FirstOrDefault(x => x.MesaId == id);
+
+            return returnMesa;
+
+            /*
+            TODO: Identificar o motivo pelo qual sempre retorna 404
+
+            var uri = API.Mesa.ObterPorId(_remoteServiceBaseUrl, id);
+
+            var responseString = await _httpClient.GetStringAsync(uri);
+
+            var mesa = JsonConvert.DeserializeObject<MesaViewModel>(responseString);
+
+            return mesa;
+            */
+        }
     }
 }

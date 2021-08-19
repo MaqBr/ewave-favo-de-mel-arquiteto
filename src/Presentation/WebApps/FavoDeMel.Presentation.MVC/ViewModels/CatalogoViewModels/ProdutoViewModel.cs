@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FavoDeMel.Presentation.MVC.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -8,6 +9,8 @@ namespace FavoDeMel.Presentation.MVC.CatalogoViewModels.ViewModels
     {
         [Key]
         public Guid Id { get; set; }
+
+        public MesaViewModel Mesa { get; set; }
 
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public Guid CategoriaId { get; set; }

@@ -6,15 +6,15 @@ namespace FavoDeMel.Venda.Application
 {
     public class AdicionarItemComandaCommand : Command
     {
-        public Guid ClienteId { get; private set; }
+        public Guid MesaId { get; private set; }
         public Guid ProdutoId { get; private set; }
         public string Nome { get; private set; }
         public int Quantidade { get; private set; }
         public decimal ValorUnitario { get; private set; }
 
-        public AdicionarItemComandaCommand(Guid clienteId, Guid produtoId, string nome, int quantidade, decimal valorUnitario)
+        public AdicionarItemComandaCommand(Guid mesaId, Guid produtoId, string nome, int quantidade, decimal valorUnitario)
         {
-            ClienteId = clienteId;
+            MesaId = mesaId;
             ProdutoId = produtoId;
             Nome = nome;
             Quantidade = quantidade;
@@ -32,9 +32,9 @@ namespace FavoDeMel.Venda.Application
     {
         public AdicionarItemComandaValidation()
         {
-            RuleFor(c => c.ClienteId)
+            RuleFor(c => c.MesaId)
                 .NotEqual(Guid.Empty)
-                .WithMessage("Id do cliente inválido");
+                .WithMessage("Id da mesa inválido");
 
             RuleFor(c => c.ProdutoId)
                 .NotEqual(Guid.Empty)

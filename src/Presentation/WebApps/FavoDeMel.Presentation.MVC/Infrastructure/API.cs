@@ -17,14 +17,19 @@ namespace WebMVC.Infrastructure
                 return $"{baseUri}/api/comanda/cancelar";
             }
 
-            public static string ObterComandaCliente(string baseUri, Guid clienteId)
+            public static string ObterComandaMesa(string baseUri, Guid mesaId)
             {
-                return $"{baseUri}/api/comanda/cliente/{clienteId}";
+                return $"{baseUri}/api/comanda/mesa/{mesaId}";
             }
 
             public static string ObterComandaStatus(string baseUri, int status)
             {
                 return $"{baseUri}/api/comanda/status/{status}";
+            }
+
+            public static string AdicionarComanda(string baseUri)
+            {
+                return $"{baseUri}/api/comanda/adicionar";
             }
 
             public static string AdicionarItemComanda(string baseUri)
@@ -109,6 +114,19 @@ namespace WebMVC.Infrastructure
                 return $"{baseUri}/api/produto/estoque/repor";
             }
 
+        }
+
+        public static class Mesa
+        {
+            public static string ObterPorId(string baseUri, Guid id)
+            {
+                return $"{baseUri}/api​/mesa​/obter​/detalhe/{id}";
+            }
+
+            public static string ObterTodos(string baseUri)
+            {
+                return $"{baseUri}/api/mesa/obter/todos";
+            }
         }
 
         public static class Usuario

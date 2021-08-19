@@ -7,14 +7,14 @@ namespace FavoDeMel.Venda.Application
 {
     public class AtualizarItemComandaCommand : Command
     {
-        public Guid ClienteId { get; private set; }
+        public Guid MesaId { get; private set; }
         public Guid ProdutoId { get; private set; }
         public int Quantidade { get; private set; }
         public ItemStatus ItemStatus { get; private set; }
 
-        public AtualizarItemComandaCommand(Guid clienteId, Guid produtoId, int quantidade, ItemStatus itemStatus)
+        public AtualizarItemComandaCommand(Guid mesaId, Guid produtoId, int quantidade, ItemStatus itemStatus)
         {
-            ClienteId = clienteId;
+            MesaId = mesaId;
             ProdutoId = produtoId;
             Quantidade = quantidade;
             ItemStatus = itemStatus;
@@ -31,9 +31,9 @@ namespace FavoDeMel.Venda.Application
     {
         public AtualizarItemComandaValidation()
         {
-            RuleFor(c => c.ClienteId)
+            RuleFor(c => c.MesaId)
                 .NotEqual(Guid.Empty)
-                .WithMessage("Id do cliente inválido");
+                .WithMessage("Id da mesa inválido");
 
             RuleFor(c => c.ProdutoId)
                 .NotEqual(Guid.Empty)

@@ -8,7 +8,7 @@ namespace FavoDeMel.Venda.Domain.Models
     public class IniciarComandaDTO
     {
         public Guid ComandaId { get; set; }
-        public Guid ClienteId { get; set; }
+        public Guid MesaId { get; set; }
         public decimal Total { get; set; }
         public string NomeCartao { get; set; }
         public string NumeroCartao { get; set; }

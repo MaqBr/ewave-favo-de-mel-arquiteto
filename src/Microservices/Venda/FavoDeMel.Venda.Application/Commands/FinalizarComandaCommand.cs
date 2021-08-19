@@ -6,13 +6,13 @@ namespace FavoDeMel.Venda.Application
     public class FinalizarComandaCommand : Command
     {
         public Guid ComandaId { get; private set; }
-        public Guid ClienteId { get; private set; }
+        public Guid MesaId { get; private set; }
 
-        public FinalizarComandaCommand(Guid comandaId, Guid clienteId)
+        public FinalizarComandaCommand(Guid comandaId, Guid mesaId)
         {
             AggregateId = comandaId;
             ComandaId = comandaId;
-            ClienteId = clienteId;
+            MesaId = mesaId;
         }
     }
 }

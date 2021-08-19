@@ -44,16 +44,16 @@ namespace FavoDeMel.Venda.Application
         {
             if (!ValidarComando(message)) return false;
 
-            var comanda = await _comandaRepository.ObterComandaRascunhoPorClienteId(message.ClienteId);
+            var comanda = await _comandaRepository.ObterComandaRascunhoPorMesaId(message.MesaId);
             var comandaItem = new ComandaItem(message.ProdutoId, message.Nome, message.Quantidade, message.ValorUnitario);
 
             if (comanda == null)
             {
-                comanda = Comanda.ComandaFactory.NovaComandaRascunho(message.ClienteId);
+                comanda = Comanda.ComandaFactory.NovaComandaRascunho(message.MesaId);
                 comanda.AdicionarItem(comandaItem);
 
                 _comandaRepository.Adicionar(comanda);
-                comanda.AdicionarEvento(new ComandaRascunhoIniciadoEvent(message.ClienteId, message.ProdutoId));
+                comanda.AdicionarEvento(new ComandaRascunhoIniciadoEvent(message.MesaId, message.ProdutoId));
             }
             else
             {
@@ -70,10 +70,10 @@ namespace FavoDeMel.Venda.Application
                 }
             }
 
-            comanda.AdicionarEvento(new ComandaItemAdicionadoEvent(comanda.ClienteId, comanda.Id, message.ProdutoId, message.Nome, message.ValorUnitario, message.Quantidade));
+            comanda.AdicionarEvento(new ComandaItemAdicionadoEvent(comanda.MesaId.Value, comanda.Id, message.ProdutoId, message.Nome, message.ValorUnitario, message.Quantidade));
             
             //Publica em RabbitMQ para integração
-            _bus.Publish(new ComandaItemAdicionadoEvent(comanda.ClienteId, comanda.Id, message.ProdutoId, message.Nome, message.ValorUnitario, message.Quantidade));
+            _bus.Publish(new ComandaItemAdicionadoEvent(comanda.MesaId.Value, comanda.Id, message.ProdutoId, message.Nome, message.ValorUnitario, message.Quantidade));
 
             return await _comandaRepository.UnitOfWork.Commit();
         }
@@ -82,7 +82,7 @@ namespace FavoDeMel.Venda.Application
         {
             if (!ValidarComando(message)) return false;
 
-            var comanda = await _comandaRepository.ObterComandaRascunhoPorClienteId(message.ClienteId);
+            var comanda = await _comandaRepository.ObterComandaRascunhoPorMesaId(message.MesaId);
 
             if (comanda == null)
             {
@@ -100,9 +100,9 @@ namespace FavoDeMel.Venda.Application
 
             comanda.AtualizarUnidades(comandaItem, message.Quantidade);
             comanda.AtualizarItemStatus(comandaItem, message.ItemStatus);
-            comanda.AdicionarEvento(new ComandaProdutoAtualizadoEvent(message.ClienteId, comanda.Id, message.ProdutoId, message.Quantidade, message.ItemStatus));
+            comanda.AdicionarEvento(new ComandaProdutoAtualizadoEvent(message.MesaId, comanda.Id, message.ProdutoId, message.Quantidade, message.ItemStatus));
             //Publica em RabbitMQ para integração
-            _bus.Publish(new ComandaProdutoAtualizadoEvent(message.ClienteId, comanda.Id, message.ProdutoId, message.Quantidade, message.ItemStatus));
+            _bus.Publish(new ComandaProdutoAtualizadoEvent(message.MesaId, comanda.Id, message.ProdutoId, message.Quantidade, message.ItemStatus));
             _comandaRepository.AtualizarItem(comandaItem);
             _comandaRepository.Atualizar(comanda);
 
@@ -113,7 +113,7 @@ namespace FavoDeMel.Venda.Application
         {
             if (!ValidarComando(message)) return false;
 
-            var comanda = await _comandaRepository.ObterComandaRascunhoPorClienteId(message.ClienteId);
+            var comanda = await _comandaRepository.ObterComandaRascunhoPorMesaId(message.MesaId);
 
             if (comanda == null)
             {
@@ -130,9 +130,9 @@ namespace FavoDeMel.Venda.Application
             }
 
             comanda.RemoverItem(comandaItem);
-            comanda.AdicionarEvento(new ComandaProdutoRemovidoEvent(message.ClienteId, comanda.Id, message.ProdutoId));
+            comanda.AdicionarEvento(new ComandaProdutoRemovidoEvent(message.MesaId, comanda.Id, message.ProdutoId));
             //Publica em RabbitMQ para integração
-            _bus.Publish(new ComandaProdutoRemovidoEvent(message.ClienteId, comanda.Id, message.ProdutoId));
+            _bus.Publish(new ComandaProdutoRemovidoEvent(message.MesaId, comanda.Id, message.ProdutoId));
             _comandaRepository.RemoverItem(comandaItem);
             _comandaRepository.Atualizar(comanda);
 
@@ -143,7 +143,7 @@ namespace FavoDeMel.Venda.Application
         {
             if (!ValidarComando(message)) return false;
 
-            var comanda = await _comandaRepository.ObterComandaRascunhoPorClienteId(message.ClienteId);
+            var comanda = await _comandaRepository.ObterComandaRascunhoPorMesaId(message.MesaId);
 
             if (comanda == null)
             {
@@ -170,7 +170,7 @@ namespace FavoDeMel.Venda.Application
                 return false;
             }
 
-            comanda.AdicionarEvento(new VoucherAplicadoComandaEvent(message.ClienteId, comanda.Id, voucher.Id));
+            comanda.AdicionarEvento(new VoucherAplicadoComandaEvent(message.MesaId, comanda.Id, voucher.Id));
 
             _comandaRepository.Atualizar(comanda);
 
@@ -181,14 +181,14 @@ namespace FavoDeMel.Venda.Application
         {
             if (!ValidarComando(message)) return false;
 
-            var comanda = await _comandaRepository.ObterComandaRascunhoPorClienteId(message.ClienteId);
+            var comanda = await _comandaRepository.ObterComandaRascunhoPorMesaId(message.MesaId);
             comanda.IniciarComanda();
 
             var itensList = new List<Item>();
             comanda.ComandaItems.ForEach(i => itensList.Add(new Item { Id = i.ProdutoId, Quantidade = i.Quantidade }));
             var listaProdutosComanda = new ListaProdutosComanda { ComandaId = comanda.Id, Itens = itensList };
 
-            comanda.AdicionarEvento(new ComandaIniciadaEvent(comanda.Id, comanda.ClienteId, listaProdutosComanda, comanda.ValorTotal, message.NomeCartao, message.NumeroCartao, message.ExpiracaoCartao, message.CvvCartao));
+            comanda.AdicionarEvento(new ComandaIniciadaEvent(comanda.Id, comanda.MesaId.Value, listaProdutosComanda, comanda.ValorTotal, message.NomeCartao, message.NumeroCartao, message.ExpiracaoCartao, message.CvvCartao));
 
             _comandaRepository.Atualizar(comanda);
             return await _comandaRepository.UnitOfWork.Commit();
@@ -200,7 +200,7 @@ namespace FavoDeMel.Venda.Application
 
             if (comanda == null)
             {
-                comanda = Comanda.ComandaFactory.NovaComanda(message.ComandaId, message.MesaId, message.ClienteId, message.Codigo);
+                comanda = Comanda.ComandaFactory.NovaComanda(message.ComandaId, message.MesaId, message.Codigo);
                 _comandaRepository.Adicionar(comanda);
                 _comandaRepository.AtualizarMesa(message.MesaId, SituacaoMesa.Ocupada);
 
@@ -266,7 +266,7 @@ namespace FavoDeMel.Venda.Application
             comanda.ComandaItems.ForEach(i => itensList.Add(new Item { Id = i.ProdutoId, Quantidade = i.Quantidade }));
             var listaProdutosComanda = new ListaProdutosComanda { ComandaId = comanda.Id, Itens = itensList };
 
-            comanda.AdicionarEvento(new ComandaProcessamentoCanceladoEvent(comanda.Id, comanda.ClienteId, listaProdutosComanda));
+            comanda.AdicionarEvento(new ComandaProcessamentoCanceladoEvent(comanda.Id, comanda.MesaId.Value, listaProdutosComanda));
             comanda.TornarRascunho();
 
             return await _comandaRepository.UnitOfWork.Commit();

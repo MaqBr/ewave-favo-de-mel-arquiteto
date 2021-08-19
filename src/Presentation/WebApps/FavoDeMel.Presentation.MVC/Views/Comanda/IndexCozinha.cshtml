@@ -15,8 +15,8 @@
 <div class="container">
     <h3>@ViewData["Title"]</h3>
     <div class="form-group">
-        <label for="email"><b>Cliente:</b></label>
-        <p>@Model.ClienteId</p>
+        <label for="email"><b>Mesa:</b></label>
+        <p>@Model.Mesa.MesaId</p>
     </div>
     <div class="form-group">
 
@@ -63,6 +63,7 @@
                                         <td class="col-sm-3 col-md-2" style="text-align: center" colspan="2">
                                             <form method="post" asp-controller="Comanda" asp-action="AtualizarItem">
                                                 <input type="hidden" id="Id" name="Id" value="@item.ProdutoId" />
+                                                <input type="hidden" id="MesaId" name="MesaId" value="@Model.Mesa.MesaId" />
                                                 <input type="hidden" id="quantidade" name="quantidade" value="@item.Quantidade" />
                                                 <div class="row" style="float: left">
                                                     <select id="itemStatus" name="itemStatus" asp-for="@item.ItemStatus" asp-items="Html.GetEnumSelectList<FavoDeMel.Presentation.MVC.ViewModels.VendaViewModels.Enuns.ItemStatus>()">@item.ItemStatus</select>
@@ -75,6 +76,7 @@
                                             </form>
                                             <form method="post" asp-controller="Comanda" asp-action="RemoverItem">
                                                 <input type="hidden" id="Id" name="Id" value="@item.ProdutoId" />
+                                                <input type="hidden" id="MesaId" name="MesaId" value="@Model.Mesa.MesaId" />
                                                 <button type="submit" class="btn btn-danger">
                                                     <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                                 </button>
@@ -87,11 +89,11 @@
 
                         <tr>
                             <td colspan="4" class="text-right">
-                                <a asp-controller="Comanda" asp-action="ResumoDaCompra" class="btn btn-success">
+                                <a asp-controller="Comanda" asp-action="ResumoDaCompra" asp-route-mesaId="@Model.Mesa.MesaId" class="btn btn-success">
                                     <span class="glyphicon glyphicon-ok-circle"></span> Finalizar
                                 </a>
 
-                                <a asp-controller="Comanda" asp-action="ResumoDaCompraCancelar" class="btn btn-danger">
+                                <a asp-controller="Comanda" asp-action="ResumoDaCompraCancelar" asp-route-mesaId="@Model.Mesa.MesaId" class="btn btn-danger">
                                     <span class="glyphicon glyphicon-remove-circle"></span> Cancelar
                                 </a>
                             </td>

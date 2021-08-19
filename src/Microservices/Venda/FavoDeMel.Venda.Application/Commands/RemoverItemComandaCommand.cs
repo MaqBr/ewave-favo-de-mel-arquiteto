@@ -6,12 +6,12 @@ namespace FavoDeMel.Venda.Application
 {
     public class RemoverItemComandaCommand : Command
     {
-        public Guid ClienteId { get; private set; }
+        public Guid MesaId { get; private set; }
         public Guid ProdutoId { get; private set; }
 
-        public RemoverItemComandaCommand(Guid clienteId, Guid produtoId)
+        public RemoverItemComandaCommand(Guid mesaId, Guid produtoId)
         {
-            ClienteId = clienteId;
+            MesaId = mesaId;
             ProdutoId = produtoId;
         }
 
@@ -26,9 +26,9 @@ namespace FavoDeMel.Venda.Application
     {
         public RemoverItemComandaValidation()
         {
-            RuleFor(c => c.ClienteId)
+            RuleFor(c => c.MesaId)
                 .NotEqual(Guid.Empty)
-                .WithMessage("Id do cliente inválido");
+                .WithMessage("Id da mesa inválido");
 
             RuleFor(c => c.ProdutoId)
                 .NotEqual(Guid.Empty)

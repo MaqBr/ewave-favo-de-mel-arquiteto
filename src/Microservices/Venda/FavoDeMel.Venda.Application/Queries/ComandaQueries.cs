@@ -16,14 +16,14 @@ namespace FavoDeMel.Venda.Application.Queries
             _comandaRepository = comandaRepository;
         }
 
-        public async Task<ComandaViewModel> ObterComandaCliente(Guid clienteId)
+        public async Task<ComandaViewModel> ObterComandaCliente(Guid mesaId)
         {
-            var comanda = await _comandaRepository.ObterComandaRascunhoPorClienteId(clienteId);
+            var comanda = await _comandaRepository.ObterComandaRascunhoPorMesaId(mesaId);
             if (comanda == null) return null;
 
             var comandaVM = new ComandaViewModel
             {
-                ClienteId = comanda.ClienteId,
+                MesaId = comanda.MesaId,
                 ValorTotal = comanda.ValorTotal,
                 ComandaId = comanda.Id,
                 ValorDesconto = comanda.Desconto,
@@ -58,7 +58,6 @@ namespace FavoDeMel.Venda.Application.Queries
 
             var comandaVM = new ComandaViewModel
             {
-                ClienteId = comanda.ClienteId,
                 MesaId = comanda.MesaId,
                 ValorTotal = comanda.ValorTotal,
                 ComandaId = comanda.Id,
@@ -99,9 +98,9 @@ namespace FavoDeMel.Venda.Application.Queries
             return comandaVM;
         }
 
-        public async Task<IEnumerable<ComandaViewModel>> ObterComandasCliente(Guid clienteId)
+        public async Task<IEnumerable<ComandaViewModel>> ObterComandasMesa(Guid mesaId)
         {
-            var comandas = await _comandaRepository.ObterListaPorClienteId(clienteId);
+            var comandas = await _comandaRepository.ObterListaPorMesaId(mesaId);
 
             comandas = comandas.Where(p => p.ComandaStatus == ComandaStatus.Pago || p.ComandaStatus == ComandaStatus.Cancelado)
                 .OrderByDescending(p => p.Codigo);

@@ -2,8 +2,8 @@
 
 namespace FavoDeMel.Presentation.MVC.ViewModels
 {
-    public class IndexViewModel
+    public class Mesa
     {
-        public IEnumerable<MesaViewModel> Mesas { get; set; }
+        public List<MesaViewModel> Data { get; init; }
     }
 }

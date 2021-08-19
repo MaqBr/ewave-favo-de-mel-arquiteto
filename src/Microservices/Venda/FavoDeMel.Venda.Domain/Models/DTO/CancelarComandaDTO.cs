@@ -8,6 +8,6 @@ namespace FavoDeMel.Venda.Domain.Models
     public class CancelarComandaDTO
     {
         public Guid ComandaId { get; set; }
-        public Guid ClienteId { get; set; }
+        public Guid MesaId { get; set; }
     }
 }

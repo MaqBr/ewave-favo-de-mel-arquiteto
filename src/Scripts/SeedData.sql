@@ -107,7 +107,6 @@ BEGIN
 	CREATE TABLE [dbo].[Comandas] (
 		[Id]               UNIQUEIDENTIFIER NOT NULL,
 		[Codigo]           NVARCHAR (MAX)   NULL,
-		[ClienteId]        UNIQUEIDENTIFIER NOT NULL,
 		[VoucherId]        UNIQUEIDENTIFIER NULL,
 		[MesaId]           UNIQUEIDENTIFIER NULL,
 		[VoucherUtilizado] BIT              NOT NULL,
@@ -152,8 +151,8 @@ BEGIN
 	ALTER TABLE [dbo].[Comandas] CHECK CONSTRAINT [FK_Comandas_Mesas_MesaId]
 
 
-	INSERT [dbo].[Comandas] ([Id], [Codigo], [ClienteId], [VoucherId], [MesaId], [VoucherUtilizado], [Desconto], [ValorTotal], [DataCadastro], [ComandaStatus]) VALUES (N'44c7ff2b-e6e6-42ad-a669-2da3a1757793', 'MESA 10 - MARCIO', N'9faf55b5-5088-42dd-8c55-5f8698b8295c', NULL, NULL, 0, CAST(0.00 AS Decimal(18, 2)), CAST(80.00 AS Decimal(18, 2)), CAST(N'2021-08-11T00:00:00.0000000' AS DateTime2), 0)
-	INSERT [dbo].[Comandas] ([Id], [Codigo], [ClienteId], [VoucherId], [MesaId], [VoucherUtilizado], [Desconto], [ValorTotal], [DataCadastro], [ComandaStatus]) VALUES (N'4755fb51-eb13-4684-871e-f15c0f120f7d', 'MESA 1 - GUILHERME', N'9faf55b5-5088-42dd-8c55-5f8698b8295c', NULL, NULL, 0, CAST(0.00 AS Decimal(18, 2)), CAST(40.00 AS Decimal(18, 2)), CAST(N'2021-08-11T00:00:00.0000000' AS DateTime2), 0)
+	INSERT [dbo].[Comandas] ([Id], [Codigo], [VoucherId], [MesaId], [VoucherUtilizado], [Desconto], [ValorTotal], [DataCadastro], [ComandaStatus]) VALUES (N'44c7ff2b-e6e6-42ad-a669-2da3a1757793', 'MESA 10 - MARCIO', NULL, NULL, 0, CAST(0.00 AS Decimal(18, 2)), CAST(80.00 AS Decimal(18, 2)), CAST(N'2021-08-11T00:00:00.0000000' AS DateTime2), 0)
+	INSERT [dbo].[Comandas] ([Id], [Codigo], [VoucherId], [MesaId], [VoucherUtilizado], [Desconto], [ValorTotal], [DataCadastro], [ComandaStatus]) VALUES (N'4755fb51-eb13-4684-871e-f15c0f120f7d', 'MESA 1 - GUILHERME', NULL, NULL, 0, CAST(0.00 AS Decimal(18, 2)), CAST(40.00 AS Decimal(18, 2)), CAST(N'2021-08-11T00:00:00.0000000' AS DateTime2), 0)
 	INSERT [dbo].[ComandaItems] ([Id], [ComandaId], [ProdutoId], [ProdutoNome], [Quantidade], [ValorUnitario], [ItemStatus]) VALUES (N'417e22db-5f46-47ee-98f9-691fa0eb1ba7', N'44c7ff2b-e6e6-42ad-a669-2da3a1757793', N'aa1c2bb3-cc7b-4011-b5e7-2521a5c0b9aa', N'Talharim (Nero Di Seppia - Tinta de Lula)', 1, CAST(20.00 AS Decimal(18, 2)), 1)
 	INSERT [dbo].[ComandaItems] ([Id], [ComandaId], [ProdutoId], [ProdutoNome], [Quantidade], [ValorUnitario], [ItemStatus]) VALUES (N'5a309721-e801-4c11-8f18-bb0c48b4b83e', N'44c7ff2b-e6e6-42ad-a669-2da3a1757793', N'c463ce4d-b4aa-4284-8d9c-41ef71eb4878', N'Nhoque de Mandioquinha', 1, CAST(20.00 AS Decimal(18, 2)), 1)
 	INSERT [dbo].[ComandaItems] ([Id], [ComandaId], [ProdutoId], [ProdutoNome], [Quantidade], [ValorUnitario], [ItemStatus]) VALUES (N'10714014-454d-42ee-bd88-762d1b8827d4', N'44c7ff2b-e6e6-42ad-a669-2da3a1757793', N'4e86d76c-7e1d-4381-90a5-57016e92667a', N'Parpadelle com tomatinho', 1, CAST(20.00 AS Decimal(18, 2)), 1)

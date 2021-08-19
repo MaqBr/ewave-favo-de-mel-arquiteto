@@ -13,8 +13,14 @@
 
     <h3>Mesa: @Model.Numero</h3>
 
-    <div>
-
-    </div>
+    <form method="post" asp-controller="Comanda" asp-action="AdicionarComanda">
+        <div class="form-group">
+            <input type="hidden" id="Id" name="Id" value="@Model.MesaId" />
+            <label for="Codigo">Digite o número da comanda a ser adicionada à mesa:</label>
+            <input type="text" class="form-control" id="Codigo" name="Codigo">
+        </div>
+        <button class="btn btn-danger">VOLTAR</button>
+        <button class="btn btn-primary" type="submit">ABRIR COMANDA</button>
+    </form>
 
 </div>

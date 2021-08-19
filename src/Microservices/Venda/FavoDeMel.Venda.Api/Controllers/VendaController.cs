@@ -38,7 +38,7 @@ namespace FavoDeMel.Venda.Api.Controllers
 
             try
             {
-                var command = new AdicionarComandaCommand(Guid.NewGuid(), comanda.MesaId, comanda.ClienteId, comanda.Codigo);
+                var command = new AdicionarComandaCommand(Guid.NewGuid(), comanda.MesaId, comanda.Codigo);
 
                 await _mediatorHandler.EnviarComando(command);
 
@@ -62,7 +62,7 @@ namespace FavoDeMel.Venda.Api.Controllers
 
             try
             {
-                var command = new AdicionarItemComandaCommand(itemComanda.ClienteId,
+                var command = new AdicionarItemComandaCommand(itemComanda.MesaId,
                     itemComanda.ProdutoId, itemComanda.Nome, itemComanda.Quantidade, itemComanda.ValorUnitario);
 
                 await _mediatorHandler.EnviarComando(command);
@@ -86,7 +86,7 @@ namespace FavoDeMel.Venda.Api.Controllers
 
             try
             {
-                var command = new AtualizarItemComandaCommand(itemComanda.ClienteId,
+                var command = new AtualizarItemComandaCommand(itemComanda.MesaId,
                     itemComanda.ProdutoId, itemComanda.Quantidade, itemComanda.ItemStatus);
 
                 await _mediatorHandler.EnviarComando(command);
@@ -110,7 +110,7 @@ namespace FavoDeMel.Venda.Api.Controllers
 
             try
             {
-                var command = new RemoverItemComandaCommand(itemComanda.ClienteId,
+                var command = new RemoverItemComandaCommand(itemComanda.MesaId,
                     itemComanda.ProdutoId);
 
                 await _mediatorHandler.EnviarComando(command);
@@ -133,9 +133,9 @@ namespace FavoDeMel.Venda.Api.Controllers
         {
             try
             {
-                var resultado = await _comandaQueries.ObterComandaCliente(comanda.ClienteId);
+                var resultado = await _comandaQueries.ObterComandaMesa(comanda.MesaId);
 
-                var command = new FinalizarComandaCommand(resultado.ComandaId, resultado.ClienteId);
+                var command = new FinalizarComandaCommand(resultado.ComandaId, resultado.MesaId.Value);
 
                 await _mediatorHandler.EnviarComando(command);
 
@@ -155,9 +155,9 @@ namespace FavoDeMel.Venda.Api.Controllers
         {
             try
             {
-                var resultado = await _comandaQueries.ObterComandaCliente(comanda.ClienteId);
+                var resultado = await _comandaQueries.ObterComandaMesa(comanda.MesaId);
 
-                var command = new CancelarComandaCommand(resultado.ComandaId, resultado.ClienteId);
+                var command = new CancelarComandaCommand(resultado.ComandaId, resultado.MesaId.Value);
 
                 await _mediatorHandler.EnviarComando(command);
 
@@ -172,12 +172,12 @@ namespace FavoDeMel.Venda.Api.Controllers
         }
 
         [HttpGet]
-        [Route("cliente/{clienteId}")]
-        public async Task<ComandaViewModel> ObterComandaCliente(Guid clienteId)
+        [Route("mesa/{mesaId}")]
+        public async Task<ComandaViewModel> ObterComandaMesa(Guid mesaId)
         {
             try
             {
-                var result = await _comandaQueries.ObterComandaCliente(clienteId);
+                var result = await _comandaQueries.ObterComandaMesa(mesaId);
                 return result;
             }
             catch (Exception ex)
@@ -204,23 +204,5 @@ namespace FavoDeMel.Venda.Api.Controllers
             }
 
         }
-
-        [HttpGet]
-        [Route("mesa/{mesaId}")]
-        public async Task<ComandaViewModel> ObterComandaMesa(Guid mesaId)
-        {
-            try
-            {
-                var result = await _comandaQueries.ObterComandaMesa(mesaId);
-                return result;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Houve um erro ao obter os dados");
-                throw new Exception($"Houve um erro ao obter os dados: {ex.Message}");
-            }
-
-        }
-
     }
 }

@@ -7,7 +7,8 @@ namespace FavoDeMel.Presentation.MVC.Services
 {
     public interface IComandaAppService
     {
-        Task<ComandaViewModel> ObterComandaCliente(Guid clienteId);
+        Task<ComandaViewModel> ObterComandaMesa(Guid mesaId);
+        Task AdicionarComanda(AdicionarComandaDTO comanda);
         Task FinalizarComanda(FinalizarComandaDTO comanda);
         Task CancelarComanda(CancelarComandaDTO comanda);
         Task AdicionarItemComanda(AdicionarItemComandaDTO itemComanda);

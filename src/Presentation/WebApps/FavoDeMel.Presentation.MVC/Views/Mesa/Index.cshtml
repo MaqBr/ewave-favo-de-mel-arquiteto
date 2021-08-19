@@ -1,4 +1,4 @@
-﻿@model FavoDeMel.Presentation.MVC.ViewModels.MesaViewModel.IndexViewModel
+﻿@model FavoDeMel.Presentation.MVC.ViewModels.IndexViewModel
 
 @{
     ViewData["Title"] = "Mesas Disponíveis";
@@ -12,21 +12,39 @@
     </div>
     @if (Model.Mesas.Count() > 0)
     {
-        <div class="esh-catalog-items row">
-            @foreach (var mesa in Model.Mesas)
-            {
-                <div class="esh-catalog-item col-md-4">
-                    <div class="esh-catalog-name" style="background-color: #EBEBEB; height: 100px; font-size: 20pt;">
-                        <p style="text-align:center">@mesa.Numero</p>
-                        <p style="text-align:center">
-                            <a asp-controller="Comanda" asp-action="NovaComanda" asp-route-id="@mesa.MesaId" class="btn btn-info">
-                                <span class="glyphicon glyphicon-plus"></span> [NOVA COMANDA]
-                            </a>
-                        </p>
-                    </div>
+<div class="esh-catalog-items row">
+    @foreach (var mesa in Model.Mesas)
+    {
+
+        if (mesa.Situacao.Equals(SituacaoMesa.Livre))
+        {
+            <div class="esh-catalog-item col-md-4">
+                <div class="esh-catalog-name" style="background-color: #EBEBEB; height: 100px; font-size: 20pt;">
+                    <p style="text-align:center">@mesa.Numero</p>
+                    <p style="text-align:center">
+                        <a asp-controller="Comanda" asp-action="NovaComanda" asp-route-id="@mesa.MesaId" class="btn btn-info">
+                            <span class="glyphicon glyphicon-plus"></span> [NOVA COMANDA]
+                        </a>
+                    </p>
                 </div>
-            }
-        </div>
+            </div>
+        }
+        else
+        {
+            <div class="esh-catalog-item col-md-4">
+                <div class="esh-catalog-name" style="background-color: indianred; height: 100px; font-size: 20pt;">
+                    <p style="text-align:center;color:white">@mesa.Numero</p>
+                    <p style="text-align:center">
+                        <a asp-controller="Comanda" asp-action="IndexComandaMesa" asp-route-id="@mesa.MesaId" class="btn btn-default">
+                            <span class="glyphicon glyphicon-eye-open"></span> [VISUALIZAR COMANDA]
+                        </a>
+                    </p>
+                </div>
+            </div>
+        }
+
+    }
+</div>
     }
     else
     {

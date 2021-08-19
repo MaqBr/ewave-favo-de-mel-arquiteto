@@ -6,12 +6,12 @@ namespace FavoDeMel.Venda.Application
 {
     public class AplicarVoucherComandaCommand : Command
     {
-        public Guid ClienteId { get; private set; }
+        public Guid MesaId { get; private set; }
         public string CodigoVoucher { get; private set; }
 
-        public AplicarVoucherComandaCommand(Guid clienteId, string codigoVoucher)
+        public AplicarVoucherComandaCommand(Guid mesaId, string codigoVoucher)
         {
-            ClienteId = clienteId;
+            MesaId = mesaId;
             CodigoVoucher = codigoVoucher;
         }
 
@@ -26,9 +26,9 @@ namespace FavoDeMel.Venda.Application
     {
         public AplicarVoucherComandaValidation()
         {
-            RuleFor(c => c.ClienteId)
+            RuleFor(c => c.MesaId)
                 .NotEqual(Guid.Empty)
-                .WithMessage("Id do cliente inválido");
+                .WithMessage("Id da mesa inválido");
 
             RuleFor(c => c.CodigoVoucher)
                 .NotEmpty()

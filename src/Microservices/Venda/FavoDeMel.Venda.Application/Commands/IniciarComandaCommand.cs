@@ -7,17 +7,17 @@ namespace FavoDeMel.Venda.Application
     public class IniciarComandaCommand : Command
     {
         public Guid ComandaId { get; private set; }
-        public Guid ClienteId { get; private set; }
+        public Guid MesaId { get; private set; }
         public decimal Total { get; private set; }
         public string NomeCartao { get; private set; }
         public string NumeroCartao { get; private set; }
         public string ExpiracaoCartao { get; private set; }
         public string CvvCartao { get; private set; }
 
-        public IniciarComandaCommand(Guid comandaId, Guid clienteId, decimal total, string nomeCartao, string numeroCartao, string expiracaoCartao, string cvvCartao)
+        public IniciarComandaCommand(Guid comandaId, Guid mesaId, decimal total, string nomeCartao, string numeroCartao, string expiracaoCartao, string cvvCartao)
         {
             ComandaId = comandaId;
-            ClienteId = clienteId;
+            MesaId = mesaId;
             Total = total;
             NomeCartao = nomeCartao;
             NumeroCartao = numeroCartao;
@@ -36,9 +36,9 @@ namespace FavoDeMel.Venda.Application
     {
         public IniciarComandaValidation()
         {
-            RuleFor(c => c.ClienteId)
+            RuleFor(c => c.MesaId)
                 .NotEqual(Guid.Empty)
-                .WithMessage("Id do cliente inválido");
+                .WithMessage("Id da mesa inválido");
 
             RuleFor(c => c.ComandaId)
                 .NotEqual(Guid.Empty)

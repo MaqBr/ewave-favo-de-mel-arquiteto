@@ -155,12 +155,13 @@
     <h3>@ViewData["Title"]</h3>
 
     <div class="form-group">
+        <label for="email"><b>Garçom:</b></label>
+        <p>@User.Identity.Name</p>
+    </div>
 
-        @if (User.Identity.IsAuthenticated)
-        {
-            <label for="email"><b>Garçom:</b></label>
-            <p>@User.Identity.Name</p>
-        }
+    <div class="form-group">
+        <label for="email"><b>Mesa:</b></label>
+        <p>@Model.Mesa.Numero</p>
     </div>
 
     <vc:summary />
@@ -180,7 +181,7 @@
             <form method="post" asp-controller="Comanda" asp-action="AdicionarItem">
 
                 <input type="hidden" id="Id" name="Id" value="@Model.Id" />
-
+                <input type="hidden" id="MesaId" name="MesaId" value="@Model.Mesa.MesaId" />
                 <div class="section" style="padding-bottom: 20px;">
                     <h6 class="title-attr"><small>QUANTIDADE</small></h6>
                     <div>

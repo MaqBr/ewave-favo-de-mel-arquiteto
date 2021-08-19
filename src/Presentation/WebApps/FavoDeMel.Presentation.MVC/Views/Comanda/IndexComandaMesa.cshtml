@@ -7,7 +7,7 @@
 @{
     ViewData["Title"] = "Detalhes da Comanda";
     var headerList = new List<Header>() {
-          new Header() { Controller = "Vitrine", Text = "Voltar" }};
+          new Header() { Controller = "Mesa", Text = "Voltar" }};
 }
 
 <partial name="_Header" model="headerList" />
@@ -139,11 +139,14 @@
                 }
                 else
                 {
-                    <div><p>Comanda Vazia</p></div>
-                    <div>
-                        <a asp-controller="Vitrine" asp-action="Index" class="btn btn-success">
-                            <span class="glyphicon glyphicon-plus-sign"></span>Adicionar
+                    <div class="alert alert-warning text-center">
+
+                        <p>Comanda Vazia</p>
+
+                        <a asp-controller="Vitrine" asp-action="Index" asp-route-mesaId="@Model.Mesa.MesaId" class="btn btn-primary">
+                            <span class="glyphicon glyphicon-plus-sign"></span> Adicionar Itens
                         </a>
+
                     </div>
                 }
             }

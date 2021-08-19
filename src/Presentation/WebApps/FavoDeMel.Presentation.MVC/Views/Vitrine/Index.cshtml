@@ -6,39 +6,58 @@
 
 <section class="esh-catalog-filters">
     <div class="container">
-            <form asp-action="Index" asp-controller="Vitrine" method="post">
-                <label class="esh-catalog-label" data-title="Tipo">
-                    <select asp-for="@Model.FiltroTipo" asp-items="@Model.Tipos" class="esh-catalog-filter"></select>
-                </label>
-                <label class="esh-catalog-label" data-title="Categoria">
-                    <select asp-for="@Model.FiltroMarca" asp-items="@Model.Marcas" class="esh-catalog-filter"></select>
-                </label>
-                <input class="esh-catalog-send" type="image" src="~/images/arrow-right.svg" />
-            </form>
-        </div>
+        <form asp-action="Index" asp-controller="Vitrine" method="post">
+            <label class="esh-catalog-label" data-title="Tipo">
+                <select asp-for="@Model.FiltroTipo" asp-items="@Model.Tipos" class="esh-catalog-filter"></select>
+            </label>
+            <label class="esh-catalog-label" data-title="Categoria">
+                <select asp-for="@Model.FiltroMarca" asp-items="@Model.Marcas" class="esh-catalog-filter"></select>
+            </label>
+            <input class="esh-catalog-send" type="image" src="~/images/arrow-right.svg" />
+        </form>
+    </div>
 </section>
 
 <div class="container">
 
-    @if (Model.CatalogoItens.Count() > 0)
-    {
-    <partial name="_paginacao" for="PaginacaoInfo" />
-
-    <div class="esh-catalog-items row">
-        @foreach (var catalogoItem in Model.CatalogoItens)
-            {
-        <div class="esh-catalog-item col-md-4">
-            <partial name="_produto" model="catalogoItem" />
-        </div>
-            }
+    <h3>@ViewData["Title"]</h3>
+    <div class="form-group">
+        <label for="email"><b>Mesa:</b></label>
+        <p>@Model.Mesa.Numero</p>
+    </div>
+    <div class="form-group">
+        <label for="email"><b>Garçom:</b></label>
+        <p>@User.Identity.Name</p>
     </div>
 
-    <partial name="_paginacao" for="PaginacaoInfo" />
+    @if (Model.CatalogoItens.Count() > 0)
+    {
+        <partial name="_paginacao" for="PaginacaoInfo" />
+
+        <div class="esh-catalog-items row">
+            @foreach (var catalogoItem in Model.CatalogoItens)
+            {
+                <div class="esh-catalog-item col-md-4">
+                    <img class="esh-catalog-thumbnail" src="~/images/@catalogoItem.Imagem" />
+                    <a class="esh-catalog-button" asp-controller="Vitrine" asp-action="ProdutoDetalhe"
+                       asp-route-id="@catalogoItem.Id" asp-route-mesaId="@Model.Mesa.MesaId">[ + COMANDA ]</a>
+
+                    <div class="esh-catalog-name">
+                        <span>@catalogoItem.Nome</span>
+                    </div>
+                    <div class="esh-catalog-price">
+                        <span>@catalogoItem.Valor.ToString("C")</span>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <partial name="_paginacao" for="PaginacaoInfo" />
     }
     else
     {
-    <div class="esh-catalog-items row">
-        NENHUM RESULTADO NO CRITÉRIO DA CONSULTA
-    </div>
+        <div class="esh-catalog-items row">
+            NENHUM RESULTADO NO CRITÉRIO DA CONSULTA
+        </div>
     }
 </div>

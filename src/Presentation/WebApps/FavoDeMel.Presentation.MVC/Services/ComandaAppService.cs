@@ -31,17 +31,36 @@ namespace FavoDeMel.Presentation.MVC.Services
             
         }
 
-        public async Task<ComandaViewModel> ObterComandaCliente(Guid clienteId)
+
+        public async Task<ComandaViewModel> ObterComandaMesa(Guid mesaId)
         {
-            
-            var uri = API.Comanda.ObterComandaCliente(_remoteServiceBaseUrl, clienteId);
+
+            var uri = API.Comanda.ObterComandaMesa(_remoteServiceBaseUrl, mesaId);
 
             var responseString = await _httpClient.GetStringAsync(uri);
 
-            var carrinho = JsonConvert.DeserializeObject<ComandaViewModel>(responseString);
+            var comanda = JsonConvert.DeserializeObject<ComandaViewModel>(responseString);
 
-            return carrinho;
+            return comanda;
         }
+
+        public async Task AdicionarComanda(AdicionarComandaDTO comanda)
+        {
+            var uri = API.Comanda.AdicionarComanda(_remoteServiceBaseUrl);
+
+            var comandaContent = new StringContent(JsonConvert.SerializeObject(comanda),
+                System.Text.Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PostAsync(uri, comandaContent);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.InternalServerError)
+            {
+                throw new Exception("Error ao adicionar a comanda.");
+            }
+
+            response.EnsureSuccessStatusCode();
+        }
+
 
         public async Task AdicionarItemComanda(AdicionarItemComandaDTO itemComanda)
         {
