@@ -9,8 +9,10 @@ namespace FavoDeMel.Venda.Domain.Models
     {
         Task<Comanda> ObterPorId(Guid id);
         Task<IEnumerable<Comanda>> ObterListaPorClienteId(Guid clienteId);
+        Task<IEnumerable<Comanda>> ObterListaPorMesaId(Guid mesaId);
         Task<IEnumerable<Comanda>> ObterListaPorStatus(ComandaStatus status);
         Task<Comanda> ObterComandaRascunhoPorClienteId(Guid clienteId);
+        Task<Comanda> ObterComandaRascunhoPorMesaId(Guid mesaId);
         void Adicionar(Comanda comanda);
         void Atualizar(Comanda comanda);
 
@@ -19,6 +21,7 @@ namespace FavoDeMel.Venda.Domain.Models
         void AdicionarItem(ComandaItem comandaItem);
         void AtualizarItem(ComandaItem comandaItem);
         void RemoverItem(ComandaItem comandaItem);
+        void AtualizarMesa(Guid mesaId, SituacaoMesa situacaoMesa);
 
         Task<Voucher> ObterVoucherPorCodigo(string codigo);
     }

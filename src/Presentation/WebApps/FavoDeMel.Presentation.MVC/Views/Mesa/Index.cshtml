@@ -1,0 +1,37 @@
+﻿@model FavoDeMel.Presentation.MVC.ViewModels.MesaViewModel.IndexViewModel
+
+@{
+    ViewData["Title"] = "Mesas Disponíveis";
+}
+
+<div class="container">
+    <p></p>
+    <h3>@ViewData["Title"]</h3>
+    <div class="form-group">
+        <label for="email"><b>Garçom:</b> @User.Identity.Name</label>
+    </div>
+    @if (Model.Mesas.Count() > 0)
+    {
+        <div class="esh-catalog-items row">
+            @foreach (var mesa in Model.Mesas)
+            {
+                <div class="esh-catalog-item col-md-4">
+                    <div class="esh-catalog-name" style="background-color: #EBEBEB; height: 100px; font-size: 20pt;">
+                        <p style="text-align:center">@mesa.Numero</p>
+                        <p style="text-align:center">
+                            <a asp-controller="Comanda" asp-action="NovaComanda" asp-route-id="@mesa.MesaId" class="btn btn-info">
+                                <span class="glyphicon glyphicon-plus"></span> [NOVA COMANDA]
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="esh-catalog-items row">
+            NENHUMA MESA DISPONÍVEL
+        </div>
+    }
+</div>

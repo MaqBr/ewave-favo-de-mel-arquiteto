@@ -9,6 +9,7 @@ namespace FavoDeMel.Venda.Application.Queries
     public interface IComandaQueries
     {
         Task<ComandaViewModel> ObterComandaCliente(Guid clienteId);
+        Task<ComandaViewModel> ObterComandaMesa(Guid mesaId);
         Task<IEnumerable<ComandaViewModel>> ObterComandasCliente(Guid clienteId);
         Task<IEnumerable<ComandaViewModel>> ObterComandaStatus(ComandaStatus status);
     }

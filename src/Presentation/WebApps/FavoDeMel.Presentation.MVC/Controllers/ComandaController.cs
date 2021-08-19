@@ -5,6 +5,7 @@ using FavoDeMel.Domain.Core.Messages.CommonMessages.Notifications;
 using FavoDeMel.Presentation.MVC.CatalogoViewModels.Venda.ViewModels;
 using FavoDeMel.Presentation.MVC.Models.DTO;
 using FavoDeMel.Presentation.MVC.Services;
+using FavoDeMel.Presentation.MVC.ViewModels.ComandaViewModel;
 using FavoDeMel.Presentation.MVC.ViewModels.VendaViewModels.Enuns;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -16,6 +17,7 @@ namespace FavoDeMel.Presentation.MVC.Controllers
     {
         private readonly IProdutoAppService _produtoAppService;
         private readonly IComandaAppService _comandaAppService;
+        private readonly IMesaAppService _mesaAppService;
         private string returnView => User.Identity.IsAuthenticated && User.Identity.Name.Equals("cozinha")
             ? "IndexCozinha" : "IndexGarcom";
 
@@ -23,11 +25,13 @@ namespace FavoDeMel.Presentation.MVC.Controllers
                                   IProdutoAppService produtoAppService, 
                                   IMediatorHandler mediatorHandler, 
                                   IComandaAppService comandaAppService,
+                                  IMesaAppService mesaAppService,
                                   IHttpContextAccessor httpContextAccessor
             ) : base(notifications, mediatorHandler, httpContextAccessor)
         {
             _produtoAppService = produtoAppService;
             _comandaAppService = comandaAppService;
+            _mesaAppService = mesaAppService;
         }
 
         [Route("vizualizar-comanda/garcom")]
@@ -51,8 +55,32 @@ namespace FavoDeMel.Presentation.MVC.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        [Route("nova-comanda")]
+        public async Task<IActionResult> NovaComanda(Guid id)
+        {
+            var mesa = await _mesaAppService.ObterPorId(id);
+            var vm = new NovaComandaViewModel()
+            {
+                MesaId = mesa.MesaId,
+                Numero = mesa.Numero
+            };
+
+            return View(vm);
+        }
+
         [HttpPost]
-        [Route("comanda")]
+        [Route("comanda/adicionar")]
+        public async Task<IActionResult> AdicionarComanda(Guid id)
+        {
+            //var mesaId = id
+            //Mock
+            return RedirectToAction("Index", "Vitrine", new { comandaId = Guid.NewGuid() });
+        }
+
+
+        [HttpPost]
+        [Route("comanda/item/adicionar")]
         public async Task<IActionResult> AdicionarItem(Guid id, int quantidade)
         {
             var produto = await _produtoAppService.ObterPorId(id);
@@ -83,7 +111,7 @@ namespace FavoDeMel.Presentation.MVC.Controllers
         }
 
         [HttpPost]
-        [Route("remover-item")]
+        [Route("comanda/item/remover")]
         public async Task<IActionResult> RemoverItem(Guid id)
         {
             var produto = await _produtoAppService.ObterPorId(id);
@@ -105,7 +133,7 @@ namespace FavoDeMel.Presentation.MVC.Controllers
         }
 
         [HttpPost]
-        [Route("atualizar-item")]
+        [Route("comanda/item/atualizar")]
         public async Task<IActionResult> AtualizarItem(Guid id, int quantidade, ItemStatus itemStatus)
         {
             var produto = await _produtoAppService.ObterPorId(id);

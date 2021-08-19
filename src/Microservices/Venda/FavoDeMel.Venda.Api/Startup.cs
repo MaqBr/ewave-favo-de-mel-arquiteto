@@ -127,6 +127,7 @@ namespace FavoDeMel.Venda.Api
             DependencyContainer.RegisterServices(services);
 
             services.AddScoped<IComandaRepository, ComandaRepository>();
+            services.AddScoped<IMesaRepository, MesaRepository>();
             services.AddScoped<IComandaQueries, ComandaQueries>();
             services.AddScoped<VendaDbContext>();
 
@@ -136,6 +137,7 @@ namespace FavoDeMel.Venda.Api
             services.AddScoped<IRequestHandler<AplicarVoucherComandaCommand, bool>, ComandaCommandHandler>();
             services.AddScoped<IRequestHandler<IniciarComandaCommand, bool>, ComandaCommandHandler>();
             services.AddScoped<IRequestHandler<FinalizarComandaCommand, bool>, ComandaCommandHandler>();
+            services.AddScoped<IRequestHandler<AdicionarComandaCommand, bool>, ComandaCommandHandler>();
             services.AddScoped<IRequestHandler<CancelarComandaCommand, bool>, ComandaCommandHandler>();
             services.AddScoped<IRequestHandler<CancelarProcessamentoComandaCommand, bool>, ComandaCommandHandler>();
             services.AddScoped<IRequestHandler<CancelarProcessamentoComandaEstornarEstoqueCommand, bool>, ComandaCommandHandler>();

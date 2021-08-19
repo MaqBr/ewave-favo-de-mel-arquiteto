@@ -53,6 +53,34 @@ namespace FavoDeMel.Venda.Data.Repository
             return comanda;
         }
 
+        public async Task<Comanda> ObterComandaRascunhoPorMesaId(Guid mesaId)
+        {
+            var comanda = await _context.Comandas.FirstOrDefaultAsync(p => p.MesaId == mesaId && p.ComandaStatus == ComandaStatus.Rascunho);
+            if (comanda == null) return null;
+
+            await _context.Entry(comanda)
+                .Collection(i => i.ComandaItems).LoadAsync();
+
+            if (comanda.VoucherId != null)
+            {
+                await _context.Entry(comanda)
+                    .Reference(i => i.Voucher).LoadAsync();
+            }
+
+            if (comanda.MesaId != null)
+            {
+                await _context.Entry(comanda)
+                    .Reference(i => i.Mesa).LoadAsync();
+            }
+
+            return comanda;
+        }
+
+        public async Task<IEnumerable<Comanda>> ObterListaPorMesaId(Guid mesaId)
+        {
+            return await _context.Comandas.AsNoTracking().Where(p => p.MesaId == mesaId).ToListAsync();
+        }
+
         public void Adicionar(Comanda comanda)
         {
             _context.Comandas.Add(comanda);
@@ -84,6 +112,13 @@ namespace FavoDeMel.Venda.Data.Repository
             _context.ComandaItems.Update(comandaItem);
         }
 
+        public void AtualizarMesa(Guid mesaId, SituacaoMesa situacaoMesa)
+        {
+            var mesa = _context.Mesas.Find(mesaId);
+            mesa.Situacao = situacaoMesa;
+            _context.Mesas.Update(mesa);
+        }
+
         public void RemoverItem(ComandaItem comandaItem)
         {
             _context.ComandaItems.Remove(comandaItem);
@@ -98,5 +133,7 @@ namespace FavoDeMel.Venda.Data.Repository
         {
             _context.Dispose();
         }
+
+
     }
 }

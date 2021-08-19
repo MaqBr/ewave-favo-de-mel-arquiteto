@@ -22,6 +22,7 @@ namespace FavoDeMel.Venda.Data.Context
         public DbSet<Comanda> Comandas { get; set; }
         public DbSet<ComandaItem> ComandaItems { get; set; }
         public DbSet<Voucher> Vouchers { get; set; }
+        public DbSet<Mesa> Mesas { get; set; }
 
         public async Task<bool> Commit()
         {

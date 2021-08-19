@@ -22,6 +22,7 @@ namespace FavoDeMel.Venda.Application
         IRequestHandler<AplicarVoucherComandaCommand, bool>,
         IRequestHandler<IniciarComandaCommand, bool>,
         IRequestHandler<FinalizarComandaCommand, bool>,
+        IRequestHandler<AdicionarComandaCommand, bool>,
         IRequestHandler<CancelarComandaCommand, bool>,
         IRequestHandler<CancelarProcessamentoComandaEstornarEstoqueCommand, bool>,
         IRequestHandler<CancelarProcessamentoComandaCommand, bool>
@@ -191,6 +192,28 @@ namespace FavoDeMel.Venda.Application
 
             _comandaRepository.Atualizar(comanda);
             return await _comandaRepository.UnitOfWork.Commit();
+        }
+
+        public async Task<bool> Handle(AdicionarComandaCommand message, CancellationToken cancellationToken)
+        {
+            var comanda = await _comandaRepository.ObterPorId(message.ComandaId);
+
+            if (comanda == null)
+            {
+                comanda = Comanda.ComandaFactory.NovaComanda(message.ComandaId, message.MesaId, message.ClienteId, message.Codigo);
+                _comandaRepository.Adicionar(comanda);
+                _comandaRepository.AtualizarMesa(message.MesaId, SituacaoMesa.Ocupada);
+
+                comanda.AdicionarEvento(new ComandaAdicionadaEvent(message.ComandaId));
+               
+                //Publica em RabbitMQ para integração
+                _bus.Publish(new ComandaAdicionadaEvent(message.ComandaId));
+                return await _comandaRepository.UnitOfWork.Commit();
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public async Task<bool> Handle(FinalizarComandaCommand message, CancellationToken cancellationToken)

@@ -27,7 +27,7 @@ namespace FavoDeMel.Presentation.MVC.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("Index", "Vitrine");
+                return RedirectToAction("Index", "Mesa");
             }
 
             ViewData["ReturnUrl"] = returnUrl;
@@ -49,7 +49,7 @@ namespace FavoDeMel.Presentation.MVC.Controllers
                     {
                         usuarioAutenticado.Lembrar = usuario.Lembrar;
                         Login(usuarioAutenticado);
-                        return RedirectToAction("Index", "Vitrine");
+                        return RedirectToAction("Index", "Mesa");
                     }
                     else
                     {

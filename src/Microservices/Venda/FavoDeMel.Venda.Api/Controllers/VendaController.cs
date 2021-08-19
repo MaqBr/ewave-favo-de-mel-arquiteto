@@ -29,6 +29,31 @@ namespace FavoDeMel.Venda.Api.Controllers
             _mediatorHandler = mediatorHandler;
 
         }
+
+        [HttpPost]
+        [Route("adicionar")]
+        public async Task<IActionResult> AdicionarComanda([FromBody] AdicionarComandaDTO comanda)
+        {
+            if (comanda == null) return BadRequest();
+
+            try
+            {
+                var command = new AdicionarComandaCommand(Guid.NewGuid(), comanda.MesaId, comanda.ClienteId, comanda.Codigo);
+
+                await _mediatorHandler.EnviarComando(command);
+
+                return Ok();
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Houve um erro ao adicionar a comanda {itemComanda}", comanda);
+                throw new Exception($"Houve um erro ao adicionar a comanda: {ex.Message}");
+            }
+
+        }
+
+
         [HttpPost]
         [Route("item/adicionar")]
         public async Task<IActionResult> AdicionarItem([FromBody] AdicionarItemComandaDTO itemComanda)
@@ -170,6 +195,23 @@ namespace FavoDeMel.Venda.Api.Controllers
             try
             {
                 var result = await _comandaQueries.ObterComandaStatus(status);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Houve um erro ao obter os dados");
+                throw new Exception($"Houve um erro ao obter os dados: {ex.Message}");
+            }
+
+        }
+
+        [HttpGet]
+        [Route("mesa/{mesaId}")]
+        public async Task<ComandaViewModel> ObterComandaMesa(Guid mesaId)
+        {
+            try
+            {
+                var result = await _comandaQueries.ObterComandaMesa(mesaId);
                 return result;
             }
             catch (Exception ex)

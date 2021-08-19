@@ -75,6 +75,18 @@ BEGIN
 
 	USE [VendaDb]
 
+	CREATE TABLE [dbo].[Mesas](
+		[Id] [uniqueidentifier] NOT NULL,
+		[Numero] [int] NOT NULL,
+		[DataCriacao] [datetime2](7) NOT NULL,
+		[Situacao] [int] NOT NULL,
+	 CONSTRAINT [PK_Mesas] PRIMARY KEY CLUSTERED 
+	(
+		[Id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+	) ON [PRIMARY]
+
+
 	CREATE TABLE [dbo].[Vouchers] (
 		[Id]                  UNIQUEIDENTIFIER NOT NULL,
 		[Codigo]              NVARCHAR (MAX)   NULL,
@@ -94,9 +106,10 @@ BEGIN
 
 	CREATE TABLE [dbo].[Comandas] (
 		[Id]               UNIQUEIDENTIFIER NOT NULL,
-		[Codigo]           INT              NOT NULL,
+		[Codigo]           NVARCHAR (MAX)   NULL,
 		[ClienteId]        UNIQUEIDENTIFIER NOT NULL,
 		[VoucherId]        UNIQUEIDENTIFIER NULL,
+		[MesaId]           UNIQUEIDENTIFIER NULL,
 		[VoucherUtilizado] BIT              NOT NULL,
 		[Desconto]         DECIMAL (18, 2)  NOT NULL,
 		[ValorTotal]       DECIMAL (18, 2)  NOT NULL,
@@ -133,13 +146,30 @@ BEGIN
 	ALTER TABLE [dbo].[ComandaItems]
 		ADD CONSTRAINT [FK_ComandaItems_Pedidos_PedidoId] FOREIGN KEY ([ComandaId]) REFERENCES [dbo].[Comandas] ([Id]);
 
+	ALTER TABLE [dbo].[Comandas]  WITH CHECK ADD  CONSTRAINT [FK_Comandas_Mesas_MesaId] FOREIGN KEY([MesaId])
+	REFERENCES [dbo].[Mesas] ([Id])
 
-	INSERT [dbo].[Comandas] ([Id], [Codigo], [ClienteId], [VoucherId], [VoucherUtilizado], [Desconto], [ValorTotal], [DataCadastro], [ComandaStatus]) VALUES (N'44c7ff2b-e6e6-42ad-a669-2da3a1757793', 1, N'9faf55b5-5088-42dd-8c55-5f8698b8295c', NULL, 0, CAST(0.00 AS Decimal(18, 2)), CAST(80.00 AS Decimal(18, 2)), CAST(N'2021-08-11T00:00:00.0000000' AS DateTime2), 0)
-	INSERT [dbo].[Comandas] ([Id], [Codigo], [ClienteId], [VoucherId], [VoucherUtilizado], [Desconto], [ValorTotal], [DataCadastro], [ComandaStatus]) VALUES (N'4755fb51-eb13-4684-871e-f15c0f120f7d', 2, N'9faf55b5-5088-42dd-8c55-5f8698b8295c', NULL, 0, CAST(0.00 AS Decimal(18, 2)), CAST(40.00 AS Decimal(18, 2)), CAST(N'2021-08-11T00:00:00.0000000' AS DateTime2), 0)
+	ALTER TABLE [dbo].[Comandas] CHECK CONSTRAINT [FK_Comandas_Mesas_MesaId]
+
+
+	INSERT [dbo].[Comandas] ([Id], [Codigo], [ClienteId], [VoucherId], [MesaId], [VoucherUtilizado], [Desconto], [ValorTotal], [DataCadastro], [ComandaStatus]) VALUES (N'44c7ff2b-e6e6-42ad-a669-2da3a1757793', 'MESA 10 - MARCIO', N'9faf55b5-5088-42dd-8c55-5f8698b8295c', NULL, NULL, 0, CAST(0.00 AS Decimal(18, 2)), CAST(80.00 AS Decimal(18, 2)), CAST(N'2021-08-11T00:00:00.0000000' AS DateTime2), 0)
+	INSERT [dbo].[Comandas] ([Id], [Codigo], [ClienteId], [VoucherId], [MesaId], [VoucherUtilizado], [Desconto], [ValorTotal], [DataCadastro], [ComandaStatus]) VALUES (N'4755fb51-eb13-4684-871e-f15c0f120f7d', 'MESA 1 - GUILHERME', N'9faf55b5-5088-42dd-8c55-5f8698b8295c', NULL, NULL, 0, CAST(0.00 AS Decimal(18, 2)), CAST(40.00 AS Decimal(18, 2)), CAST(N'2021-08-11T00:00:00.0000000' AS DateTime2), 0)
 	INSERT [dbo].[ComandaItems] ([Id], [ComandaId], [ProdutoId], [ProdutoNome], [Quantidade], [ValorUnitario], [ItemStatus]) VALUES (N'417e22db-5f46-47ee-98f9-691fa0eb1ba7', N'44c7ff2b-e6e6-42ad-a669-2da3a1757793', N'aa1c2bb3-cc7b-4011-b5e7-2521a5c0b9aa', N'Talharim (Nero Di Seppia - Tinta de Lula)', 1, CAST(20.00 AS Decimal(18, 2)), 1)
 	INSERT [dbo].[ComandaItems] ([Id], [ComandaId], [ProdutoId], [ProdutoNome], [Quantidade], [ValorUnitario], [ItemStatus]) VALUES (N'5a309721-e801-4c11-8f18-bb0c48b4b83e', N'44c7ff2b-e6e6-42ad-a669-2da3a1757793', N'c463ce4d-b4aa-4284-8d9c-41ef71eb4878', N'Nhoque de Mandioquinha', 1, CAST(20.00 AS Decimal(18, 2)), 1)
 	INSERT [dbo].[ComandaItems] ([Id], [ComandaId], [ProdutoId], [ProdutoNome], [Quantidade], [ValorUnitario], [ItemStatus]) VALUES (N'10714014-454d-42ee-bd88-762d1b8827d4', N'44c7ff2b-e6e6-42ad-a669-2da3a1757793', N'4e86d76c-7e1d-4381-90a5-57016e92667a', N'Parpadelle com tomatinho', 1, CAST(20.00 AS Decimal(18, 2)), 1)
 	INSERT [dbo].[ComandaItems] ([Id], [ComandaId], [ProdutoId], [ProdutoNome], [Quantidade], [ValorUnitario], [ItemStatus]) VALUES (N'd3b3c1fa-9938-4809-b7c2-8d7495ff4672', N'44c7ff2b-e6e6-42ad-a669-2da3a1757793', N'14764628-97c9-4152-b163-8114ae89f3ba', N'Nhoque de Mandioquinha sem farinha', 1, CAST(20.00 AS Decimal(18, 2)), 1)
+
+	INSERT INTO [dbo].[Mesas] ([Id], [Numero], [DataCriacao], [Situacao]) VALUES (N'8758d449-4d43-4aa7-add3-43bddbdc18c3', 4, N'2021-08-18 00:00:00', 1)
+	INSERT INTO [dbo].[Mesas] ([Id], [Numero], [DataCriacao], [Situacao]) VALUES (N'a33b9fe0-ad71-4bf2-916c-5763f3325367', 5, N'2021-08-18 00:00:00', 1)
+	INSERT INTO [dbo].[Mesas] ([Id], [Numero], [DataCriacao], [Situacao]) VALUES (N'14d5cbcf-e198-4da7-b0eb-68321da8f10f', 2, N'2021-08-18 00:00:00', 1)
+	INSERT INTO [dbo].[Mesas] ([Id], [Numero], [DataCriacao], [Situacao]) VALUES (N'810bc7ca-8f3c-4719-a193-72dea64eaebc', 8, N'2021-08-18 00:00:00', 1)
+	INSERT INTO [dbo].[Mesas] ([Id], [Numero], [DataCriacao], [Situacao]) VALUES (N'c4043a96-8b22-490c-93c1-7c4d28127d01', 9, N'2021-08-18 00:00:00', 1)
+	INSERT INTO [dbo].[Mesas] ([Id], [Numero], [DataCriacao], [Situacao]) VALUES (N'f926b202-f5fd-4101-ab24-8d6e09d750fa', 1, N'2021-08-18 00:00:00', 1)
+	INSERT INTO [dbo].[Mesas] ([Id], [Numero], [DataCriacao], [Situacao]) VALUES (N'fbd8810e-d7ed-4c8c-b4bf-92ae0f4abee1', 6, N'2021-08-18 00:00:00', 1)
+	INSERT INTO [dbo].[Mesas] ([Id], [Numero], [DataCriacao], [Situacao]) VALUES (N'1edf4bde-6cae-427a-bff6-aaf4e6dc7566', 3, N'2021-08-18 00:00:00', 1)
+	INSERT INTO [dbo].[Mesas] ([Id], [Numero], [DataCriacao], [Situacao]) VALUES (N'04b8b2fb-5da9-48ce-a628-b6cdb62c1a04', 7, N'2021-08-18 00:00:00', 1)
+	INSERT INTO [dbo].[Mesas] ([Id], [Numero], [DataCriacao], [Situacao]) VALUES (N'77532b83-6c75-4ad6-b1d2-de3f38480eb4', 10, N'2021-08-18 00:00:00', 1)
+
 
 END
 

@@ -21,7 +21,7 @@ namespace FavoDeMel.Venda.Application.Queries
             var comanda = await _comandaRepository.ObterComandaRascunhoPorClienteId(clienteId);
             if (comanda == null) return null;
 
-            var carrinho = new ComandaViewModel
+            var comandaVM = new ComandaViewModel
             {
                 ClienteId = comanda.ClienteId,
                 ValorTotal = comanda.ValorTotal,
@@ -32,12 +32,12 @@ namespace FavoDeMel.Venda.Application.Queries
 
             if (comanda.VoucherId != null)
             {
-                carrinho.VoucherCodigo = comanda.Voucher.Codigo;
+                comandaVM.VoucherCodigo = comanda.Voucher.Codigo;
             }
 
             foreach (var item in comanda.ComandaItems)
             {
-                carrinho.Items.Add(new ComandaItemViewModel
+                comandaVM.Items.Add(new ComandaItemViewModel
                 {
                     ProdutoId = item.ProdutoId,
                     ProdutoNome = item.ProdutoNome,
@@ -48,7 +48,55 @@ namespace FavoDeMel.Venda.Application.Queries
                 });
             }
 
-            return carrinho;
+            return comandaVM;
+        }
+
+        public async Task<ComandaViewModel> ObterComandaMesa(Guid mesaId)
+        {
+            var comanda = await _comandaRepository.ObterComandaRascunhoPorMesaId(mesaId);
+            if (comanda == null) return null;
+
+            var comandaVM = new ComandaViewModel
+            {
+                ClienteId = comanda.ClienteId,
+                MesaId = comanda.MesaId,
+                ValorTotal = comanda.ValorTotal,
+                ComandaId = comanda.Id,
+                ValorDesconto = comanda.Desconto,
+                SubTotal = comanda.Desconto + comanda.ValorTotal
+            };
+
+            if (comanda.VoucherId != null)
+            {
+                comandaVM.VoucherCodigo = comanda.Voucher.Codigo;
+            }
+
+            if(comanda.MesaId != null)
+            {
+                comandaVM.Mesa = new MesaViewModel { 
+                    
+                    MesaId = comanda.Mesa.Id, 
+                    Numero = comanda.Mesa.Numero,
+                    Situacao = comanda.Mesa.Situacao,
+                    DataCriacao = comanda.Mesa.DataCriacao
+                };
+            }
+
+            foreach (var item in comanda.ComandaItems)
+            {
+                comandaVM.Items.Add(new ComandaItemViewModel
+                {
+                    ProdutoId = item.ProdutoId,
+                    
+                    ProdutoNome = item.ProdutoNome,
+                    ItemStatus = item.ItemStatus,
+                    Quantidade = item.Quantidade,
+                    ValorUnitario = item.ValorUnitario,
+                    ValorTotal = item.ValorUnitario * item.Quantidade
+                });
+            }
+
+            return comandaVM;
         }
 
         public async Task<IEnumerable<ComandaViewModel>> ObterComandasCliente(Guid clienteId)
@@ -67,6 +115,7 @@ namespace FavoDeMel.Venda.Application.Queries
                 comandasView.Add(new ComandaViewModel
                 {
                     ComandaId = comanda.Id,
+                    MesaId = comanda.MesaId,
                     ValorTotal = comanda.ValorTotal,
                     ComandaStatus = comanda.ComandaStatus,
                     Codigo = comanda.Codigo,

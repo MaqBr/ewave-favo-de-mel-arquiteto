@@ -8,9 +8,10 @@ namespace FavoDeMel.Venda.Domain.Models
 {
     public class Comanda : Entity, IAggregateRoot
     {
-        public int Codigo { get; private set; }
+        public string Codigo { get; private set; }
         public Guid ClienteId { get; private set; }
         public Guid? VoucherId { get; private set; }
+        public Guid? MesaId { get; set; }
         public bool VoucherUtilizado { get; private set; }
         public decimal Desconto { get; private set; }
         public decimal ValorTotal { get; private set; }
@@ -20,9 +21,9 @@ namespace FavoDeMel.Venda.Domain.Models
         private readonly List<ComandaItem> _comandaItems;
         public IReadOnlyCollection<ComandaItem> ComandaItems => _comandaItems;
 
-        // EF Rel.
         public Voucher Voucher { get; private set; }
-
+        public Mesa Mesa { get; private set; }
+        
         public Comanda(Guid clienteId, bool voucherUtilizado, decimal desconto, decimal valorTotal)
         {
             ClienteId = clienteId;
@@ -178,6 +179,25 @@ namespace FavoDeMel.Venda.Domain.Models
                 };
 
                 comanda.TornarRascunho();
+                return comanda;
+            }
+
+            public static Comanda NovaComanda(Guid comandaId, Guid mesaId, Guid clienteId, string codigo)
+            {
+                var comanda = new Comanda
+                {
+                    Id = comandaId,
+                    ClienteId = clienteId,
+                    MesaId = mesaId,
+                    ComandaStatus = ComandaStatus.Rascunho,
+                    DataCadastro = DateTime.Now,
+                    Desconto = 0,
+                    ValorTotal = 0,
+                    VoucherUtilizado = false,
+                    Codigo = codigo
+
+                };
+
                 return comanda;
             }
         }

@@ -204,6 +204,7 @@ namespace FavoDeMel.Catalogo.Api
             eventBus.Subscribe<ComandaItemAdicionadoEvent, ComandaItemAdicionadoEventHandler>();
             eventBus.Subscribe<ComandaProdutoRemovidoEvent, ComandaProdutoRemovidoEventHandler>();
             eventBus.Subscribe<ComandaFinalizadaEvent, ComandaFinalizadaEventHandler>();
+            eventBus.Subscribe<ComandaAdicionadaEvent, ComandaAdicionadaEventHandler>();
             eventBus.Subscribe<ComandaCanceladaEvent, ComandaCanceladaEventHandler>();
             eventBus.Subscribe<ComandaProcessamentoCanceladoEvent, ComandaProcessamentoCanceladoEventHandler>();
             eventBus.Subscribe<ComandaProdutoAtualizadoEvent, ComandaProdutoAtualizadoEventHandler>();
@@ -232,6 +233,7 @@ namespace FavoDeMel.Catalogo.Api
             services.AddTransient<ComandaProdutoRemovidoEventHandler>();
             services.AddTransient<ComandaFinalizadaEventHandler>();
             services.AddTransient<ComandaCanceladaEventHandler>();
+            services.AddTransient<ComandaAdicionadaEventHandler>();
             services.AddTransient<ComandaProcessamentoCanceladoEventHandler>();
             services.AddTransient<ComandaProdutoAtualizadoEventHandler>();
 

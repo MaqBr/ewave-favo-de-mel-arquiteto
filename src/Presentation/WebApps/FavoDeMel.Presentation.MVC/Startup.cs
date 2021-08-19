@@ -103,6 +103,9 @@ namespace FavoDeMel.Presentation.MVC
             services.AddHttpClient<IAuthAppService, AuthAppService>()
                 .SetHandlerLifetime(TimeSpan.FromMinutes(5));
 
+            services.AddHttpClient<IMesaAppService, MesaAppService>()
+                .SetHandlerLifetime(TimeSpan.FromMinutes(5));
+
             return services;
         }
 
