@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using FavoDeMel.Catalogo.Api.Infrastructure;
 using FavoDeMel.Catalogo.Api;
+using System;
 
 namespace Catalogo.FunctionalTests
 {
@@ -46,9 +47,21 @@ namespace Catalogo.FunctionalTests
         {
             public static string ObterProdutos = "api/produto/vitrine";
 
-            public static string ProdutoDetalhe(int id)
+            public static string ObterProdutosPaginado(int pageSize, int pageIndex) { 
+                
+                return $"api/produto/vitrine?pageSize={pageSize}&{pageIndex}";
+            } 
+
+            public static string ObterProdutoDetalhe(Guid id)
             {
                 return $"api/produto/produto-detalhe/{id}";
+            }
+
+            public static string ObterCategorias = "api/produto/categorias";
+
+            public static string ObterProdutosPorCategoria(Guid id)
+            {
+                return $"api/produto/categoria/{id}";
             }
         }
 

@@ -56,6 +56,7 @@ namespace FavoDeMel.Catalogo.Api.Infrastructure
 
         private IEnumerable<Produto> ObterSeedProdutos(List<Categoria> categorias)
         {
+
             return new List<Produto>()
             {
                 new Produto("Talharim (Nero Di Seppia - Tinta de Lula)", "Talharim (Nero Di Seppia - Tinta de Lula)", true, 20, categorias[0].Id, DateTime.Now, "produto-talharim-tinta-lula.png", null, 100),

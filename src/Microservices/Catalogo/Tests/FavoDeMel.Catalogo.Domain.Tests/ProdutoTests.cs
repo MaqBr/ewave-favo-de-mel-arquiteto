@@ -8,6 +8,7 @@ namespace FavoDeMel.Catalogo.Unit.Tests
     public class ProdutoTests
     {
         [Fact]
+        [Trait("Produto", "Unidade - Validar Entidade Produto")]
         public void Produto_Validar_ValidacoesDevemRetornarExceptions()
         {
 
