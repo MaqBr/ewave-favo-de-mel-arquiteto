@@ -1,4 +1,4 @@
-using FavoDeMel.Catalogo.Api.Infrastructure;
+using FavoDeMel.Venda.Api.Infrastructure;
 using FavoDeMel.Venda.Api;
 using FavoDeMel.Venda.Data.Context;
 using Microsoft.AspNetCore;

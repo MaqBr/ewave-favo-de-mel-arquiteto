@@ -31,6 +31,8 @@ namespace FavoDeMel.Venda.Domain.Models
             Desconto = desconto;
             ValorTotal = valorTotal;
             _comandaItems = new List<ComandaItem>();
+
+            Validar();
         }
 
         protected Comanda()
@@ -204,6 +206,11 @@ namespace FavoDeMel.Venda.Domain.Models
 
                 return comanda;
             }
+        }
+
+        public void Validar()
+        {
+            Validacoes.ValidarSeVazio(Codigo, "O campo Codigo da comanda não pode estar vazio");
         }
     }
 }

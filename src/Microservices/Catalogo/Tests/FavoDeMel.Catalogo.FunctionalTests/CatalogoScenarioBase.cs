@@ -59,7 +59,7 @@ namespace Catalogo.FunctionalTests
 
             public static string ObterCategorias = "api/produto/categorias";
 
-            public static string ObterProdutosPorCategoria(Guid id)
+            public static string ObterProdutosPorCategoria(int id)
             {
                 return $"api/produto/categoria/{id}";
             }

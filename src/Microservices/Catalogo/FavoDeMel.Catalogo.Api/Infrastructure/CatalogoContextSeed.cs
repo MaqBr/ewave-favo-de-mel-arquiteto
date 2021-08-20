@@ -56,13 +56,15 @@ namespace FavoDeMel.Catalogo.Api.Infrastructure
 
         private IEnumerable<Produto> ObterSeedProdutos(List<Categoria> categorias)
         {
+            var IdCategoriaTipoMassa = 
+                categorias.FirstOrDefault(q => q.Codigo == 102).Id;
 
             return new List<Produto>()
             {
-                new Produto("Talharim (Nero Di Seppia - Tinta de Lula)", "Talharim (Nero Di Seppia - Tinta de Lula)", true, 20, categorias[0].Id, DateTime.Now, "produto-talharim-tinta-lula.png", null, 100),
-                new Produto("Nhoque de Mandioquinha", "Nhoque de Mandioquinha", true, 20, categorias[0].Id, DateTime.Now, "produto-nhoque-mandioquinha.png", null, 100),
-                new Produto("Parpadelle com tomatinho", "Parpadelle com tomatinho", true, 20, categorias[0].Id, DateTime.Now, "produto-parpadelle-com-tomatinho.png", null, 100),
-                new Produto("Nhoque de Mandioquinha sem farinha", "Nhoque de Mandioquinha sem farinha", true, 20, categorias[0].Id, DateTime.Now, "produto-nhoque-mandioquinha2.png", null, 100),
+                new Produto("Talharim (Nero Di Seppia - Tinta de Lula)", "Talharim (Nero Di Seppia - Tinta de Lula)", true, 20, IdCategoriaTipoMassa, DateTime.Now, "produto-talharim-tinta-lula.png", null, 100),
+                new Produto("Nhoque de Mandioquinha", "Nhoque de Mandioquinha", true, 20, IdCategoriaTipoMassa, DateTime.Now, "produto-nhoque-mandioquinha.png", null, 100),
+                new Produto("Parpadelle com tomatinho", "Parpadelle com tomatinho", true, 20, IdCategoriaTipoMassa, DateTime.Now, "produto-parpadelle-com-tomatinho.png", null, 100),
+                new Produto("Nhoque de Mandioquinha sem farinha", "Nhoque de Mandioquinha sem farinha", true, 20, IdCategoriaTipoMassa, DateTime.Now, "produto-nhoque-mandioquinha2.png", null, 100),
             };
         }
     }

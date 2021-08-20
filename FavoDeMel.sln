@@ -80,7 +80,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{ECEDA5E9-760
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FavoDeMel.Presentation.MVC", "src\Presentation\WebApps\FavoDeMel.Presentation.MVC\FavoDeMel.Presentation.MVC.csproj", "{B44B6502-CDFF-4061-9698-9DB970E5F687}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FavoDeMel.Identity", "src\Microservices\Identity\FavoDeMel.Identity\FavoDeMel.Identity.csproj", "{E1847739-E71D-42A9-A25B-6955D729489E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FavoDeMel.Identity", "src\Microservices\Identity\FavoDeMel.Identity\FavoDeMel.Identity.csproj", "{E1847739-E71D-42A9-A25B-6955D729489E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{EE6159B5-065C-4389-B65F-08D6C7D99063}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FavoDeMel.Venda.Unit.Tests", "src\Microservices\Venda\Tests\FavoDeMel.Venda.Unit.Tests\FavoDeMel.Venda.Unit.Tests.csproj", "{BA6F9078-E579-48BB-8147-37843E16715D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FavoDeMel.Venda.FunctionalTests", "src\Microservices\Venda\Tests\FavoDeMel.Venda.FunctionalTests\FavoDeMel.Venda.FunctionalTests.csproj", "{259DFCE5-113B-4D8C-92CB-C7234E640028}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -172,6 +178,14 @@ Global
 		{E1847739-E71D-42A9-A25B-6955D729489E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E1847739-E71D-42A9-A25B-6955D729489E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E1847739-E71D-42A9-A25B-6955D729489E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA6F9078-E579-48BB-8147-37843E16715D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA6F9078-E579-48BB-8147-37843E16715D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA6F9078-E579-48BB-8147-37843E16715D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA6F9078-E579-48BB-8147-37843E16715D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{259DFCE5-113B-4D8C-92CB-C7234E640028}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{259DFCE5-113B-4D8C-92CB-C7234E640028}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{259DFCE5-113B-4D8C-92CB-C7234E640028}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{259DFCE5-113B-4D8C-92CB-C7234E640028}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -212,6 +226,9 @@ Global
 		{FC40D95E-1291-4466-BA47-42036244ED68} = {46D4A3C6-8F20-471F-AB15-01D57E6EF12F}
 		{B44B6502-CDFF-4061-9698-9DB970E5F687} = {93142A69-9C0C-475C-B1BB-C79072E9AC48}
 		{E1847739-E71D-42A9-A25B-6955D729489E} = {9487B5BD-2F8B-413F-B4AE-0B043F3C7378}
+		{EE6159B5-065C-4389-B65F-08D6C7D99063} = {1D1F9C85-DF25-46F3-81FA-CCC161D3C2BA}
+		{BA6F9078-E579-48BB-8147-37843E16715D} = {EE6159B5-065C-4389-B65F-08D6C7D99063}
+		{259DFCE5-113B-4D8C-92CB-C7234E640028} = {EE6159B5-065C-4389-B65F-08D6C7D99063}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3E8207A1-E0D2-445A-ABD0-B5D7FE922808}

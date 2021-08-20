@@ -65,7 +65,7 @@ namespace Catalogo.FunctionalTests
             using (var server = CreateServer())
             {
                 var response = await server.CreateClient()
-                    .GetAsync(Get.ObterProdutosPorCategoria(new Guid("fd69338f-7ef8-457b-b984-f0f050c47ef9")));
+                    .GetAsync(Get.ObterProdutosPorCategoria(102));
 
                 response.EnsureSuccessStatusCode();
             }

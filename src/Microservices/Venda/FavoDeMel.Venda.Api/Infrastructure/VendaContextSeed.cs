@@ -10,7 +10,7 @@ using System.Linq;
 using FavoDeMel.Venda.Data.Context;
 using FavoDeMel.Venda.Domain.Models;
 
-namespace FavoDeMel.Catalogo.Api.Infrastructure
+namespace FavoDeMel.Venda.Api.Infrastructure
 {
     public class VendaContextSeed
     {
