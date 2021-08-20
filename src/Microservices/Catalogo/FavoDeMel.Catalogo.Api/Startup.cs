@@ -62,11 +62,7 @@ namespace FavoDeMel.Catalogo.Api
                 c.Swagger = _appSettings.Swagger;
             });
 
-            services.AddDbContext<CatalogoDbContext>(options =>
-            {
-                options.UseSqlServer(_appSettings.Data.CatalogoConnection);
-            });
-
+            services.AddCustomDbContext(_appSettings.Data);
             services
                  .AddLogging(loggingBuilder =>
                  {
@@ -207,6 +203,21 @@ namespace FavoDeMel.Catalogo.Api
 
     static class CustomExtensionsMethods
     {
+        public static IServiceCollection AddCustomDbContext(this IServiceCollection services, DataSettings settings)
+        {
+            services.AddEntityFrameworkSqlServer()
+                .AddDbContext<CatalogoDbContext>(options =>
+                {
+                    options.UseSqlServer(settings.CatalogoConnection,
+                                            sqlServerOptionsAction: sqlOptions =>
+                                            {
+                                                sqlOptions.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
+                                                sqlOptions.EnableRetryOnFailure(maxRetryCount: 15, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null);
+                                            });
+                });
+
+            return services;
+        }
         public static IServiceCollection AddEventBus(this IServiceCollection services, RabbitMqSettings settings)
         {
             services.AddSingleton<IEventBus, EventBusRabbitMQ>(sp =>

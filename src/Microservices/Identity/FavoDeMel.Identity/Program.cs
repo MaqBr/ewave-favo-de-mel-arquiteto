@@ -1,4 +1,3 @@
-using FavoDeMel.Catalogo.Api.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using FavoDeMel.Identity;
 using FavoDeMel.Identity.Data;
@@ -8,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using System;
 using Microsoft.Extensions.Logging;
-using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
+using FavoDeMel.Identity.Infrastructure;
 
 var configuration = GetConfiguration();
 

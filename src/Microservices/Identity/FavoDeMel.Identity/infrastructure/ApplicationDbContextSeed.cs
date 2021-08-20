@@ -12,7 +12,7 @@ using FavoDeMel.Venda.Domain.Models;
 using FavoDeMel.Identity.Data;
 using FavoDeMel.Identity.Model;
 
-namespace FavoDeMel.Catalogo.Api.Infrastructure
+namespace FavoDeMel.Identity.Infrastructure
 {
     public class ApplicationDbContextSeed
     {

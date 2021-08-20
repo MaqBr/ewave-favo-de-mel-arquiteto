@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace FavoDeMel.Catalogo.Data.EF.Migrations
+namespace FavoDeMel.Catalogo.Api.Migrations
 {
     public partial class MigracaoInicial : Migration
     {

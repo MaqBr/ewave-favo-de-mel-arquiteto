@@ -51,11 +51,7 @@ namespace FavoDeMel.Venda.Api
                 c.Swagger = _appSettings.Swagger;
             });
 
-            services.AddDbContext<VendaDbContext>(options =>
-            {
-                options.UseSqlServer(_appSettings.Data.VendaConnection);
-            });
-
+            services.AddCustomDbContext(_appSettings.Data);
             services
                  .AddLogging(loggingBuilder =>
                  {
@@ -155,7 +151,21 @@ namespace FavoDeMel.Venda.Api
 
     static class CustomExtensionsMethods
     {
-        
+        public static IServiceCollection AddCustomDbContext(this IServiceCollection services, DataSettings settings)
+        {
+            services.AddEntityFrameworkSqlServer()
+                .AddDbContext<VendaDbContext>(options =>
+                {
+                    options.UseSqlServer(settings.VendaConnection,
+                                            sqlServerOptionsAction: sqlOptions =>
+                                            {
+                                                sqlOptions.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
+                                                sqlOptions.EnableRetryOnFailure(maxRetryCount: 15, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null);
+                                            });
+                });
+
+            return services;
+        }
         public static IServiceCollection AddEventBus(this IServiceCollection services, RabbitMqSettings settings)
         {
             services.AddSingleton<IEventBus, EventBusRabbitMQ>(sp =>

@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace FavoDeMel.Catalogo.Data.EF.Migrations
+namespace FavoDeMel.Catalogo.Api.Migrations
 {
     [DbContext(typeof(CatalogoDbContext))]
     [Migration("20210811205558_MigracaoInicial")]

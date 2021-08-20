@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace FavoDeMel.Venda.Data.Migrations
+namespace FavoDeMel.Venda.Api.Migrations
 {
     [DbContext(typeof(VendaDbContext))]
     partial class VendaDbContextModelSnapshot : ModelSnapshot

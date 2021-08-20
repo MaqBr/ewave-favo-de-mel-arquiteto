@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace FavoDeMel.Catalogo.Data.EF.Migrations
+namespace FavoDeMel.Catalogo.Api.Migrations
 {
     [DbContext(typeof(CatalogoDbContext))]
     partial class CatalogoDbContextModelSnapshot : ModelSnapshot
