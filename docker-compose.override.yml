@@ -72,6 +72,14 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://0.0.0.0:80
+      - VendaDbConnection=Server=local-mssql;Database=VendaDb;User Id=sa;Password=P@ssw0rd
+      - CatalogoDbConnection=Server=local-mssql;Database=CatalogoDb;User Id=sa;Password=P@ssw0rd
+      - RABBITMQ__URL=local-rabbitmq
+      - RABBITMQ__USUARIO=guest
+      - RABBITMQ__SENHA=guest
+      - RABBITMQ__VHOST=/
+      - RABBITMQ__QUEUE=favoDeMelQueue
+      - RABBITMQ__RETRY=5
     ports:
       - "5150:80"
     volumes:
