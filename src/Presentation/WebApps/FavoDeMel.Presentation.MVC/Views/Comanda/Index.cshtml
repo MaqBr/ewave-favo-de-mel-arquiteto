@@ -15,6 +15,10 @@
 <div class="container">
     <h3>@ViewData["Title"]</h3>
     <div class="form-group">
+        <label for="email"><b>Situação:</b></label>
+        <p>@Model.ComandaStatus</p>
+    </div>
+    <div class="form-group">
         <label for="email"><b>Mesa:</b></label>
         <p>@Model.Mesa.Numero</p>
     </div>
@@ -50,7 +54,7 @@
                                         <td class="col-sm-5 col-md-5">
                                             <div class="media">
                                                 <div class="media-body">
-                                                    <h4 class="media-heading"><a asp-controller="Vitrine" asp-action="ProdutoDetalhe" asp-route-id="@item.ProdutoId">@item.ProdutoNome</a></h4>
+                                                    <h4 class="media-heading">@item.ProdutoNome</h4>
                                                 </div>
                                             </div>
                                         </td>
@@ -72,7 +76,7 @@
                                                     <input style="width: 70px" type="text" class="form-control" name="quantidade" id="quantidade" value="@item.Quantidade">
                                                 </div>
                                                 <div class="row" style="float: right">
-                                                    <button type="submit" class="btn btn-success">
+                                                    <button type="submit" class="btn btn-dark" title="Atualizar quantidade">
                                                         <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
                                                     </button>
                                                 </div>
@@ -85,7 +89,7 @@
                                             <form method="post" asp-controller="Comanda" asp-action="RemoverItem">
                                                 <input type="hidden" id="Id" name="Id" value="@item.ProdutoId" />
                                                 <input type="hidden" id="MesaId" name="MesaId" value="@Model.Mesa.MesaId" />
-                                                <button type="submit" class="btn btn-danger">
+                                                <button type="submit" class="btn btn-danger" title="Excluir">
                                                     <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                                 </button>
                                             </form>
@@ -113,29 +117,39 @@
                                 <td> </td>
                                 <td> </td>
                                 <td>
-                                    <h3>Total</h3>
+                                    <h4>Total</h4>
                                 </td>
                                 <td class="text-right">
-                                    <h3><strong>@Model.ValorTotal.ToString("C")</strong></h3>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
-                                <td>
-                                    <a asp-controller="Vitrine" asp-action="Index" asp-route-mesaId="@Model.Mesa.MesaId" class="btn btn-success">
-                                        <span class="glyphicon glyphicon-remove-circle"></span> Adicionar
-                                    </a>
-                                </td>
-                                <td>
-                                    <a asp-controller="Comanda" asp-action="ResumoDaCompra" asp-route-mesaId="@Model.Mesa.MesaId" class="btn btn-success">
-                                        <span class="glyphicon glyphicon-ok-circle"></span> Finalizar
-                                    </a>
+                                    <h4><strong>@Model.ValorTotal.ToString("C")</strong></h4>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
+
+                    <div class="text-center">
+
+                        <a asp-controller="Vitrine" asp-action="Index" asp-route-mesaId="@Model.Mesa.MesaId" class="btn btn-dark">
+                            <span class="glyphicon glyphicon-plus-sign"></span> Adicionar itens
+                        </a>
+
+                        @if (Model.ComandaStatus.Equals(ComandaStatus.Rascunho))
+                        {
+                            <a asp-controller="Comanda" asp-action="IniciarComanda" asp-route-mesaId="@Model.Mesa.MesaId" class="btn btn-dark">
+                                <span class="glyphicon glyphicon-share-alt"></span> Enviar para cozinha
+                            </a>
+                        }
+
+                        <a asp-controller="Comanda" asp-action="ResumoDaCompra" asp-route-mesaId="@Model.Mesa.MesaId" class="btn btn-dark">
+                            <span class="glyphicon glyphicon-ok-circle"></span> Fechar comanda
+                        </a>
+
+                        <a asp-controller="Comanda" asp-action="ResumoDaCompraCancelar" asp-route-mesaId="@Model.Mesa.MesaId" class="btn btn-danger">
+                            <span class="glyphicon glyphicon-remove-circle"></span> Cancelar comanda
+                        </a>
+
+                    </div>
+
+
                 }
                 else
                 {
@@ -143,8 +157,12 @@
 
                         <p>Comanda Vazia</p>
 
-                        <a asp-controller="Vitrine" asp-action="Index" asp-route-mesaId="@Model.Mesa.MesaId" class="btn btn-primary">
+                        <a asp-controller="Vitrine" asp-action="Index" asp-route-mesaId="@Model.Mesa.MesaId" class="btn btn-dark">
                             <span class="glyphicon glyphicon-plus-sign"></span> Adicionar Itens
+                        </a>
+
+                        <a asp-controller="Comanda" asp-action="ResumoDaCompra" asp-route-mesaId="@Model.Mesa.MesaId" class="btn btn-dark">
+                            <span class="glyphicon glyphicon-ok-circle"></span> Fechar comanda
                         </a>
 
                     </div>

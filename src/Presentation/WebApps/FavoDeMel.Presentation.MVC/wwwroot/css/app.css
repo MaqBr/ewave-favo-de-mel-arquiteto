@@ -79,8 +79,9 @@ a:visited {
     transition: color 0.35s;
 }
 
-    a:hover,
-    a:active {
-        color: #75B918;
-        transition: color 0.35s;
-    }
+a:hover,
+a:active {
+    color: #75B918;
+    transition: color 0.35s;
+}
+

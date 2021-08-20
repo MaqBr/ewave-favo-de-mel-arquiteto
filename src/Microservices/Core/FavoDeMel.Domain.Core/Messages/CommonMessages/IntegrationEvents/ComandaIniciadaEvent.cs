@@ -9,22 +9,14 @@ namespace FavoDeMel.Domain.Core.Messages.CommonMessages.IntegrationEvents
         public Guid MesaId { get; private set; }
         public decimal Total { get; private set; }
         public ListaProdutosComanda ProdutosComanda { get; private set; }
-        public string NomeCartao { get; private set; }
-        public string NumeroCartao { get; private set; }
-        public string ExpiracaoCartao { get; private set; }
-        public string CvvCartao { get; private set; }
 
-        public ComandaIniciadaEvent(Guid comandaId, Guid mesaId, ListaProdutosComanda itens, decimal total, string nomeCartao, string numeroCartao, string expiracaoCartao, string cvvCartao)
+        public ComandaIniciadaEvent(Guid comandaId, Guid mesaId, ListaProdutosComanda itens, decimal total)
         {
             AggregateId = comandaId;
             ComandaId = comandaId;
             MesaId = mesaId;
             ProdutosComanda = itens;
             Total = total;
-            NomeCartao = nomeCartao;
-            NumeroCartao = numeroCartao;
-            ExpiracaoCartao = expiracaoCartao;
-            CvvCartao = cvvCartao;
         }
     }
 }

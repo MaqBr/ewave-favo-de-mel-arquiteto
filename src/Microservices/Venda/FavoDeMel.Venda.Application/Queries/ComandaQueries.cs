@@ -16,41 +16,6 @@ namespace FavoDeMel.Venda.Application.Queries
             _comandaRepository = comandaRepository;
         }
 
-        public async Task<ComandaViewModel> ObterComandaCliente(Guid mesaId)
-        {
-            var comanda = await _comandaRepository.ObterComandaRascunhoPorMesaId(mesaId);
-            if (comanda == null) return null;
-
-            var comandaVM = new ComandaViewModel
-            {
-                MesaId = comanda.MesaId,
-                ValorTotal = comanda.ValorTotal,
-                ComandaId = comanda.Id,
-                ValorDesconto = comanda.Desconto,
-                SubTotal = comanda.Desconto + comanda.ValorTotal
-            };
-
-            if (comanda.VoucherId != null)
-            {
-                comandaVM.VoucherCodigo = comanda.Voucher.Codigo;
-            }
-
-            foreach (var item in comanda.ComandaItems)
-            {
-                comandaVM.Items.Add(new ComandaItemViewModel
-                {
-                    ProdutoId = item.ProdutoId,
-                    ProdutoNome = item.ProdutoNome,
-                    ItemStatus = item.ItemStatus,
-                    Quantidade = item.Quantidade,
-                    ValorUnitario = item.ValorUnitario,
-                    ValorTotal = item.ValorUnitario * item.Quantidade
-                });
-            }
-
-            return comandaVM;
-        }
-
         public async Task<ComandaViewModel> ObterComandaMesa(Guid mesaId)
         {
             var comanda = await _comandaRepository.ObterComandaRascunhoPorMesaId(mesaId);
@@ -62,7 +27,8 @@ namespace FavoDeMel.Venda.Application.Queries
                 ValorTotal = comanda.ValorTotal,
                 ComandaId = comanda.Id,
                 ValorDesconto = comanda.Desconto,
-                SubTotal = comanda.Desconto + comanda.ValorTotal
+                SubTotal = comanda.Desconto + comanda.ValorTotal,
+                ComandaStatus = comanda.ComandaStatus
             };
 
             if (comanda.VoucherId != null)

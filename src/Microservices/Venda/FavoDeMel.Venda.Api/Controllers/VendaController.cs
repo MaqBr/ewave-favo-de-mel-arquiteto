@@ -128,6 +128,28 @@ namespace FavoDeMel.Venda.Api.Controllers
         }
 
         [HttpPost]
+        [Route("iniciar")]
+        public async Task<IActionResult> IniciarComanda(IniciarComandaDTO comanda)
+        {
+            try
+            {
+                var resultado = await _comandaQueries.ObterComandaMesa(comanda.MesaId);
+
+                var command = new IniciarComandaCommand(resultado.ComandaId, resultado.MesaId.Value, comanda.Total);
+
+                await _mediatorHandler.EnviarComando(command);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Houve um erro ao iniciar a comanda {comanda}", comanda);
+                throw new Exception($"Houve um erro ao iniciar a comanda: {ex.Message}");
+            }
+
+        }
+
+        [HttpPost]
         [Route("finalizar")]
         public async Task<IActionResult> FinalizarComanda(FinalizarComandaDTO comanda)
         {

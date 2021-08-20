@@ -141,9 +141,6 @@ namespace FavoDeMel.Venda.Api
             services.AddScoped<IRequestHandler<FinalizarComandaCommand, bool>, ComandaCommandHandler>();
             services.AddScoped<IRequestHandler<AdicionarComandaCommand, bool>, ComandaCommandHandler>();
             services.AddScoped<IRequestHandler<CancelarComandaCommand, bool>, ComandaCommandHandler>();
-            services.AddScoped<IRequestHandler<CancelarProcessamentoComandaCommand, bool>, ComandaCommandHandler>();
-            services.AddScoped<IRequestHandler<CancelarProcessamentoComandaEstornarEstoqueCommand, bool>, ComandaCommandHandler>();
-
         }
 
         private void ConfigureEventBus(IApplicationBuilder app)

@@ -1,7 +1,5 @@
-﻿using FavoDeMel.Presentation.MVC.ViewModels.VendaViewModels.Enuns;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Identity;
 using FavoDeMel.Presentation.MVC.ViewModels;
 
 namespace FavoDeMel.Presentation.MVC.CatalogoViewModels.Venda.ViewModels
@@ -14,7 +12,7 @@ namespace FavoDeMel.Presentation.MVC.CatalogoViewModels.Venda.ViewModels
         public decimal ValorTotal { get; set; }
         public decimal ValorDesconto { get; set; }
         public string VoucherCodigo { get; set; }
-        public ItemStatus ItensStatus { get; set; }
+        public ComandaStatus ComandaStatus { get; set; }
         public List<ComandaItemViewModel> Items { get; set; } = new List<ComandaItemViewModel>();
     }
 

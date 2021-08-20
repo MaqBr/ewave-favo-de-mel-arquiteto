@@ -7,6 +7,11 @@ namespace WebMVC.Infrastructure
     {
         public static class Comanda
         {
+            public static string IniciarComanda(string baseUri)
+            {
+                return $"{baseUri}/api/comanda/iniciar";
+            }
+
             public static string FinalizarComanda(string baseUri)
             {
                 return $"{baseUri}/api/comanda/finalizar";

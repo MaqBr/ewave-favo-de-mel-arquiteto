@@ -9,8 +9,8 @@ namespace FavoDeMel.Catalogo.Application.IntegrationEvents.EventHandling
         public Task Handle(ComandaItemAdicionadoEvent @event)
         {
             var itemAdicionado = @event;
-            
-            //TODO: implementação após ACK
+
+            //TODO: Atualizar entidade Produto -> EstoqueService -> DebitarItemEstoque(Guid produtoId, int quantidade)
             return Task.CompletedTask;
         }
     }

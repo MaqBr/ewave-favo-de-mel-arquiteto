@@ -14,6 +14,16 @@
 
 <div class="container">
 
+    <h3>@ViewData["Title"]</h3>
+    <div class="form-group">
+        <label for="email"><b>Mesa:</b></label>
+        <p>@Model.Mesa.Numero</p>
+    </div>
+    <div class="form-group">
+        <label for="email"><b>Garçom:</b></label>
+        <p>@User.Identity.Name</p>
+    </div>
+
     <vc:summary />
 
     <div class="row">
@@ -60,15 +70,15 @@
 
                 </div>
                 <div class="col-md-8 order-md-1">
-                    <form method="post" asp-controller="Comanda" asp-action="FinalizarComanda">
-                        <h4>Confirmação de Finalização</h4>
-                        <div class="form-group">
-                            <label for="email"><b>Cliente:</b></label>
-                            <p>@Model.Mesa.MesaId</p>
-                        </div>
-                        <hr class="mb-4">
-                        <button class="btn btn-primary btn-lg btn-block" type="submit">Finalizar</button>
-                    </form>
+                    <h4>CONFIRMAÇÃO DE FECHAMENTO DE COMANDA</h4>
+                    <div class="form-group">
+                        <label for="email"><b>Mesa:</b></label>
+                        <p>@Model.Mesa.Numero</p>
+                    </div>
+                    <hr class="mb-4">
+                    <a asp-controller="Comanda" asp-action="FinalizarComanda" asp-route-mesaId="@Model.Mesa.MesaId" class="btn btn-dark btn-lg">
+                        <span class="glyphicon glyphicon-ok-circle"></span> CONFIRMAR
+                    </a>
                 </div>
             }
             else

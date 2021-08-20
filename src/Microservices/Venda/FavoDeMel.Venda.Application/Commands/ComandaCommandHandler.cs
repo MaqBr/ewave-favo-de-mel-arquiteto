@@ -23,9 +23,7 @@ namespace FavoDeMel.Venda.Application
         IRequestHandler<IniciarComandaCommand, bool>,
         IRequestHandler<FinalizarComandaCommand, bool>,
         IRequestHandler<AdicionarComandaCommand, bool>,
-        IRequestHandler<CancelarComandaCommand, bool>,
-        IRequestHandler<CancelarProcessamentoComandaEstornarEstoqueCommand, bool>,
-        IRequestHandler<CancelarProcessamentoComandaCommand, bool>
+        IRequestHandler<CancelarComandaCommand, bool>
         
     {
         private readonly IComandaRepository _comandaRepository;
@@ -71,8 +69,8 @@ namespace FavoDeMel.Venda.Application
             }
 
             comanda.AdicionarEvento(new ComandaItemAdicionadoEvent(comanda.MesaId.Value, comanda.Id, message.ProdutoId, message.Nome, message.ValorUnitario, message.Quantidade));
-            
-            //Publica em RabbitMQ para integração
+
+            //Publica em RabbitMQ para integração - subscriber em contexto de catálogo -> atualizar o estoque
             _bus.Publish(new ComandaItemAdicionadoEvent(comanda.MesaId.Value, comanda.Id, message.ProdutoId, message.Nome, message.ValorUnitario, message.Quantidade));
 
             return await _comandaRepository.UnitOfWork.Commit();
@@ -101,7 +99,7 @@ namespace FavoDeMel.Venda.Application
             comanda.AtualizarUnidades(comandaItem, message.Quantidade);
             comanda.AtualizarItemStatus(comandaItem, message.ItemStatus);
             comanda.AdicionarEvento(new ComandaProdutoAtualizadoEvent(message.MesaId, comanda.Id, message.ProdutoId, message.Quantidade, message.ItemStatus));
-            //Publica em RabbitMQ para integração
+            //Publica em RabbitMQ para integração - subscriber em contexto de catálogo -> atualizar o estoque
             _bus.Publish(new ComandaProdutoAtualizadoEvent(message.MesaId, comanda.Id, message.ProdutoId, message.Quantidade, message.ItemStatus));
             _comandaRepository.AtualizarItem(comandaItem);
             _comandaRepository.Atualizar(comanda);
@@ -131,7 +129,7 @@ namespace FavoDeMel.Venda.Application
 
             comanda.RemoverItem(comandaItem);
             comanda.AdicionarEvento(new ComandaProdutoRemovidoEvent(message.MesaId, comanda.Id, message.ProdutoId));
-            //Publica em RabbitMQ para integração
+            //Publica em RabbitMQ para integração - subscriber em contexto de catálogo -> atualizar o estoque
             _bus.Publish(new ComandaProdutoRemovidoEvent(message.MesaId, comanda.Id, message.ProdutoId));
             _comandaRepository.RemoverItem(comandaItem);
             _comandaRepository.Atualizar(comanda);
@@ -188,8 +186,10 @@ namespace FavoDeMel.Venda.Application
             comanda.ComandaItems.ForEach(i => itensList.Add(new Item { Id = i.ProdutoId, Quantidade = i.Quantidade }));
             var listaProdutosComanda = new ListaProdutosComanda { ComandaId = comanda.Id, Itens = itensList };
 
-            comanda.AdicionarEvento(new ComandaIniciadaEvent(comanda.Id, comanda.MesaId.Value, listaProdutosComanda, comanda.ValorTotal, message.NomeCartao, message.NumeroCartao, message.ExpiracaoCartao, message.CvvCartao));
-
+            comanda.AdicionarEvento(new ComandaIniciadaEvent(comanda.Id, comanda.MesaId.Value, listaProdutosComanda, comanda.ValorTotal));
+            //Publica em RabbitMQ para integração
+            //TODO: Adicionar subscriber em contexto de Vendas - notificação hub SignalR
+            //_bus.Publish(new ComandaIniciadaEvent(comanda.Id, comanda.MesaId.Value, listaProdutosComanda, comanda.ValorTotal));
             _comandaRepository.Atualizar(comanda);
             return await _comandaRepository.UnitOfWork.Commit();
         }
@@ -206,8 +206,8 @@ namespace FavoDeMel.Venda.Application
 
                 comanda.AdicionarEvento(new ComandaAdicionadaEvent(message.ComandaId));
                
-                //Publica em RabbitMQ para integração
-                _bus.Publish(new ComandaAdicionadaEvent(message.ComandaId));
+                //TODO: remover subscriber pois não é necessário notificar via SignarR
+                //_bus.Publish(new ComandaAdicionadaEvent(message.ComandaId));
                 return await _comandaRepository.UnitOfWork.Commit();
             }
             else
@@ -227,9 +227,10 @@ namespace FavoDeMel.Venda.Application
             }
 
             comanda.FinalizarComanda();
+            _comandaRepository.AtualizarMesa(message.MesaId, SituacaoMesa.Livre);
 
             comanda.AdicionarEvento(new ComandaFinalizadaEvent(message.ComandaId));
-            //Publica em RabbitMQ para integração
+            //Publica em RabbitMQ para integraçãoA - dicionar subscriber em contexto de Vendas - notificação hub SignalR
             _bus.Publish(new ComandaFinalizadaEvent(message.ComandaId));
             return await _comandaRepository.UnitOfWork.Commit();
         }
@@ -245,45 +246,11 @@ namespace FavoDeMel.Venda.Application
             }
 
             comanda.CancelarComanda();
+            _comandaRepository.AtualizarMesa(message.MesaId, SituacaoMesa.Livre);
 
             comanda.AdicionarEvento(new ComandaCanceladaEvent(message.ComandaId));
-            //Publica em RabbitMQ para integração
+            //Publica em RabbitMQ para integração - Adicionar subscriber em contexto de Vendas - notificação hub SignalR
             _bus.Publish(new ComandaCanceladaEvent(message.ComandaId));
-            return await _comandaRepository.UnitOfWork.Commit();
-        }
-
-        public async Task<bool> Handle(CancelarProcessamentoComandaEstornarEstoqueCommand message, CancellationToken cancellationToken)
-        {
-            var comanda = await _comandaRepository.ObterPorId(message.ComandaId);
-
-            if (comanda == null)
-            {
-                await _mediatorHandler.PublicarNotificacao(new DomainNotification("comanda", "Comanda não encontrado!"));
-                return false;
-            }
-
-            var itensList = new List<Item>();
-            comanda.ComandaItems.ForEach(i => itensList.Add(new Item { Id = i.ProdutoId, Quantidade = i.Quantidade }));
-            var listaProdutosComanda = new ListaProdutosComanda { ComandaId = comanda.Id, Itens = itensList };
-
-            comanda.AdicionarEvento(new ComandaProcessamentoCanceladoEvent(comanda.Id, comanda.MesaId.Value, listaProdutosComanda));
-            comanda.TornarRascunho();
-
-            return await _comandaRepository.UnitOfWork.Commit();
-        }
-        
-        public async Task<bool> Handle(CancelarProcessamentoComandaCommand message, CancellationToken cancellationToken)
-        {
-            var comanda = await _comandaRepository.ObterPorId(message.ComandaId);
-
-            if (comanda == null)
-            {
-                await _mediatorHandler.PublicarNotificacao(new DomainNotification("comanda", "Comanda não encontrado!"));
-                return false;
-            }
-
-            comanda.TornarRascunho();
-
             return await _comandaRepository.UnitOfWork.Commit();
         }
 

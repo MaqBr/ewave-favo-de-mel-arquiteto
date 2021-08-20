@@ -33,7 +33,10 @@ namespace FavoDeMel.Venda.Data.Repository
 
         public async Task<Comanda> ObterComandaRascunhoPorMesaId(Guid mesaId)
         {
-            var comanda = await _context.Comandas.FirstOrDefaultAsync(p => p.MesaId == mesaId && p.ComandaStatus == ComandaStatus.Rascunho);
+            var comanda = await _context.Comandas.FirstOrDefaultAsync(p => 
+
+            p.MesaId == mesaId && p.ComandaStatus == ComandaStatus.Rascunho || p.ComandaStatus == ComandaStatus.Iniciado);
+
             if (comanda == null) return null;
 
             await _context.Entry(comanda)

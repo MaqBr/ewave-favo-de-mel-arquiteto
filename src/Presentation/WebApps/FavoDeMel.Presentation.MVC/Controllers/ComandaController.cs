@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using FavoDeMel.Domain.Core.Communication.Mediator;
 using FavoDeMel.Domain.Core.Messages.CommonMessages.Notifications;
@@ -18,8 +19,6 @@ namespace FavoDeMel.Presentation.MVC.Controllers
         private readonly IProdutoAppService _produtoAppService;
         private readonly IComandaAppService _comandaAppService;
         private readonly IMesaAppService _mesaAppService;
-        private string returnView => User.Identity.IsAuthenticated && User.Identity.Name.Equals("cozinha")
-            ? "IndexCozinha" : "IndexGarcom";
 
         public ComandaController(INotificationHandler<DomainNotification> notifications,
                                   IProdutoAppService produtoAppService, 
@@ -35,7 +34,7 @@ namespace FavoDeMel.Presentation.MVC.Controllers
         }
 
         [Route("vizualizar-comanda/mesa/{id}")]
-        public async Task<IActionResult> IndexComandaMesa(Guid id)
+        public async Task<IActionResult> Index(Guid id)
         {
             var model = await _comandaAppService.ObterComandaMesa(id);
 
@@ -44,31 +43,6 @@ namespace FavoDeMel.Presentation.MVC.Controllers
             return View(model);
         }
 
-
-        [Route("vizualizar-comanda/garcom")]
-        public async Task<IActionResult> IndexGarcom(Guid mesaId)
-        {
-            var model = await _comandaAppService.ObterComandaMesa(mesaId);
-            
-            if (model == null) return BadRequest();
-
-            var mesa = await _mesaAppService.ObterPorId(mesaId);
-            model.Mesa = mesa;
-
-            return View(model);
-        }
-
-        [Route("vizualizar-comanda/cozinha")]
-        public async Task<IActionResult> IndexCozinha(Guid mesaId)
-        {
-            var model = await _comandaAppService.ObterComandaMesa(mesaId);
-            if (model == null) return BadRequest();
-
-            var mesa = await _mesaAppService.ObterPorId(mesaId);
-            model.Mesa = mesa;
-
-            return View(model);
-        }
 
         [HttpGet]
         [Route("nova-comanda")]
@@ -132,7 +106,7 @@ namespace FavoDeMel.Presentation.MVC.Controllers
 
             if (OperacaoValida())
             {
-                return RedirectToAction("Index", "Vitrine", new { mesaId });
+                return RedirectToAction("Index", "Comanda", new { id = mesaId });
             }
 
             TempData["Erros"] = ObterMensagensErro();
@@ -155,7 +129,7 @@ namespace FavoDeMel.Presentation.MVC.Controllers
 
             if (OperacaoValida())
             {
-                return RedirectToAction(returnView, new { mesaId });
+                return RedirectToAction("Index", "Comanda", new { id = mesaId });
             }
             
             return View("Index", await _comandaAppService.ObterComandaMesa(mesaId));
@@ -179,7 +153,7 @@ namespace FavoDeMel.Presentation.MVC.Controllers
 
             if (OperacaoValida())
             {
-                return RedirectToAction(returnView, new { mesaId });
+                return RedirectToAction("Index", "Comanda", new { id = mesaId });
             }
 
             return View("Index", await _comandaAppService.ObterComandaMesa(mesaId));
@@ -188,57 +162,91 @@ namespace FavoDeMel.Presentation.MVC.Controllers
         [Route("resumo-da-compra/finalizar")]
         public async Task<IActionResult> ResumoDaCompra(Guid mesaId)
         {
-            return View(await _comandaAppService.ObterComandaMesa(mesaId));
+            var model = await _comandaAppService.ObterComandaMesa(mesaId);
+
+            if (!model.Items.Any()) {
+                await _comandaAppService
+                    .FinalizarComanda(new FinalizarComandaDTO
+                    {
+
+                        ComandaId = model.ComandaId,
+                        MesaId = mesaId
+
+                    });
+                return RedirectToAction("Index", "Mesa", new { id = mesaId });
+            }
+
+
+            return View(model);
         }
 
         [Route("resumo-da-compra/cancelar")]
         public async Task<IActionResult> ResumoDaCompraCancelar(Guid mesaId)
         {
-            return View(await _comandaAppService.ObterComandaMesa(mesaId));
+            var model = await _comandaAppService.ObterComandaMesa(mesaId);
+            return View(model);
         }
 
-        [HttpPost]
-        [Route("finalizar-comanda")]
-        public async Task<IActionResult> FinalizarComanda(ComandaViewModel comandaViewModel)
+        [Route("iniciar-comanda")]
+        public async Task<IActionResult> IniciarComanda(Guid mesaId)
         {
-            var comanda = await _comandaAppService.ObterComandaMesa(comandaViewModel.Mesa.MesaId);
+            var comanda = await _comandaAppService.ObterComandaMesa(mesaId);
+
+            await _comandaAppService
+                    .IniciarComanda(new IniciarComandaDTO
+                    {
+                        ComandaId = comanda.ComandaId,
+                        MesaId = mesaId
+                    });
+
+            if (OperacaoValida())
+            {
+                return RedirectToAction("Index", "Mesa", new { id = mesaId });
+            }
+
+            return View("ResumoDaCompra", await _comandaAppService.ObterComandaMesa(mesaId));
+        }
+
+        [Route("finalizar-comanda")]
+        public async Task<IActionResult> FinalizarComanda(Guid mesaId)
+        {
+            var comanda = await _comandaAppService.ObterComandaMesa(mesaId);
 
             await _comandaAppService
                     .FinalizarComanda(new FinalizarComandaDTO
                     {
 
                         ComandaId = comanda.ComandaId,
-                        MesaId = comanda.Mesa.MesaId
+                        MesaId = mesaId
 
                     });
 
             if (OperacaoValida())
             {
-                 return RedirectToAction("Index", "Vitrine", new { comanda.Mesa.MesaId });
-             }
+                return RedirectToAction("Index", "Mesa", new { id = mesaId });
+            }
 
-             return View("ResumoDaCompra", await _comandaAppService.ObterComandaMesa(comandaViewModel.Mesa.MesaId));
+             return View("ResumoDaCompra", await _comandaAppService.ObterComandaMesa(mesaId));
         }
 
-        [HttpPost]
         [Route("cancelar-comanda")]
-        public async Task<IActionResult> CancelarComanda(ComandaViewModel comandaViewModel)
+        public async Task<IActionResult> CancelarComanda(Guid mesaId)
         {
-            var carrinho = await _comandaAppService.ObterComandaMesa(comandaViewModel.Mesa.MesaId);
+            var comanda = await _comandaAppService.ObterComandaMesa(mesaId);
 
             await _comandaAppService
                     .CancelarComanda(new CancelarComandaDTO
                     {
-                        ComandaId = carrinho.ComandaId,
-                        MesaId = comandaViewModel.Mesa.MesaId
+                        ComandaId = comanda.ComandaId,
+                        MesaId = mesaId
                     });
 
             if (OperacaoValida())
             {
-                return RedirectToAction("Index", "Vitrine", new { comandaViewModel.Mesa.MesaId });
+                return RedirectToAction("Index", "Mesa", new { id = mesaId });
             }
 
-            return View("ResumoDaCompraCancelar", await _comandaAppService.ObterComandaMesa(comandaViewModel.Mesa.MesaId));
+            return View("ResumoDaCompraCancelar", await _comandaAppService.ObterComandaMesa(mesaId));
         }
     }
 }

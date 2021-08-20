@@ -19,8 +19,12 @@
             <label for="Codigo">Digite o número da comanda a ser adicionada à mesa:</label>
             <input type="text" class="form-control" id="Codigo" name="Codigo">
         </div>
-        <button class="btn btn-danger">VOLTAR</button>
-        <button class="btn btn-primary" type="submit">ABRIR COMANDA</button>
+        <a asp-controller="Mesa" asp-action="Index" class="btn btn-dark">
+            <span class="glyphicon glyphicon-circle-arrow-left"></span> VOLTAR
+        </a>
+        <button type="submit" class="btn btn-dark">
+            <span class="glyphicon glyphicon-share" aria-hidden="true"></span> ABRIR COMANDA
+        </button>
     </form>
 
 </div>

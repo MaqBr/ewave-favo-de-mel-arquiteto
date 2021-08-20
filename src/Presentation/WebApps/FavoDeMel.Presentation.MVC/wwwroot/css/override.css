@@ -1,5 +1,20 @@
-﻿.esh-catalog-button {
-    background-color: #ffcc00; /* to override the style of this button ie. to make it red, use background-color: #FF001b; */
+﻿a,
+a:active,
+a:hover,
+a:visited {
+    color: #fff !important;
+    text-decoration: none;
+    transition: color 0.35s;
+}
+
+a:hover,
+a:active {
+    color: #75B918;
+    transition: color 0.35s;
+}
+
+.esh-catalog-button {
+    background-color: #ffcc00; 
 }
 
 .esh-identity-drop {

@@ -168,6 +168,11 @@ namespace FavoDeMel.Venda.Domain.Models
             ComandaStatus = ComandaStatus.Cancelado;
         }
 
+        public void EntregarComanda()
+        {
+            ComandaStatus = ComandaStatus.Entregue;
+        }
+
         public static class ComandaFactory
         {
             public static Comanda NovaComandaRascunho(Guid mesaId)

@@ -190,10 +190,8 @@
                         <div class="btn-plus"><span style="font-size: 15px">+</span></div>
                     </div>
                 </div>
-
-                <!-- Botoes de compra -->
                 <div class="section" style="padding-bottom: 20px;">
-                    <button type="submit" class="btn btn-success"><span style="margin-right: 20px" aria-hidden="true"></span> Adicionar na comanda</button>
+                    <button type="submit" class="btn btn-dark"><span style="margin-right: 20px" aria-hidden="true"></span> Adicionar na comanda</button>
                 </div>
             </form>
         </div>
@@ -205,7 +203,7 @@
 {
     <script>
         $(document).ready(function () {
-            //-- Click on detail
+
             $("ul.menu-items > li").on("click", function () {
                 $("ul.menu-items > li").removeClass("active");
                 $(this).addClass("active");
@@ -218,7 +216,6 @@
                 $(this).addClass("active");
             })
 
-            //-- Click on QUANTITY
             $(".btn-minus").on("click", function () {
                 var now = $(".section > div > input").val();
                 if ($.isNumeric(now)) {
