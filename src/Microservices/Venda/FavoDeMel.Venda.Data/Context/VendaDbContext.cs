@@ -21,9 +21,9 @@ namespace FavoDeMel.Venda.Data.Context
 
         public DbSet<Comanda> Comandas { get; set; }
         public DbSet<ComandaItem> ComandaItems { get; set; }
-        public DbSet<Voucher> Vouchers { get; set; }
         public DbSet<Mesa> Mesas { get; set; }
-
+        public DbSet<Voucher> Vouchers { get; set; }
+        
         public async Task<bool> Commit()
         {
             foreach (var entry in ChangeTracker.Entries()
@@ -50,10 +50,7 @@ namespace FavoDeMel.Venda.Data.Context
         {
             modelBuilder.Ignore<Event>();
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(VendaDbContext).Assembly);
-            foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys())) relationship.DeleteBehavior = DeleteBehavior.ClientSetNull;
 
-            modelBuilder.HasSequence<int>("MinhaSequencia").StartsAt(1000).IncrementsBy(1);
-            base.OnModelCreating(modelBuilder);
         }
     }
 }

@@ -63,9 +63,6 @@ services:
   favodemel.sqlserver:
     image: mcr.microsoft.com/mssql/server:2019-latest
     container_name: local-mssql
-    build:
-      context: .
-      dockerfile: src/Scripts/Dockerfile
 
   favodemel.elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.9.2

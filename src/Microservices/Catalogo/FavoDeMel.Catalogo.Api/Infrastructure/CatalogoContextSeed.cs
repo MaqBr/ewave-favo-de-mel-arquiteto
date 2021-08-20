@@ -4,9 +4,11 @@ using Polly;
 using Polly.Retry;
 using System;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
 using FavoDeMel.Catalogo.Data.EF.Context;
+using System.Collections.Generic;
+using FavoDeMel.Catalogo.Domain;
+using System.Linq;
 
 namespace FavoDeMel.Catalogo.Api.Infrastructure
 {
@@ -18,16 +20,12 @@ namespace FavoDeMel.Catalogo.Api.Infrastructure
 
             await policy.ExecuteAsync(async () =>
             {
-
-                var contentRootPath = env.ContentRootPath;
-
-
-                using (context)
+                if (!context.Categorias.Any())
                 {
-                    context.Database.Migrate();
+                    await context.Categorias.AddRangeAsync(ObterSeedCategorias());
+                    await context.SaveChangesAsync();
 
-                    //TODO:
-
+                    await context.Produtos.AddRangeAsync(ObterSeedProdutos(context.Categorias.ToList()));
                     await context.SaveChangesAsync();
                 }
             });
@@ -46,5 +44,25 @@ namespace FavoDeMel.Catalogo.Api.Infrastructure
                 );
         }
 
+
+        private IEnumerable<Categoria> ObterSeedCategorias()
+        {
+            return new List<Categoria>()
+            {
+                new Categoria("Massas", 102),
+                new Categoria("Bebidas", 101)
+            };
+        }
+
+        private IEnumerable<Produto> ObterSeedProdutos(List<Categoria> categorias)
+        {
+            return new List<Produto>()
+            {
+                new Produto("Talharim (Nero Di Seppia - Tinta de Lula)", "Talharim (Nero Di Seppia - Tinta de Lula)", true, 20, categorias[0].Id, DateTime.Now, "produto-talharim-tinta-lula.png", null, 100),
+                new Produto("Nhoque de Mandioquinha", "Nhoque de Mandioquinha", true, 20, categorias[0].Id, DateTime.Now, "produto-nhoque-mandioquinha.png", null, 100),
+                new Produto("Parpadelle com tomatinho", "Parpadelle com tomatinho", true, 20, categorias[0].Id, DateTime.Now, "produto-parpadelle-com-tomatinho.png", null, 100),
+                new Produto("Nhoque de Mandioquinha sem farinha", "Nhoque de Mandioquinha sem farinha", true, 20, categorias[0].Id, DateTime.Now, "produto-nhoque-mandioquinha2.png", null, 100),
+            };
+        }
     }
 }

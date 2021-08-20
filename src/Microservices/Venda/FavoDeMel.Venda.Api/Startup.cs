@@ -26,15 +26,18 @@ using FavoDeMel.Venda.Data.Repository;
 using FavoDeMel.Venda.Application.Events;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using HealthChecks.UI.Client;
+using System.Reflection;
+using System;
 
 namespace FavoDeMel.Venda.Api
 {
     public class Startup
     {
         private readonly AppSettings _appSettings;
-
+        public IConfiguration Configuration { get; }
         public Startup(IConfiguration configuration)
         {
+            Configuration = configuration;
             _appSettings = configuration.GetAppSettings();
         }
 
@@ -70,7 +73,6 @@ namespace FavoDeMel.Venda.Api
                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
 
             RegisterServices(services);
-
             services.AddAuthentication("Bearer")
                 .AddJwtBearer("Bearer",
                     options =>
@@ -153,7 +155,7 @@ namespace FavoDeMel.Venda.Api
 
     static class CustomExtensionsMethods
     {
-
+        
         public static IServiceCollection AddEventBus(this IServiceCollection services, RabbitMqSettings settings)
         {
             services.AddSingleton<IEventBus, EventBusRabbitMQ>(sp =>

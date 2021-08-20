@@ -24,9 +24,6 @@ namespace FavoDeMel.Identity
         {
             _configuration = configuration;
         }
-
-        
-
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();

@@ -23,9 +23,10 @@ namespace FavoDeMel.Venda.Domain.Models
         public Voucher Voucher { get; private set; }
         public Mesa Mesa { get; private set; }
         
-        public Comanda(Guid mesaId, bool voucherUtilizado, decimal desconto, decimal valorTotal)
+        public Comanda(Guid mesaId, string codigo, bool voucherUtilizado, decimal desconto, decimal valorTotal)
         {
             MesaId = mesaId;
+            Codigo = codigo;
             VoucherUtilizado = voucherUtilizado;
             Desconto = desconto;
             ValorTotal = valorTotal;

@@ -1,4 +1,7 @@
-﻿using System.Text;
+﻿using System;
+using System.Reflection;
+using System.Text;
+using FavoDeMel.Identity;
 using FavoDeMel.Identity.Data;
 using FavoDeMel.IdentityExtensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -16,7 +19,12 @@ namespace FavoDeMel.IdentityConfiguration
             IConfiguration configuration)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("IdentityDbConnection")));
+                    options.UseSqlServer(configuration.GetConnectionString("IdentityDbConnection"),
+                    sqlServerOptionsAction: sqlOptions =>
+                    {
+                        sqlOptions.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
+                                    sqlOptions.EnableRetryOnFailure(maxRetryCount: 15, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null);
+                    }));
 
             services.AddDefaultIdentity<IdentityUser>()
                 .AddRoles<IdentityRole>()

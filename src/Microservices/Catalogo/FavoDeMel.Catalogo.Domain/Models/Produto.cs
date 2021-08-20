@@ -17,7 +17,7 @@ namespace FavoDeMel.Catalogo.Domain
         public Categoria Categoria { get; private set; }
 
         protected Produto() { }
-        public Produto(string nome, string descricao, bool ativo, decimal valor, Guid categoriaId, DateTime dataCadastro, string imagem, Dimensoes dimensoes)
+        public Produto(string nome, string descricao, bool ativo, decimal valor, Guid categoriaId, DateTime dataCadastro, string imagem, Dimensoes dimensoes, int quantidadeEstoque = 0)
         {
             CategoriaId = categoriaId;
             Nome = nome;
@@ -27,7 +27,7 @@ namespace FavoDeMel.Catalogo.Domain
             DataCadastro = dataCadastro;
             Imagem = imagem;
             Dimensoes = dimensoes;
-
+            QuantidadeEstoque = quantidadeEstoque;
             Validar();
         }
 

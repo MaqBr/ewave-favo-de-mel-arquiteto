@@ -7,6 +7,7 @@ using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using FavoDeMel.Catalogo.Api.Infrastructure;
+using FavoDeMel.Catalogo.Api;
 
 namespace Catalogo.FunctionalTests
 {
@@ -23,7 +24,7 @@ namespace Catalogo.FunctionalTests
                 {
                     cb.AddJsonFile("appsettings.json", optional: false)
                     .AddEnvironmentVariables();
-                }).UseStartup<CatalogoTestsStartup>();
+                }).UseStartup<Startup>();
 
             var testServer = new TestServer(hostBuilder);
 
@@ -43,18 +44,13 @@ namespace Catalogo.FunctionalTests
 
         public static class Get
         {
-            public static string Accounts = "api/v1/Get";
+            public static string ObterProdutos = "api/produto/vitrine";
 
-            public static string OrderBy(int id)
+            public static string ProdutoDetalhe(int id)
             {
-                return $"api/v1/Get/{id}";
+                return $"api/produto/produto-detalhe/{id}";
             }
         }
 
-        public static class Put
-        {
-            public static string CancelOrder = "api/v1/orders/cancel";
-            public static string ShipOrder = "api/v1/orders/ship";
-        }
     }
 }

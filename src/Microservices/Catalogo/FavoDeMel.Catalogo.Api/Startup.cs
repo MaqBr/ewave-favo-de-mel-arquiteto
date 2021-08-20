@@ -37,6 +37,7 @@ using FavoDeMel.Domain.Core.Messages.CommonMessages.IntegrationEvents;
 using FavoDeMel.Catalogo.Application.IntegrationEvents.EventHandling;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using HealthChecks.UI.Client;
+using System.Reflection;
 
 namespace FavoDeMel.Catalogo.Api
 {
@@ -83,14 +84,6 @@ namespace FavoDeMel.Catalogo.Api
             services.AddControllers().AddJsonOptions(x =>
                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
 
-            services.AddAuthentication("Bearer")
-                .AddJwtBearer("Bearer",
-                    options =>
-                    {
-                        options.Authority = _appSettings.IdentityProvider.AuthorityUri;
-                        options.Audience = _appSettings.IdentityProvider.Scopes[0];
-                        options.RequireHttpsMetadata = false;
-                    });
             services.AddHealthChecks();
             services.ConfigureSwagger(_appSettings.Swagger);
         }
@@ -267,29 +260,12 @@ namespace FavoDeMel.Catalogo.Api
         {
             services.AddSwaggerGen(c =>
             {
-                
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = settings.Title, Version = settings.Version });
-                // add JWT Authentication
-                var securityScheme = new OpenApiSecurityScheme
-                {
-                    Name = settings.Autenticacao.Name,
-                    Description = settings.Autenticacao.Description,
-                    In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.Http,
-                    Scheme = "bearer", // must be lower case
-                    BearerFormat = "JWT",
-                    Reference = new OpenApiReference
-                    {
-                        Id = "Bearer",
-                        Type = ReferenceType.SecurityScheme
-                    }
-                };
-                c.AddSecurityDefinition(securityScheme.Reference.Id, securityScheme);
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
-                    {securityScheme, new string[] { }}
+                c.SwaggerDoc("v1", new OpenApiInfo 
+                { 
+                   Title = settings.Title, 
+                   Version = settings.Version,
+                   Description = settings.Description
                 });
-
             });
 
             return services;
