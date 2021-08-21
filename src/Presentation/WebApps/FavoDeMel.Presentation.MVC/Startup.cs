@@ -99,9 +99,6 @@ namespace FavoDeMel.Presentation.MVC
             services.AddHttpClient<IComandaAppService, ComandaAppService>()
                 .SetHandlerLifetime(TimeSpan.FromMinutes(5));
 
-            services.AddHttpClient<ICozinhaAppService, CozinhaAppService>()
-                .SetHandlerLifetime(TimeSpan.FromMinutes(5));
-
             services.AddHttpClient<IAuthAppService, AuthAppService>()
                 .SetHandlerLifetime(TimeSpan.FromMinutes(5));
 

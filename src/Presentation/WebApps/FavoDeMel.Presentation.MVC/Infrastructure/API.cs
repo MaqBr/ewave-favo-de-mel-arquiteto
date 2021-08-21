@@ -28,6 +28,11 @@ namespace WebMVC.Infrastructure
                 return $"{baseUri}/api/comanda/iniciar";
             }
 
+            public static string EntregarComanda(string baseUri)
+            {
+                return $"{baseUri}/api/comanda/entregar";
+            }
+
             public static string FinalizarComanda(string baseUri)
             {
                 return $"{baseUri}/api/comanda/finalizar";

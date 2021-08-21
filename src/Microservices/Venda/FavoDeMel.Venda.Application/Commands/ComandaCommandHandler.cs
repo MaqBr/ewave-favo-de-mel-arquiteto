@@ -21,6 +21,7 @@ namespace FavoDeMel.Venda.Application
         IRequestHandler<RemoverItemComandaCommand, bool>,
         IRequestHandler<AplicarVoucherComandaCommand, bool>,
         IRequestHandler<IniciarComandaCommand, bool>,
+        IRequestHandler<EntregarComandaCommand, bool>,
         IRequestHandler<FinalizarComandaCommand, bool>,
         IRequestHandler<AdicionarComandaCommand, bool>,
         IRequestHandler<CancelarComandaCommand, bool>
@@ -187,6 +188,25 @@ namespace FavoDeMel.Venda.Application
             var listaProdutosComanda = new ListaProdutosComanda { ComandaId = comanda.Id, Itens = itensList };
 
             comanda.AdicionarEvento(new ComandaIniciadaEvent(comanda.Id, comanda.MesaId.Value, listaProdutosComanda, comanda.ValorTotal));
+            //Publica em RabbitMQ para integração
+            //TODO: Adicionar subscriber em contexto de Vendas - notificação hub SignalR
+            //_bus.Publish(new ComandaIniciadaEvent(comanda.Id, comanda.MesaId.Value, listaProdutosComanda, comanda.ValorTotal));
+            _comandaRepository.Atualizar(comanda);
+            return await _comandaRepository.UnitOfWork.Commit();
+        }
+
+        public async Task<bool> Handle(EntregarComandaCommand message, CancellationToken cancellationToken)
+        {
+            if (!ValidarComando(message)) return false;
+
+            var comanda = await _comandaRepository.ObterComandaPorMesaId(message.MesaId);
+            comanda.EntregarComanda();
+
+            var itensList = new List<Item>();
+            comanda.ComandaItems.ForEach(i => itensList.Add(new Item { Id = i.ProdutoId, Quantidade = i.Quantidade }));
+            var listaProdutosComanda = new ListaProdutosComanda { ComandaId = comanda.Id, Itens = itensList };
+
+            comanda.AdicionarEvento(new ComandaEntregueEvent(comanda.Id, comanda.MesaId.Value, listaProdutosComanda, comanda.ValorTotal));
             //Publica em RabbitMQ para integração
             //TODO: Adicionar subscriber em contexto de Vendas - notificação hub SignalR
             //_bus.Publish(new ComandaIniciadaEvent(comanda.Id, comanda.MesaId.Value, listaProdutosComanda, comanda.ValorTotal));

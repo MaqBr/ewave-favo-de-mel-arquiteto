@@ -10,7 +10,6 @@ namespace FavoDeMel.Presentation.MVC.ViewModels.VendaViewModels.Enuns
         Aberto = 1,
         EmPreparo = 2,
         Pronto = 3,
-        Finalizado = 4,
-        Cancelado = 5
+        Cancelado = 4
     }
 }

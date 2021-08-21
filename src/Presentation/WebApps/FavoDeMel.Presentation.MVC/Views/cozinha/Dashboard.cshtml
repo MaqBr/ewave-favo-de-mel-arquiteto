@@ -8,7 +8,7 @@
     <p></p>
     <h3>@ViewData["Title"]</h3>
     <div class="form-group">
-        <label><b>Garçom:</b> @User.Identity.Name</label>
+        <label><b>Cozinha:</b> @User.Identity.Name</label>
     </div>
 
     <div class="form-group">
@@ -41,10 +41,6 @@
     {
         <div class="alert alert-warning text-center">
             <p>NENHUMA COMANDA ABERTA</p>
-
-            <a asp-controller="Mesa" asp-action="Index" class="btn btn-dark">
-                <span class="glyphicon glyphicon-circle-arrow-left"></span> Voltar
-            </a>
         </div>
     }
 </div>

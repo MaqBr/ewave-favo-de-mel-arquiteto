@@ -13,6 +13,7 @@ namespace FavoDeMel.Presentation.MVC.Services
         Task<ComandaViewModel> ObterComandaMesa(Guid mesaId);
         Task AdicionarComanda(AdicionarComandaDTO comanda);
         Task IniciarComanda(IniciarComandaDTO comanda);
+        Task EntregarComanda(EntregarComandaDTO comanda);
         Task FinalizarComanda(FinalizarComandaDTO comanda);
         Task CancelarComanda(CancelarComandaDTO comanda);
         Task AdicionarItemComanda(AdicionarItemComandaDTO itemComanda);

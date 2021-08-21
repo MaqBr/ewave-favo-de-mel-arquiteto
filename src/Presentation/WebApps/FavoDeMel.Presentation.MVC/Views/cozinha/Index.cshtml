@@ -21,7 +21,7 @@
         <p>@Model.Mesa.Numero</p>
     </div>
     <div class="form-group">
-        <label for="email"><b>Garçom:</b></label>
+        <label for="email"><b>Cozinha:</b></label>
         <p>@User.Identity.Name</p>
     </div>
     <div class="row">
@@ -30,83 +30,72 @@
             <vc:summary />
 
             @{
-                    <table class="table">
-                        <thead>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Produto</th>
+                        <th>Situação</th>
+                        <th>Quantidade</th>
+                        <th>Gerenciar</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @{
+                        foreach (var item in Model.Items)
+                        {
                             <tr>
-                                <th>Produto</th>
-                                <th>Situação</th>
-                                <th>Gerenciar</th>
-                                <th> </th>
+                                <td class="col-sm-4 col-md-4">
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <h4 class="media-heading">@item.ProdutoNome</h4>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td class="col-sm-1 col-md-1">
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <p>@item.ItemStatus</p>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td class="col-sm-2 col-md-2" style="text-align: center">
+                                    @item.Quantidade
+                                </td>
+
+                                <td class="col-sm-5 col-md-5" style="text-align: center">
+
+                                    <form method="post" asp-controller="Cozinha" asp-action="AtualizarItem">
+                                        <input type="hidden" id="Id" name="Id" value="@item.ProdutoId" />
+                                        <input type="hidden" id="MesaId" name="MesaId" value="@Model.Mesa.MesaId" />
+                                        <input type="hidden" id="quantidade" name="quantidade" value="@item.Quantidade" />
+                                        <select id="itemStatus" name="itemStatus" asp-for="@item.ItemStatus" asp-items="Html.GetEnumSelectList<FavoDeMel.Presentation.MVC.ViewModels.VendaViewModels.Enuns.ItemStatus>()">@item.ItemStatus</select>
+                                        <div class="row" style="float: right">
+                                            <button type="submit" class="btn btn-dark" title="Atualizar situação">
+                                                <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                                            </button>
+                                        </div>
+                                    </form>
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody>
+                        }
+                    }
+                </tbody>
+            </table>
 
-                            @{
-                                foreach (var item in Model.Items)
-                                {
-                                    <tr>
-                                        <td class="col-sm-5 col-md-5">
-                                            <div class="media">
-                                                <div class="media-body">
-                                                    <h4 class="media-heading">@item.ProdutoNome</h4>
-                                                </div>
-                                            </div>
-                                        </td>
+            <div class="text-center">
 
-                                        <td class="col-sm-5 col-md-5">
-                                            <div class="media">
-                                                <div class="media-body">
-                                                    <p>@item.ItemStatus</p>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="col-sm-2 col-md-2" style="text-align: center">
+                <a asp-controller="Cozinha" asp-action="EntregarComanda" asp-route-mesaId="@Model.Mesa.MesaId" class="btn btn-dark">
+                    <span class="glyphicon glyphicon-share-alt"></span> Enviar para o garçom
+                </a>
 
-                                            <form method="post" asp-controller="Comanda" asp-action="AtualizarItem">
-                                                <input type="hidden" id="Id" name="Id" value="@item.ProdutoId" />
-                                                <input type="hidden" id="MesaId" name="MesaId" value="@Model.Mesa.MesaId" />
-                                                <input type="hidden" id="itemStatus" name="itemStatus" value="@item.ItemStatus" />
-                                                <div class="row" style="float: left">
-                                                    <input style="width: 70px" type="text" class="form-control" name="quantidade" id="quantidade" value="@item.Quantidade">
-                                                </div>
-                                                <div class="row" style="float: right">
-                                                    <button type="submit" class="btn btn-dark" title="Atualizar quantidade">
-                                                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
-                                                    </button>
-                                                </div>
-                                            </form>
-                                        </td>
+                <a asp-controller="Cozinha" asp-action="ResumoDaCompraCancelar" asp-route-mesaId="@Model.Mesa.MesaId" class="btn btn-danger">
+                    <span class="glyphicon glyphicon-remove-circle"></span> Cancelar comanda
+                </a>
 
-                                        <td class="col-sm-1 col-md-1">
-                                            <form method="post" asp-controller="Comanda" asp-action="RemoverItem">
-                                                <input type="hidden" id="Id" name="Id" value="@item.ProdutoId" />
-                                                <input type="hidden" id="MesaId" name="MesaId" value="@Model.Mesa.MesaId" />
-                                                <button type="submit" class="btn btn-danger" title="Excluir">
-                                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                                </button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                }
-                            }
-                        </tbody>
-                    </table>
-
-                    <div class="text-center">
-
-                        <a asp-controller="Vitrine" asp-action="Index" asp-route-mesaId="@Model.Mesa.MesaId" class="btn btn-dark">
-                            <span class="glyphicon glyphicon-plus-sign"></span> Adicionar itens
-                        </a>
-
-                        <a asp-controller="Cozinha" asp-action="EntregarComanda" asp-route-mesaId="@Model.Mesa.MesaId" class="btn btn-dark">
-                            <span class="glyphicon glyphicon-share-alt"></span> Enviar para o garçom
-                        </a>
-
-                        <a asp-controller="Cozinha" asp-action="ResumoDaCompraCancelar" asp-route-mesaId="@Model.Mesa.MesaId" class="btn btn-danger">
-                            <span class="glyphicon glyphicon-remove-circle"></span> Cancelar comanda
-                        </a>
-
-                    </div>
+            </div>
 
             }
         </div>

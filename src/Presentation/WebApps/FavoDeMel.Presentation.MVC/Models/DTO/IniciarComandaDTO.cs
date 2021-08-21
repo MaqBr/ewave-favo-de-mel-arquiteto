@@ -12,6 +12,13 @@ namespace FavoDeMel.Presentation.MVC.Models.DTO
         public decimal Total { get; set; }
     }
 
+    public class EntregarComandaDTO
+    {
+        public Guid ComandaId { get; set; }
+        public Guid MesaId { get; set; }
+        public decimal Total { get; set; }
+    }
+
     public class FinalizarComandaDTO
     {
         public Guid ComandaId { get; set; }

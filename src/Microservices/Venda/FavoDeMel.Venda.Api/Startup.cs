@@ -136,6 +136,7 @@ namespace FavoDeMel.Venda.Api
             services.AddScoped<IRequestHandler<RemoverItemComandaCommand, bool>, ComandaCommandHandler>();
             services.AddScoped<IRequestHandler<AplicarVoucherComandaCommand, bool>, ComandaCommandHandler>();
             services.AddScoped<IRequestHandler<IniciarComandaCommand, bool>, ComandaCommandHandler>();
+            services.AddScoped<IRequestHandler<EntregarComandaCommand, bool>, ComandaCommandHandler>();
             services.AddScoped<IRequestHandler<FinalizarComandaCommand, bool>, ComandaCommandHandler>();
             services.AddScoped<IRequestHandler<AdicionarComandaCommand, bool>, ComandaCommandHandler>();
             services.AddScoped<IRequestHandler<CancelarComandaCommand, bool>, ComandaCommandHandler>();

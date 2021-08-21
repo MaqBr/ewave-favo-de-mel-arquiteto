@@ -132,6 +132,23 @@ namespace FavoDeMel.Presentation.MVC.Services
             response.EnsureSuccessStatusCode();
         }
 
+        public async Task EntregarComanda(EntregarComandaDTO comanda)
+        {
+            var uri = API.Comanda.EntregarComanda(_remoteServiceBaseUrl);
+
+            var comandaContent = new StringContent(JsonConvert.SerializeObject(comanda),
+                System.Text.Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PostAsync(uri, comandaContent);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.InternalServerError)
+            {
+                throw new Exception("Error ao entregar a comanda do produto.");
+            }
+
+            response.EnsureSuccessStatusCode();
+        }
+
         public async Task FinalizarComanda(FinalizarComandaDTO comanda)
         {
             var uri = API.Comanda.FinalizarComanda(_remoteServiceBaseUrl);
