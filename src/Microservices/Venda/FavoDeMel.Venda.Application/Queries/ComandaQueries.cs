@@ -18,8 +18,9 @@ namespace FavoDeMel.Venda.Application.Queries
 
         public async Task<ComandaViewModel> ObterComandaMesa(Guid mesaId)
         {
-            var comanda = await _comandaRepository.ObterComandaRascunhoPorMesaId(mesaId);
-            if (comanda == null) return null;
+            var comanda = await _comandaRepository.ObterComandaPorMesaId(mesaId);
+
+            if (comanda == null) return new ComandaViewModel();
 
             var comandaVM = new ComandaViewModel
             {
@@ -93,14 +94,13 @@ namespace FavoDeMel.Venda.Application.Queries
 
         public async Task<IEnumerable<ComandaViewModel>> ObterComandaStatus(ComandaStatus status)
         {
+            var comandasView = new List<ComandaViewModel>();
             var comandas = await _comandaRepository.ObterListaPorStatus(status);
 
             comandas = comandas.Where(p => p.ComandaStatus == status)
                 .OrderByDescending(p => p.Codigo);
 
-            if (!comandas.Any()) return null;
-
-            var comandasView = new List<ComandaViewModel>();
+            if (!comandas.Any()) return comandasView;
 
             foreach (var comanda in comandas)
             {
@@ -110,7 +110,13 @@ namespace FavoDeMel.Venda.Application.Queries
                     ValorTotal = comanda.ValorTotal,
                     ComandaStatus = comanda.ComandaStatus,
                     Codigo = comanda.Codigo,
-                    DataCadastro = comanda.DataCadastro
+                    DataCadastro = comanda.DataCadastro,
+                    Mesa = new MesaViewModel 
+                                {   MesaId = comanda.Mesa.Id, 
+                                    Numero = comanda.Mesa.Numero, 
+                                    DataCriacao = comanda.Mesa.DataCriacao, 
+                                    Situacao = comanda.Mesa.Situacao
+                                }
                 });
             }
 

@@ -1,4 +1,4 @@
-﻿namespace FavoDeMel.Presentation.MVC.CatalogoViewModels.Venda.ViewModels
+﻿namespace FavoDeMel.Presentation.MVC.Venda.ViewModels
 {
     public class ComandaPagamentoViewModel
     {

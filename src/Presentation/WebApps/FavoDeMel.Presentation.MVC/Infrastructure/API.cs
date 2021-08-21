@@ -1,12 +1,13 @@
 ﻿using FavoDeMel.Presentation.MVC.Models.DTO;
+using FavoDeMel.Presentation.MVC.ViewModels;
 using System;
 
 namespace WebMVC.Infrastructure
 {
     public static class API
     {
-        public static class Comanda
-        {
+        public static class Comanda { 
+
             public static string IniciarComanda(string baseUri)
             {
                 return $"{baseUri}/api/comanda/iniciar";
@@ -27,7 +28,7 @@ namespace WebMVC.Infrastructure
                 return $"{baseUri}/api/comanda/mesa/{mesaId}";
             }
 
-            public static string ObterComandaStatus(string baseUri, int status)
+            public static string ObterComandaStatus(string baseUri, ComandaStatus status)
             {
                 return $"{baseUri}/api/comanda/status/{status}";
             }

@@ -42,3 +42,4 @@ C:\git\ewave-favo-de-mel-arquiteto\src\BuildingBlocks\WebHostCustomization\obj\D
 C:\git\ewave-favo-de-mel-arquiteto\src\BuildingBlocks\WebHostCustomization\obj\Debug\net5.0\ref\WebHostCustomization.dll
 C:\git\ewave-favo-de-mel-arquiteto\src\BuildingBlocks\WebHostCustomization\obj\Debug\net5.0\WebHostCustomization.pdb
 C:\git\ewave-favo-de-mel-arquiteto\src\BuildingBlocks\WebHostCustomization\obj\Debug\net5.0\WebHostCustomization.genruntimeconfig.cache
+C:\git\ewave-favo-de-mel-arquiteto\src\BuildingBlocks\WebHostCustomization\obj\Debug\net5.0\WebHostCustomization.csproj.AssemblyReference.cache

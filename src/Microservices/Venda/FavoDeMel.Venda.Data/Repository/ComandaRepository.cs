@@ -28,14 +28,23 @@ namespace FavoDeMel.Venda.Data.Repository
 
         public async Task<IEnumerable<Comanda>> ObterListaPorStatus(ComandaStatus status)
         {
-            return await _context.Comandas.AsNoTracking().Where(p => p.ComandaStatus == status).ToListAsync();
+            var comandas = await _context.Comandas.Where(p => p.ComandaStatus == status).ToListAsync();
+
+            foreach (var comanda in comandas)
+            {
+                if (comanda.MesaId != null)
+                {
+                    await _context.Entry(comanda)
+                        .Reference(i => i.Mesa).LoadAsync();
+                }
+            }
+
+            return comandas;
         }
 
-        public async Task<Comanda> ObterComandaRascunhoPorMesaId(Guid mesaId)
+        public async Task<Comanda> ObterComandaPorMesaId(Guid mesaId)
         {
-            var comanda = await _context.Comandas.FirstOrDefaultAsync(p => 
-
-            p.MesaId == mesaId && p.ComandaStatus == ComandaStatus.Rascunho || p.ComandaStatus == ComandaStatus.Iniciado);
+            var comanda = await _context.Comandas.FirstOrDefaultAsync(p => p.MesaId == mesaId);
 
             if (comanda == null) return null;
 

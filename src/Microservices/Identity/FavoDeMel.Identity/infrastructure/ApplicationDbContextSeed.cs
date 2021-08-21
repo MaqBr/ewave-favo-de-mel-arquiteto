@@ -11,6 +11,8 @@ using FavoDeMel.Venda.Data.Context;
 using FavoDeMel.Venda.Domain.Models;
 using FavoDeMel.Identity.Data;
 using FavoDeMel.Identity.Model;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
 
 namespace FavoDeMel.Identity.Infrastructure
 {
@@ -25,6 +27,8 @@ namespace FavoDeMel.Identity.Infrastructure
                 if (!context.Users.Any())
                 {
                     await context.Users.AddRangeAsync(ObterUsuarios());
+                    await context.SaveChangesAsync();
+                    await context.UserClaims.AddRangeAsync(ObterClaimsUsuarios());
                     await context.SaveChangesAsync();
                 }
             });
@@ -78,6 +82,29 @@ namespace FavoDeMel.Identity.Infrastructure
                 };
 
             return new List<ApplicationUser> { garcom, cozinheiro };
+        }
+
+
+        private IEnumerable<IdentityUserClaim<string>> ObterClaimsUsuarios()
+        {
+            var claimsUsuarios = new List<IdentityUserClaim<string>>
+            {
+                new IdentityUserClaim<string>
+                {
+                    UserId = "53d600db-27df-4de2-b785-689000a87802",
+                    ClaimType = "Atendimento",
+                    ClaimValue = "Administrador"
+                },
+
+               new IdentityUserClaim<string>
+                {
+                    UserId = "d952c834-8802-47ba-bf40-6c197d74dad0",
+                    ClaimType = "Cozinha",
+                    ClaimValue = "Administrador"
+                }
+            };
+
+            return claimsUsuarios;
         }
     }
 }

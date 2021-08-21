@@ -42,7 +42,7 @@ namespace FavoDeMel.Venda.Application
         {
             if (!ValidarComando(message)) return false;
 
-            var comanda = await _comandaRepository.ObterComandaRascunhoPorMesaId(message.MesaId);
+            var comanda = await _comandaRepository.ObterComandaPorMesaId(message.MesaId);
             var comandaItem = new ComandaItem(message.ProdutoId, message.Nome, message.Quantidade, message.ValorUnitario);
 
             if (comanda == null)
@@ -80,7 +80,7 @@ namespace FavoDeMel.Venda.Application
         {
             if (!ValidarComando(message)) return false;
 
-            var comanda = await _comandaRepository.ObterComandaRascunhoPorMesaId(message.MesaId);
+            var comanda = await _comandaRepository.ObterComandaPorMesaId(message.MesaId);
 
             if (comanda == null)
             {
@@ -111,7 +111,7 @@ namespace FavoDeMel.Venda.Application
         {
             if (!ValidarComando(message)) return false;
 
-            var comanda = await _comandaRepository.ObterComandaRascunhoPorMesaId(message.MesaId);
+            var comanda = await _comandaRepository.ObterComandaPorMesaId(message.MesaId);
 
             if (comanda == null)
             {
@@ -141,7 +141,7 @@ namespace FavoDeMel.Venda.Application
         {
             if (!ValidarComando(message)) return false;
 
-            var comanda = await _comandaRepository.ObterComandaRascunhoPorMesaId(message.MesaId);
+            var comanda = await _comandaRepository.ObterComandaPorMesaId(message.MesaId);
 
             if (comanda == null)
             {
@@ -179,7 +179,7 @@ namespace FavoDeMel.Venda.Application
         {
             if (!ValidarComando(message)) return false;
 
-            var comanda = await _comandaRepository.ObterComandaRascunhoPorMesaId(message.MesaId);
+            var comanda = await _comandaRepository.ObterComandaPorMesaId(message.MesaId);
             comanda.IniciarComanda();
 
             var itensList = new List<Item>();

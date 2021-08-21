@@ -16,6 +16,7 @@ namespace FavoDeMel.Presentation.MVC.Controllers
     {
         private readonly ILogger<UsuarioController> _logger;
         private readonly IAuthAppService _authAppService;
+        
         public UsuarioController(ILogger<UsuarioController> logger, IAuthAppService authAppService)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
@@ -74,8 +75,12 @@ namespace FavoDeMel.Presentation.MVC.Controllers
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, usuarioAutenticado.Data.UserToken.Email),
+                new Claim(ClaimTypes.NameIdentifier, usuarioAutenticado.Data.UserToken.Id)
             };
 
+            foreach (var claim in usuarioAutenticado.Data.UserToken.Claims)
+                claims.Add(new Claim(claim.Type, claim.Value));
+                
             var identidadeDeUsuario = new ClaimsIdentity(claims, "Email");
             var claimPrincipal = new ClaimsPrincipal(identidadeDeUsuario);
 

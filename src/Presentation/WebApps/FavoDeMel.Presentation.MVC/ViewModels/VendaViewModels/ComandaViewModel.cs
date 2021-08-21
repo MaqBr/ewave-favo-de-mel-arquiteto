@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using FavoDeMel.Presentation.MVC.ViewModels;
 
-namespace FavoDeMel.Presentation.MVC.CatalogoViewModels.Venda.ViewModels
+namespace FavoDeMel.Presentation.MVC.Venda.ViewModels
 {
     public class ComandaViewModel
     {
         public Guid ComandaId { get; set; }
+        public string Codigo { get; set; }
         public MesaViewModel Mesa { get; set; }
         public decimal SubTotal { get; set; }
         public decimal ValorTotal { get; set; }

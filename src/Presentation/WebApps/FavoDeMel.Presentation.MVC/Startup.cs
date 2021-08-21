@@ -5,6 +5,7 @@ using FavoDeMel.Domain.Core.Data.EventSourcing;
 using FavoDeMel.Domain.Core.Extensions;
 using FavoDeMel.Domain.Core.Messages.CommonMessages.Notifications;
 using FavoDeMel.Domain.Core.Model.Configuration;
+using FavoDeMel.Presentation.MVC.Bussiness;
 using FavoDeMel.Presentation.MVC.Services;
 using FavoDeMel.Presentation.MVC.ViewModels;
 using MediatR;
@@ -22,16 +23,13 @@ namespace FavoDeMel.Presentation.MVC
 {
     public class Startup
     {
-        private readonly AppSettings _appSettings;
         public IConfiguration Configuration { get; }
 
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            _appSettings = configuration.GetAppSettings();
         }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
@@ -42,12 +40,12 @@ namespace FavoDeMel.Presentation.MVC
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options => options.LoginPath = "/Usuario/Entrar");
             services.AddMediatR(typeof(Startup));
-            // Event Sourcing
             services.AddSingleton<IEventStoreService, EventStoreService>();
             services.AddSingleton<IEventSourcingRepository, EventSourcingRepository>();
             services.AddScoped<IMediatorHandler, MediatorHandler>();
             services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();
-            services.AddTransient<IIdentityParser<ApplicationUser>, IdentityParser>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped<IUser, AspNetUser>();
 
         }
 

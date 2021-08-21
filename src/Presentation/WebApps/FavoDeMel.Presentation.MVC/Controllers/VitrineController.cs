@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using FavoDeMel.Domain.Core.Communication.Mediator;
 using FavoDeMel.Domain.Core.Messages.CommonMessages.Notifications;
+using FavoDeMel.Presentation.MVC.Bussiness;
 using FavoDeMel.Presentation.MVC.Services;
 using FavoDeMel.Presentation.MVC.ViewModels.CatalogoViewModels;
 using FavoDeMel.Presentation.MVC.ViewModels.Pagination;
@@ -22,8 +23,9 @@ namespace FavoDeMel.Presentation.MVC.Controllers
                                   IMediatorHandler mediatorHandler,
                                   IHttpContextAccessor httpContextAccessor,
                                   IProdutoAppService produtoAppService,
-                                  IMesaAppService mesaAppService)
-            : base(notifications, mediatorHandler, httpContextAccessor)
+                                  IMesaAppService mesaAppService,
+                                  IUser user)
+            : base(notifications, mediatorHandler, httpContextAccessor, user)
         {
             _produtoAppService = produtoAppService;
             _mesaAppService = mesaAppService;

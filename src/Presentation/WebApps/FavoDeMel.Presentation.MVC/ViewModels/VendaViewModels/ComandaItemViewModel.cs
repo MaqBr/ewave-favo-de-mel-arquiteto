@@ -1,7 +1,7 @@
 ﻿using FavoDeMel.Presentation.MVC.ViewModels.VendaViewModels.Enuns;
 using System;
 
-namespace FavoDeMel.Presentation.MVC.CatalogoViewModels.Venda.ViewModels
+namespace FavoDeMel.Presentation.MVC.Venda.ViewModels
 {
     public class ComandaItemViewModel
     {

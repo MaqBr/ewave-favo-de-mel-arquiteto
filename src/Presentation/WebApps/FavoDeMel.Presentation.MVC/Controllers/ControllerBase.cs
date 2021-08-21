@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using FavoDeMel.Domain.Core.CommonMessages.Notifications;
 using FavoDeMel.Domain.Core.Communication.Mediator;
 using FavoDeMel.Domain.Core.Messages.CommonMessages.Notifications;
+using FavoDeMel.Presentation.MVC.Bussiness;
 using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -17,18 +18,25 @@ namespace FavoDeMel.Presentation.MVC.Controllers
     [Authorize]
     public abstract class ControllerBase : Controller
     {
-       
+        public readonly IUser AppUser;
         private readonly DomainNotificationHandler _notifications;
         private readonly IMediatorHandler _mediatorHandler;
         private readonly IHttpContextAccessor _httpContextAccessor;
-
-
+        protected Guid UsuarioId { get; set; }
+        protected bool UsuarioAutenticado { get; set; }
         protected ControllerBase(INotificationHandler<DomainNotification> notifications, 
-                                 IMediatorHandler mediatorHandler, IHttpContextAccessor httpContextAccessor)
+                                 IMediatorHandler mediatorHandler, IHttpContextAccessor httpContextAccessor, IUser appUser)
         {
             _notifications = (DomainNotificationHandler)notifications;
             _mediatorHandler = mediatorHandler;
             _httpContextAccessor = httpContextAccessor;
+            AppUser = appUser;
+
+            if (appUser.IsAuthenticated())
+            {
+                UsuarioId = appUser.GetUserId();
+                UsuarioAutenticado = true;
+            }
         }
 
         protected bool OperacaoValida()

@@ -21,7 +21,7 @@ namespace Microsoft.AspNetCore.Hosting
 
                 try
                 {
-                    logger.LogInformation("Migrating database associated with context {DbContextName}", typeof(TContext).Name);
+                    logger.LogInformation("Mingrando o banco de dados com o contexto {DbContextName}", typeof(TContext).Name);
                     var retries = 10;
                     var retry = Policy.Handle<SqlException>()
                         .WaitAndRetry(
@@ -32,16 +32,12 @@ namespace Microsoft.AspNetCore.Hosting
                                 logger.LogWarning(exception, "[{prefix}] Exception {ExceptionType} with message {Message} detected on attempt {retry} of {retries}", nameof(TContext), exception.GetType().Name, exception.Message, retry, retries);
                             });
 
-                    //if the sql server container is not created on run docker compose this
-                    //migration can't fail for network related exception. The retry options for DbContext only 
-                    //apply to transient exceptions
-                    // Note that this is NOT applied when running some orchestrators (let the orchestrator to recreate the failing service)
                     retry.Execute(() => InvokeSeeder(seeder, context, services));
-                    logger.LogInformation("Migrated database associated with context {DbContextName}", typeof(TContext).Name);
+                    logger.LogInformation("Migrando o banco de dados com o contexto {DbContextName}", typeof(TContext).Name);
                 }
                 catch (Exception ex)
                 {
-                    logger.LogError(ex, "An error occurred while migrating the database used on context {DbContextName}", typeof(TContext).Name);
+                    logger.LogError(ex, "Ocorreu um erro ao fazer a migração do contexto {DbContextName}", typeof(TContext).Name);
                 }
             }
             return webHost;

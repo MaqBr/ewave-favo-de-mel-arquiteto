@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using FavoDeMel.Domain.Core.Extensions;
 using FavoDeMel.Domain.Core.Model.Configuration;
-using FavoDeMel.Presentation.MVC.CatalogoViewModels.Venda.ViewModels;
 using FavoDeMel.Presentation.MVC.Models.DTO;
+using FavoDeMel.Presentation.MVC.Venda.ViewModels;
+using FavoDeMel.Presentation.MVC.ViewModels;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -163,5 +165,18 @@ namespace FavoDeMel.Presentation.MVC.Services
 
             response.EnsureSuccessStatusCode();
         }
+
+
+        public async Task<IEnumerable<ComandaViewModel>> ObterComandasPorStatus(ComandaStatus status)
+        {
+            var uri = API.Comanda.ObterComandaStatus(_remoteServiceBaseUrl, status);
+
+            var responseString = await _httpClient.GetStringAsync(uri);
+
+            var comandas = JsonConvert.DeserializeObject<IEnumerable<ComandaViewModel>>(responseString);
+
+            return comandas;
+        }
+
     }
 }

@@ -3,9 +3,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using FavoDeMel.Domain.Core.Communication.Mediator;
 using FavoDeMel.Domain.Core.Messages.CommonMessages.Notifications;
-using FavoDeMel.Presentation.MVC.CatalogoViewModels.Venda.ViewModels;
+using FavoDeMel.Presentation.MVC.Bussiness;
 using FavoDeMel.Presentation.MVC.Models.DTO;
 using FavoDeMel.Presentation.MVC.Services;
+using FavoDeMel.Presentation.MVC.Venda.ViewModels;
+using FavoDeMel.Presentation.MVC.ViewModels;
 using FavoDeMel.Presentation.MVC.ViewModels.ComandaViewModel;
 using FavoDeMel.Presentation.MVC.ViewModels.VendaViewModels.Enuns;
 using MediatR;
@@ -14,6 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FavoDeMel.Presentation.MVC.Controllers
 {
+    [ClaimsAuthorize("Atendimento", "Administrador")]
     public class ComandaController : ControllerBase
     {
         private readonly IProdutoAppService _produtoAppService;
@@ -25,12 +28,20 @@ namespace FavoDeMel.Presentation.MVC.Controllers
                                   IMediatorHandler mediatorHandler, 
                                   IComandaAppService comandaAppService,
                                   IMesaAppService mesaAppService,
-                                  IHttpContextAccessor httpContextAccessor
-            ) : base(notifications, mediatorHandler, httpContextAccessor)
+                                  IHttpContextAccessor httpContextAccessor,
+                                  IUser user
+            ) : base(notifications, mediatorHandler, httpContextAccessor, user)
         {
             _produtoAppService = produtoAppService;
             _comandaAppService = comandaAppService;
             _mesaAppService = mesaAppService;
+        }
+
+        [Route("vizualizar-comanda/dashborad")]
+        public async Task<IActionResult> Dashboard(ComandaStatus status = ComandaStatus.Iniciado)
+        {
+            var model = await _comandaAppService.ObterComandasPorStatus(status);
+            return View(new DashBoardComandaViewModel { Status = status, Data = model });
         }
 
         [Route("vizualizar-comanda/mesa/{id}")]
@@ -42,7 +53,6 @@ namespace FavoDeMel.Presentation.MVC.Controllers
 
             return View(model);
         }
-
 
         [HttpGet]
         [Route("nova-comanda")]
@@ -80,7 +90,6 @@ namespace FavoDeMel.Presentation.MVC.Controllers
             TempData["Erros"] = ObterMensagensErro();
             return RedirectToAction("Index", "Mesa");
         }
-
 
         [HttpPost]
         [Route("comanda/item/adicionar")]
