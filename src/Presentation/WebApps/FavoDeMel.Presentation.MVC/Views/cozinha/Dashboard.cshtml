@@ -1,0 +1,50 @@
+﻿@model FavoDeMel.Presentation.MVC.Venda.ViewModels.DashBoardComandaViewModel
+
+@{
+    ViewData["Title"] = "Dashboard de comandas";
+}
+
+<div class="container">
+    <p></p>
+    <h3>@ViewData["Title"]</h3>
+    <div class="form-group">
+        <label><b>Garçom:</b> @User.Identity.Name</label>
+    </div>
+
+    <div class="form-group">
+        <label><b>Total de comandas:</b> @Model.Data.Count()</label>
+    </div>
+
+    @if (Model.Data.Count() > 0)
+    {
+        <div class="esh-catalog-items row">
+            @foreach (var comanda in Model.Data)
+            {
+                <div class="esh-catalog-item col-md-4">
+                    <div class="esh-catalog-name" style="background-color: #EBEBEB; font-size: 10pt; text-align: left; padding: 30px">
+                        <p style="text-align:left"><b>Código:</b> @comanda.Codigo</p>
+                        <p><b>Situação:</b> @comanda.ComandaStatus</p>
+                        <p><b>Mesa:</b> @comanda.Mesa.Numero</p>
+                        <p><b>Total itens:</b> @comanda.Items.Count</p>
+                        <p><b>Tempo</b> 1h</p>
+                        <p style="text-align: center; font-size: 15pt">
+                            <a asp-controller="Cozinha" asp-action="Index" asp-route-id="@comanda.Mesa.MesaId" class="btn btn-dark">
+                                <span class="glyphicon glyphicon-eye-open"></span> [VISUALIZAR COMANDA]
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning text-center">
+            <p>NENHUMA COMANDA ABERTA</p>
+
+            <a asp-controller="Mesa" asp-action="Index" class="btn btn-dark">
+                <span class="glyphicon glyphicon-circle-arrow-left"></span> Voltar
+            </a>
+        </div>
+    }
+</div>

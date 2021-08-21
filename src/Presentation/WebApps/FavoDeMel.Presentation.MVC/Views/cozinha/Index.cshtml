@@ -1,0 +1,114 @@
+﻿@model FavoDeMel.Presentation.MVC.Venda.ViewModels.ComandaViewModel
+@using FavoDeMel.Presentation.MVC.Services
+@using FavoDeMel.Presentation.MVC.ViewModels
+
+@{
+    ViewData["Title"] = "Detalhes da Comanda";
+    var headerList = new List<Header>() {
+          new Header() { Controller = "Cozinha", Text = "Voltar" }};
+}
+
+<partial name="_Header" model="headerList" />
+
+<div class="container">
+    <h3>@ViewData["Title"]</h3>
+    <div class="form-group">
+        <label for="email"><b>Situação:</b></label>
+        <p>@Model.ComandaStatus</p>
+    </div>
+    <div class="form-group">
+        <label for="email"><b>Mesa:</b></label>
+        <p>@Model.Mesa.Numero</p>
+    </div>
+    <div class="form-group">
+        <label for="email"><b>Garçom:</b></label>
+        <p>@User.Identity.Name</p>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 col-md-10 col-md-offset-1">
+
+            <vc:summary />
+
+            @{
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Produto</th>
+                                <th>Situação</th>
+                                <th>Gerenciar</th>
+                                <th> </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @{
+                                foreach (var item in Model.Items)
+                                {
+                                    <tr>
+                                        <td class="col-sm-5 col-md-5">
+                                            <div class="media">
+                                                <div class="media-body">
+                                                    <h4 class="media-heading">@item.ProdutoNome</h4>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td class="col-sm-5 col-md-5">
+                                            <div class="media">
+                                                <div class="media-body">
+                                                    <p>@item.ItemStatus</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="col-sm-2 col-md-2" style="text-align: center">
+
+                                            <form method="post" asp-controller="Comanda" asp-action="AtualizarItem">
+                                                <input type="hidden" id="Id" name="Id" value="@item.ProdutoId" />
+                                                <input type="hidden" id="MesaId" name="MesaId" value="@Model.Mesa.MesaId" />
+                                                <input type="hidden" id="itemStatus" name="itemStatus" value="@item.ItemStatus" />
+                                                <div class="row" style="float: left">
+                                                    <input style="width: 70px" type="text" class="form-control" name="quantidade" id="quantidade" value="@item.Quantidade">
+                                                </div>
+                                                <div class="row" style="float: right">
+                                                    <button type="submit" class="btn btn-dark" title="Atualizar quantidade">
+                                                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </td>
+
+                                        <td class="col-sm-1 col-md-1">
+                                            <form method="post" asp-controller="Comanda" asp-action="RemoverItem">
+                                                <input type="hidden" id="Id" name="Id" value="@item.ProdutoId" />
+                                                <input type="hidden" id="MesaId" name="MesaId" value="@Model.Mesa.MesaId" />
+                                                <button type="submit" class="btn btn-danger" title="Excluir">
+                                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+
+                    <div class="text-center">
+
+                        <a asp-controller="Vitrine" asp-action="Index" asp-route-mesaId="@Model.Mesa.MesaId" class="btn btn-dark">
+                            <span class="glyphicon glyphicon-plus-sign"></span> Adicionar itens
+                        </a>
+
+                        <a asp-controller="Cozinha" asp-action="EntregarComanda" asp-route-mesaId="@Model.Mesa.MesaId" class="btn btn-dark">
+                            <span class="glyphicon glyphicon-share-alt"></span> Enviar para o garçom
+                        </a>
+
+                        <a asp-controller="Cozinha" asp-action="ResumoDaCompraCancelar" asp-route-mesaId="@Model.Mesa.MesaId" class="btn btn-danger">
+                            <span class="glyphicon glyphicon-remove-circle"></span> Cancelar comanda
+                        </a>
+
+                    </div>
+
+            }
+        </div>
+    </div>
+</div>

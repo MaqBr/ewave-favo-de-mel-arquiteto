@@ -1,4 +1,5 @@
-﻿using FavoDeMel.Presentation.MVC.Services;
+﻿using FavoDeMel.Presentation.MVC.Bussiness;
+using FavoDeMel.Presentation.MVC.Services;
 using FavoDeMel.Presentation.MVC.ViewModels.AccountViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -16,17 +18,18 @@ namespace FavoDeMel.Presentation.MVC.Controllers
     {
         private readonly ILogger<UsuarioController> _logger;
         private readonly IAuthAppService _authAppService;
-        
-        public UsuarioController(ILogger<UsuarioController> logger, IAuthAppService authAppService)
+        private readonly IUser _user;
+        public UsuarioController(ILogger<UsuarioController> logger, IAuthAppService authAppService, IUser user)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _authAppService = authAppService;
+            _user = user;
         }
 
         [HttpGet]
         public IActionResult Entrar(string returnUrl)
         {
-            if (User.Identity.IsAuthenticated)
+            if (_user.IsAuthenticated())
             {
                 return RedirectToAction("Index", "Mesa");
             }
@@ -49,8 +52,12 @@ namespace FavoDeMel.Presentation.MVC.Controllers
                     if(usuarioAutenticado.Success)
                     {
                         usuarioAutenticado.Lembrar = usuario.Lembrar;
-                        Login(usuarioAutenticado);
-                        return RedirectToAction("Index", "Mesa");
+                        await Login(usuarioAutenticado);
+                      
+                        if(usuarioAutenticado.Data.UserToken.Claims.Any(q=> q.Type == "Atendimento"))
+                            return RedirectToAction("Index", "Mesa");
+
+                        return RedirectToAction("Dashboard", "Cozinha");
                     }
                     else
                     {
@@ -68,7 +75,7 @@ namespace FavoDeMel.Presentation.MVC.Controllers
             return View("Entrar");
         }
 
-        private async void Login(UsuarioAutenticadoViewModel usuarioAutenticado)
+        private async Task Login(UsuarioAutenticadoViewModel usuarioAutenticado)
         {
             var tokenLifetime = usuarioAutenticado.Data.ExpiresIn;
 
@@ -80,7 +87,7 @@ namespace FavoDeMel.Presentation.MVC.Controllers
 
             foreach (var claim in usuarioAutenticado.Data.UserToken.Claims)
                 claims.Add(new Claim(claim.Type, claim.Value));
-                
+ 
             var identidadeDeUsuario = new ClaimsIdentity(claims, "Email");
             var claimPrincipal = new ClaimsPrincipal(identidadeDeUsuario);
 

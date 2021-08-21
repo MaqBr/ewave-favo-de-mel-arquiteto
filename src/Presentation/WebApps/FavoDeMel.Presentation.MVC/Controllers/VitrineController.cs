@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FavoDeMel.Presentation.MVC.Controllers
 {
+    [ClaimsAuthorize("Atendimento", "Administrador")]
     public class VitrineController : ControllerBase
     {
         private readonly IProdutoAppService _produtoAppService;

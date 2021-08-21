@@ -37,7 +37,7 @@ namespace FavoDeMel.Presentation.MVC.Controllers
             _mesaAppService = mesaAppService;
         }
 
-        [Route("vizualizar-comanda/dashborad")]
+        [Route("vizualizar-comanda/atendimento/dashborad")]
         public async Task<IActionResult> Dashboard(ComandaStatus status = ComandaStatus.Iniciado)
         {
             var model = await _comandaAppService.ObterComandasPorStatus(status);

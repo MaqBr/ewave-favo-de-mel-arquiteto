@@ -6,6 +6,21 @@ namespace WebMVC.Infrastructure
 {
     public static class API
     {
+        public static class Cozinha
+        {
+
+            public static string ObterComandaStatus(string baseUri, ComandaStatus status)
+            {
+                return $"{baseUri}/api/comanda/status/{status}";
+            }
+
+            public static string ObterComandaMesa(string baseUri, Guid mesaId)
+            {
+                return $"{baseUri}/api/comanda/mesa/{mesaId}";
+            }
+
+
+        }
         public static class Comanda { 
 
             public static string IniciarComanda(string baseUri)

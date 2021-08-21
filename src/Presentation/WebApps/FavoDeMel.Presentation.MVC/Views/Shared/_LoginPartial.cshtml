@@ -2,60 +2,74 @@
 
 @if (User.Identity.IsAuthenticated)
 {
-    <section class="col-lg-4 col-md-5 col-xs-12">
-        <div class="esh-identity">
-            <form asp-area="" asp-controller="Usuario" asp-action="Sair" method="post" id="logoutForm" class="navbar-right">
+        <section class="col-lg-4 col-md-5 col-xs-12">
+            <div class="esh-identity">
+                <form asp-area="" asp-controller="Usuario" asp-action="Sair" method="post" id="logoutForm" class="navbar-right">
+                    <section class="esh-identity-section">
+
+                        <div class="esh-identity-name">@User.Identity.Name</div>
+                        <img class="esh-identity-image" src="~/images/arrow-down.png">
+                    </section>
+
+                    <section class="esh-identity-drop">
+
+                        @if (User.HasClaim(c => c.Type == "Atendimento"))
+                        {
+                            <a class="esh-identity-item"
+                               asp-controller="Mesa"
+                               asp-action="Index">
+
+                                <div class="esh-identity-name esh-identity-name--upper">Mesas</div>
+                                <img class="esh-identity-image" src="~/images/my_orders.png">
+                            </a>
+
+                            <a class="esh-identity-item"
+                               asp-controller="Comanda"
+                               asp-action="Dashboard">
+
+                                <div class="esh-identity-name esh-identity-name--upper">Comandas</div>
+                                <img class="esh-identity-image" src="~/images/my_orders.png">
+                            </a>
+
+                        }
+                        else
+                        {
+                            <a class="esh-identity-item"
+                               asp-controller="Cozinha"
+                               asp-action="Dashboard">
+
+                                <div class="esh-identity-name esh-identity-name--upper">Comandas</div>
+                                <img class="esh-identity-image" src="~/images/my_orders.png">
+                            </a>
+
+                        }
+
+                        <a class="esh-identity-item"
+                           href="javascript:document.getElementById('logoutForm').submit()">
+
+                            <div class="esh-identity-name esh-identity-name--upper">Sair</div>
+                            <img class="esh-identity-image" src="~/images/logout.png">
+                        </a>
+                    </section>
+                </form>
+            </div>
+        </section>
+    }
+    else
+    {
+        <section class="col-lg-4 col-md-5 col-xs-12">
+            <div class="esh-identity">
                 <section class="esh-identity-section">
+                    <div class="esh-identity-item">
 
-                    <div class="esh-identity-name">@User.Identity.Name</div>
-                    <img class="esh-identity-image" src="~/images/arrow-down.png">
+                        <a asp-area="" asp-controller="Usuario" asp-action="Entrar" class="esh-identity-name esh-identity-name--upper">
+                            Entrar
+                        </a>
+                    </div>
                 </section>
+            </div>
+        </section>
 
-                <section class="esh-identity-drop">
-
-                    <a class="esh-identity-item"
-                       asp-controller="Mesa"
-                       asp-action="Index">
-
-                        <div class="esh-identity-name esh-identity-name--upper">Mesas</div>
-                        <img class="esh-identity-image" src="~/images/my_orders.png">
-                    </a>
-
-                    <a class="esh-identity-item"
-                       asp-controller="Comanda"
-                       asp-action="Dashboard">
-
-                        <div class="esh-identity-name esh-identity-name--upper">Comandas</div>
-                        <img class="esh-identity-image" src="~/images/my_orders.png">
-                    </a>
-
-                    <a class="esh-identity-item"
-                       href="javascript:document.getElementById('logoutForm').submit()">
-
-                        <div class="esh-identity-name esh-identity-name--upper">Sair</div>
-                        <img class="esh-identity-image" src="~/images/logout.png">
-                    </a>
-                </section>
-            </form>
-        </div>
-    </section>
-}
-else
-{
-    <section class="col-lg-4 col-md-5 col-xs-12">
-        <div class="esh-identity">
-            <section class="esh-identity-section">
-                <div class="esh-identity-item">
-
-                    <a asp-area="" asp-controller="Usuario" asp-action="Entrar" class="esh-identity-name esh-identity-name--upper">
-                        Entrar
-                    </a>
-                </div>
-            </section>
-        </div>
-    </section>
-
-    <section class="col-lg-1 col-xs-12">
-
-    </section>
-}
+        <section class="col-lg-1 col-xs-12">
+        </section>
+    }

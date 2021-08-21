@@ -38,7 +38,8 @@ namespace FavoDeMel.Presentation.MVC
             services.AddHttpClient();
             services.AddControllers();
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(options => options.LoginPath = "/Usuario/Entrar");
+                .AddCookie(options => 
+                    options.LoginPath = "/Usuario/Entrar");
             services.AddMediatR(typeof(Startup));
             services.AddSingleton<IEventStoreService, EventStoreService>();
             services.AddSingleton<IEventSourcingRepository, EventSourcingRepository>();
@@ -96,6 +97,9 @@ namespace FavoDeMel.Presentation.MVC
                 .SetHandlerLifetime(TimeSpan.FromMinutes(5));
 
             services.AddHttpClient<IComandaAppService, ComandaAppService>()
+                .SetHandlerLifetime(TimeSpan.FromMinutes(5));
+
+            services.AddHttpClient<ICozinhaAppService, CozinhaAppService>()
                 .SetHandlerLifetime(TimeSpan.FromMinutes(5));
 
             services.AddHttpClient<IAuthAppService, AuthAppService>()

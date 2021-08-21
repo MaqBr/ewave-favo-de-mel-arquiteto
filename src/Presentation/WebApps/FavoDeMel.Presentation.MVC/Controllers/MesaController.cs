@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FavoDeMel.Presentation.MVC.Controllers
 {
+    [ClaimsAuthorize("Atendimento", "Administrador")]
     public class MesaController : ControllerBase
     {
         private readonly IMesaAppService _mesaAppService;
