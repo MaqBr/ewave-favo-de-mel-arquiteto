@@ -77,6 +77,7 @@ services:
       - ASPNETCORE_URLS=http://0.0.0.0:80
       - VendaDbConnection=Server=local-mssql;Database=VendaDb;User Id=sa;Password=P@ssw0rd
       - CatalogoDbConnection=Server=local-mssql;Database=CatalogoDb;User Id=sa;Password=P@ssw0rd
+      - IdentityDbConnection=Server=local-mssql;Database=IdentityDb;User Id=sa;Password=P@ssw0rd
       - RABBITMQ__URL=local-rabbitmq
       - RABBITMQ__USUARIO=guest
       - RABBITMQ__SENHA=guest

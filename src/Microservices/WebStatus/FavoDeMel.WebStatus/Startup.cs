@@ -79,6 +79,8 @@ namespace FavoDeMel.WebStatus
                     new SqlServerCatalogoDbHealthCheck(dataSettings.CatalogoConnection))
                 .AddCheck("SqlServer - Venda",
                     new SqlServerVendaDbHealthCheck(dataSettings.VendaConnection))
+                .AddCheck("SqlServer - Identity",
+                    new SqlServerIdentityDbHealthCheck(dataSettings.IdentityConnection))
                 .AddCheck("self", () => HealthCheckResult.Healthy(), tags: new[] { "essential" })
                 .AddProcessAllocatedMemoryHealthCheck(dataSettings.MemoryLimit, "memory", tags: new[] { "essential" })
                 .AddRabbitMQ(

@@ -31,6 +31,7 @@ namespace FavoDeMel.Domain.Core.Model.Configuration
             {
                 public const string Catalogo_CONNECTION_STRING = "CatalogoDbConnection";
                 public const string Venda_CONNECTION_STRING = "VendaDbConnection";
+                public const string Identity_CONNECTION_STRING = "IdentityDbConnection";
                 public const string DEFAULT_EVENT_STORE_CONNECTION_STRING = "EventStoreConnection";
                 public const string MEMORY_LIMIT = "MEMORY-LIMIT";
             }
