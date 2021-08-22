@@ -137,7 +137,7 @@ Todas as aplicações clientes recebem as credenciais através desta API.
 
 ### 6 . URL API de Venda
 
-A API de venda foi desenvolvida para consumo apenas com clientes autenticados via OAuth2.  A autenticação foi retirada por se tratar de um ambiente de desenvolvimento e devido a problemas de instalção de certificados HTTPS em contâiners docker local.
+A API de venda foi desenvolvida para consumo apenas com clientes autenticados via OAuth2.  A autenticação foi retirada por se tratar de um ambiente de desenvolvimento e devido a problemas de instalação de certificados HTTPS em contâiners docker local.
 Toda as funcionalidades de geranciamento de comandas, mesas e pedidos são geranciados por essa API.
 
 ![image](https://user-images.githubusercontent.com/19453244/130339241-2de6941a-f2c8-422a-854d-7946faa88859.png)
@@ -145,7 +145,10 @@ Toda as funcionalidades de geranciamento de comandas, mesas e pedidos são geran
 ### 7 . URL API de Catálogo
 
 A API de catálogo foi desenvolvida para consumo de clientes sem a autenticação por se tratar de apenas leitura.  
-As informações de produtos, categorias, estoque e vouchers são gerenciados por essa API.
+As informações de produtos e categorias são gerenciados por essa API.
+
+![image](https://user-images.githubusercontent.com/19453244/130370909-caca7ca6-f011-4f7c-a988-23b6c3e0d9ff.png)
+
 
 ### 8 . URL RabbitMQ
 
