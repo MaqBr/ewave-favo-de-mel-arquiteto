@@ -160,5 +160,13 @@ A comunicação entre os microserviços ocorrem através da implementação de u
      
 Disponível as informações de todos os logs de erros com o ElasticSearch + Kibana.
 
+#### 11 . URL do EventStore
+Esse recurso implementa o padrão Event Sourcing que utiliza o EventStore, um bando de banco de dados para armazenagem de eventos. Os eventos são armazenados e resgatados do EventStore disponível na URL:
+     - http://host.docker.internal:2113
+
+![image](https://user-images.githubusercontent.com/19453244/130351952-df029e19-9fa0-450c-bcac-31b9e271312a.png)
+
+
 ### Explore o código e a aplicação
-Acesse o Wiki  para saber mais detalhes da arquitetura e uso da aplicação.
+
+Acesse o Wiki para saber mais detalhes da arquitetura e uso geral da aplicação.
