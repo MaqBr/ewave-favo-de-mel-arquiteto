@@ -1,4 +1,4 @@
-### Visão Geral da Aplicação ‘Favo de Mel’
+## Visão Geral da Aplicação ‘Favo de Mel’
 O objetivo geral desse projeto ‘Favo de Mel’ é o fornecer uma nova ferramenta que ajude o restaurante fictício ‘Favo de Mel’ a gerenciar o atendimento de seus clientes. A ferramenta foi desenvolvida como parte de avaliação do processo seletivo para a vaga de Arquiteto de Sistemas da empresa Ewave. 
 Os principais recursos disponíveis são:
 - Garçom: visualizar comandas abertas, abrir comanda, adicionar pedido a comanda, cancelar pedido da comanda, acompanhar o status de um pedido na cozinha e fechar a comanda;
@@ -15,7 +15,7 @@ O sistema terá em breve novas atualizações com os seguintes recursos:
 Qualquer dúvida ou sugestão entre em contato através do e-mail marcio.queiroz@ewave.com.br 
 
 
-### Visão Geral da Arquitetura
+## Visão Geral da Arquitetura
 
 A ferramenta ‘Favo de Mel’ foi desenvolvida em arquitetura de microserviços para ser implantado em contêiners do Docker. O aplicativo é composto com front-end em ASP.NET MVC Core.
 A justificativa da escolha da arquitetura de microserviços foi a de permitir a facilidade de manutenção das unidades de subsistemas de maneira independente, ou seja, cada microserviço tem o ciclo de vida autônomo e granular ao invés de um único aplicativo monolítico.  Principais características:
@@ -54,8 +54,11 @@ A justificativa da escolha da arquitetura de microserviços foi a de permitir a 
 - Autenticação e Autorização OAuth2 e JWT
 - Carga de dados (Seed) em contâiner Docker com Migrations EntityFramework Core
 
-### Como usar a aplicação
-#### 1. Pré-requisitos para utilização:
+### Explore o código da aplicação
+- Acesse o <a href="https://github.com/MaqBr/ewave-favo-de-mel-arquiteto/wiki/Vis%C3%A3o-geral-do-c%C3%B3digo-da-aplica%C3%A7%C3%A3o">Wiki</a> para detalhes da arquitetura da aplicação.
+
+## Como usar a aplicação
+### 1. Pré-requisitos para utilização:
 
 - Pré-requisitos para utilização:
   - Docker https://docs.docker.com/docker-for-windows/install/
@@ -70,7 +73,7 @@ A justificativa da escolha da arquitetura de microserviços foi a de permitir a 
 
 - Não é necessário configurar o Docker manualmente se estiver usando  Docker Desktop WSL 2 backend 
 
-#### 2 . Executar a aplicação com Docker Compose:
+### 2 . Executar a aplicação com Docker Compose:
 
      - Clonar o código: 
         git clone https://github.com/MaqBr/ewave-favo-de-mel-arquiteto.git
@@ -79,7 +82,7 @@ A justificativa da escolha da arquitetura de microserviços foi a de permitir a 
         docker-compose build
         docker-compose up -d
         
-#### 3 . Abrir a URL da API WebStatus
+### 3 . Abrir a URL da API WebStatus
      - http://host.docker.internal:5160
  
 Na primeira execução pode acontecer eventualmente uma falha de comunicação com os microserviços API Vendas 'Connection refused (catalogo-api:80)' e API Catalogo 'Connection refused (catalogo-api:80)' conforme ilustra a imagem abaixo.  Caso aconteça a falha, aguarde aproximadamente 10 segundos até que todos os recursos fiquem disponíveis (cor verde).
@@ -89,7 +92,7 @@ Na primeira execução pode acontecer eventualmente uma falha de comunicação c
 
 ![image](https://user-images.githubusercontent.com/19453244/130339052-671ec20b-7a20-4225-bb5f-382cf1f41dda.png)
 
-#### 4 . Abrir a URL da Aplicação MVC
+### 4 . Abrir a URL da Aplicação MVC
      - http://host.docker.internal:5130
 
 As informações de autenticação estão no rodapé da página:
@@ -105,8 +108,11 @@ A aplicação possue 2 perfis de usuários:
  - Perfil Cozinha
    - Usuário: cozinha@teste.com
    - Senha: Teste@123  
+   - 
+### Detalhes de uso da aplicação
+- Acesse o <a href="https://github.com/MaqBr/ewave-favo-de-mel-arquiteto/wiki/O-uso-da-aplica%C3%A7%C3%A3o-ASP.NET-MVC-Core">Wiki</a> para detalhes do uso da aplicação.
 
-#### 5 . URL API de Autenticação
+### 5 . URL API de Autenticação
      - http://host.docker.internal:5000
 
 Para exemplificar a geração de token JWT, utilize uma das contas disponíveis descrito no item 4 deste documento. 
@@ -117,19 +123,19 @@ Todas as aplicações clientes recebem as credenciais através desta API.
 
 ![image](https://user-images.githubusercontent.com/19453244/130338997-988622ec-5f40-4894-b872-dd7e2da59b9e.png)
 
-#### 6 . URL API de Venda
+### 6 . URL API de Venda
 
 A API de venda foi desenvolvida para consumo apenas com clientes autenticados via OAuth2.  A autenticação foi retirada por se tratar de um ambiente de desenvolvimento e devido a problemas de instalção de certificados HTTPS em contâiners docker local.
 Toda as funcionalidades de geranciamento de comandas, mesas e pedidos são geranciados por essa API.
 
 ![image](https://user-images.githubusercontent.com/19453244/130339241-2de6941a-f2c8-422a-854d-7946faa88859.png)
 
-#### 7 . URL API de Catálogo
+### 7 . URL API de Catálogo
 
 A API de catálogo foi desenvolvida para consumo de clientes sem a autenticação por se tratar de apenas leitura.  
 As informações de produtos, categorias, estoque e vouchers são gerenciados por essa API.
 
-#### 8 . URL RabbitMQ
+### 8 . URL RabbitMQ
 
      - http://host.docker.internal:15672
      - Username: guest
@@ -142,7 +148,7 @@ A comunicação entre os microserviços ocorrem através da implementação de u
      
  ![image](https://user-images.githubusercontent.com/19453244/130339542-2cba73f4-cc8f-4e9c-a851-fdb53073a5d2.png)
 
-#### 9 . Banco de Dados SQL Server
+### 9 . Banco de Dados SQL Server
 
      - host.docker.internal,5433
      - Username: sa
@@ -158,18 +164,18 @@ A comunicação entre os microserviços ocorrem através da implementação de u
      - String de conexão para o banco de microserviço de venda: Server=host.docker.internal,5433;Database=VendaDb;User Id=sa;Password=P@ssw0rd
 ![image](https://user-images.githubusercontent.com/19453244/130339620-57320986-ba10-421e-9f16-f4f2d25f2240.png)
 
-#### 10 . URL de logs
+### 10 . URL de logs
      - http://host.docker.internal:5601 
      
 Disponível as informações de todos os logs de erros com o ElasticSearch + Kibana.
 
-#### 11 . URL do EventStore
+### 11 . URL do EventStore
 Esse recurso implementa o padrão Event Sourcing que utiliza o EventStore, um bando de banco de dados para armazenagem de eventos. Os eventos são armazenados e resgatados do EventStore disponível na URL:
      - http://host.docker.internal:2113
 
 ![image](https://user-images.githubusercontent.com/19453244/130351952-df029e19-9fa0-450c-bcac-31b9e271312a.png)
 
 
-### Explore o código e a aplicação
+## Acesse o Wiki
 
 Acesse o <a href=https://github.com/MaqBr/ewave-favo-de-mel-arquiteto/wiki/Seja-bem-vindo-ao-wiki-do-projeto-%E2%80%98Favo-de-Mel%E2%80%99>Wiki</a> para saber mais detalhes da arquitetura e uso geral da aplicação.
