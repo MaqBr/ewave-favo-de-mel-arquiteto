@@ -89,6 +89,18 @@ Na primeira execução pode acontecer eventualmente uma falha de comunicação c
 
 ![image](https://user-images.githubusercontent.com/19453244/130352985-3028d8bb-6cde-4d38-87f6-5c084ce3a0a4.png)
 
+Em testes realizados em diversas máquinas, ainda na primeira execução pode acontecer falha de autenticação com o usuário sa nos bancos de dados de vendas e catálogo.  Veja o exemplo abaixo:
+
+![image](https://user-images.githubusercontent.com/19453244/130363221-5ae7395d-ff40-44e8-bad5-c0200fa248bb.png)
+
+
+Nesse caso, verifique as configurações de requisitos mínimos do Docker descritos no item 1 deste documento.  Caso as configurações estejam de acordo com os requisitos mínimos e ocorra este problema, execute os comandos no diretório raiz da aplicação:
+
+     - No diretório raiz executar os comandos:
+        docker-compose down
+        docker-compose up -d
+
+Aguarde aproximadamente 10 segundos até que todos os recursos fiquem disponíveis (cor verde):
 
 ![image](https://user-images.githubusercontent.com/19453244/130339052-671ec20b-7a20-4225-bb5f-382cf1f41dda.png)
 
