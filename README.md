@@ -82,7 +82,10 @@ A justificativa da escolha da arquitetura de microserviços foi a de permitir a 
 #### 3 . Abrir a URL da API WebStatus
      - http://host.docker.internal:5160
  
-Na primeira execução pode acontecer eventualmente uma falha de comunicação com os microserviços API Vendas e API Catalogo.  Caso aconteça a falha, aguarde aproximadamente 10 segundos até que todos os recursos fiquem disponíveis (cor verde).
+Na primeira execução pode acontecer eventualmente uma falha de comunicação com os microserviços API Vendas 'Connection refused (catalogo-api:80)' e API Catalogo 'Connection refused (catalogo-api:80)' conforme ilustra a imagem abaixo.  Caso aconteça a falha, aguarde aproximadamente 10 segundos até que todos os recursos fiquem disponíveis (cor verde).
+
+![image](https://user-images.githubusercontent.com/19453244/130352985-3028d8bb-6cde-4d38-87f6-5c084ce3a0a4.png)
+
 
 ![image](https://user-images.githubusercontent.com/19453244/130339052-671ec20b-7a20-4225-bb5f-382cf1f41dda.png)
 
@@ -160,5 +163,13 @@ A comunicação entre os microserviços ocorrem através da implementação de u
      
 Disponível as informações de todos os logs de erros com o ElasticSearch + Kibana.
 
+#### 11 . URL do EventStore
+Esse recurso implementa o padrão Event Sourcing que utiliza o EventStore, um bando de banco de dados para armazenagem de eventos. Os eventos são armazenados e resgatados do EventStore disponível na URL:
+     - http://host.docker.internal:2113
+
+![image](https://user-images.githubusercontent.com/19453244/130351952-df029e19-9fa0-450c-bcac-31b9e271312a.png)
+
+
 ### Explore o código e a aplicação
-Acesse o Wiki  para saber mais detalhes da arquitetura e uso da aplicação.
+
+Acesse o <a href=https://github.com/MaqBr/ewave-favo-de-mel-arquiteto/wiki/Seja-bem-vindo-ao-wiki-do-projeto-%E2%80%98Favo-de-Mel%E2%80%99>Wiki</a> para saber mais detalhes da arquitetura e uso geral da aplicação.
