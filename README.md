@@ -1,140 +1,164 @@
-### Ewave-favo-de-mel-arquiteto
-Desenvolvimento da solução 'Favo de Mel' para concorrer a vaga de Arquiteto de Software - Ewave 2021
-
 ### Visão Geral da Aplicação ‘Favo de Mel’
-
-A proposta inicial foi desenvolver uma solução que ajude o restaurante ‘Favo de Mel’ a gerenciar o atendimento ao cliente, pois o mesmo está tendo sérios problemas com isso. Os problemas são: pedidos são feitos e muitas vezes o mesmo não chegam cozinha, clientes cancelam pedido e a cozinha não recebe o aviso e acaba preparando o mesmo, os pedidos estão demorando para serem entregues ou muitas vezes estão entregando pedido fora de ordem sem priorização.
-Como esse fluxo hoje é manual e devido a correria dos funcionários para tentar atender os clientes, a comunicação entre eles acaba sendo ineficiente, causando esses gargalos.
-Para resolver os principais problemas foi solicitado a criação de uma nova ferramenta que atenda no mínimo os requisitos abaixo:
+O objetivo geral desse projeto ‘Favo de Mel’ é o fornecer uma nova ferramenta que ajude o restaurante fictício ‘Favo de Mel’ a gerenciar o atendimento de seus clientes. A ferramenta foi desenvolvida como parte de avaliação do processo seletivo para a vaga de Arquiteto de Sistemas da empresa Ewave. 
+Os principais recursos disponíveis são:
 - Garçom: visualizar comandas abertas, abrir comanda, adicionar pedido a comanda, cancelar pedido da comanda, acompanhar o status de um pedido na cozinha e fechar a comanda;
 - Cozinha: visualizar, receber e entregar o pedido pronto para o garçom.
+- Notificação ativa entre o garçom e a cozinha ou vice-versa;
+- Garçom poder visualizar o andamento de preparo dos pedidos de uma comanda.
 
-Além dos requisitos mínimos acima, deixamos por opção livre a implementação de alguns requisitos que seriam interessantes para o restaurante, são eles:
--  Notificação ativa entre o garçom e a cozinha ou vice-versa;
--  Garçom poder visualizar o andamento de preparo dos pedidos de uma comanda;
--  Repriorização de ordem de preparo dos pedidos pela cozinha.
+O sistema terá em breve novas atualizações com os seguintes recursos:
+- Versão de front-end com SPA em Angular;
+- Cache distribuídos no microserviço de vendas (comandas) para melhorar o tempo de resposta da aplicação;
+- Notificação de processos com SignalR nos principais eventos de comunicação entre atendimento (garçom) e cozinha;
+- Orquestração de containers com Kubernetes.
 
-### Pré-requisitos para utilização:
-- Docker (https://docs.docker.com/docker-for-windows/install/)
-- .NET Core 5 (https://dotnet.microsoft.com/download/dotnet/5.0 )
-- Visual Studio Code ou qualquer outro IDE compatível com .NET
+Qualquer dúvida ou sugestão entre em contato através do e-mail marcio.queiroz@ewave.com.br 
+
 
 ### Visão Geral da Arquitetura
 
-Esta aplicação é cross-pataform e apresenta uma proposta inicial da solução ‘Favo de Mel’ no qual tem a principal característica de ser executada de forma independente e com eventos assíncronos com base em microserviços com o .NET Core e o Docker.
+A ferramenta ‘Favo de Mel’ foi desenvolvida em arquitetura de microserviços para ser implantado em contêiners do Docker. O aplicativo é composto com front-end em ASP.NET MVC Core.
+A justificativa da escolha da arquitetura de microserviços foi a de permitir a facilidade de manutenção das unidades de subsistemas de maneira independente, ou seja, cada microserviço tem o ciclo de vida autônomo e granular ao invés de um único aplicativo monolítico.  Principais características:
 
-Os contêineres oferecem os benefícios de portabilidade, agilidade, escalabilidade, controle e isolamento em todo o fluxo de trabalho do ciclo de vida do aplicativo. 
-
-![image](https://user-images.githubusercontent.com/19453244/129207906-9c06c7d5-3886-440e-8703-14122bb36550.png)
-
-### Principais padrões utilizados no desenvolvimento da solução
-- Domain Driven Design - Arquitetura Hexagonal
-- Unit of Work
-- Repository and Generic Repository
-- Docker-Compose
-- Principios SOLID
-
-## Principais tecnologias utilizadas
-- ASP.NET Core MVC 5
-- WEB API Core
-- Entity Framework Core
-- Docker
-- Dapper
-- MediatR
-- AutoMapper
-- .NET Core Native DI
-- FluentValidation
-- Swagger UI
-- RabbitMQ
-- XUnit
-- EventStore
-
-### Explorando a aplicação
-
-#### Execute a aplicação em ambiente local seguindo as etaspas a seguir:
-     - git clone https://github.com/MaqBr/ewave-favo-de-mel-arquiteto.git
-     - No diretório raiz executar o comando:
-       - docker-compose -f 'docker-compose.yml' -f 'docker-compose.override.yml' up -d --build
-     - Será carregado o container com todas as dependências e abrirá a página do servidor https://localhost:5006
-     
-1. Camada de Apresentação: Web App MVC Core
-   - URL: https://localhost:5006
-    ![image](https://user-images.githubusercontent.com/19453244/129280907-44035b89-6412-443b-945b-6de2b92956a1.png)
-   - Clique em "Acessar via SSO"
-     - A aplicação é redirecionada para o serviço de autenticação single sign on (SSO) no endereço http://localhost:5000 
-      ![image](https://user-images.githubusercontent.com/19453244/129281239-0213875c-a2ec-40d2-bd65-d5603ed26327.png)
-     - Entre primeiramente com o perfil de "Garçom"
-       - Nome de usuário: garcom
-       - Senha: Teste@123
+- Cada serviço é executado em seu próprio processo e comunica-se com outros processos usando protocolos HTTP/HTTPS e broker AMQP (RabbitMQ).
+- A aplicação possui um microserviço de autenticação e autorização que fornece um token JWT com as informações do usuário, bem como as claims que restringem ou permitem acesso em determinada parte da aplicação. 
  
-2. Autenticação no Identity Server (SSO) OAuth 2 
-   - URL: http://localhost:5000
-    ![image](https://user-images.githubusercontent.com/19453244/129215180-ac5106d6-0674-4017-8c60-7a9a669cc485.png)
 
-2.1. Perfis de usuários:
+![image](https://user-images.githubusercontent.com/19453244/130339877-7137cd08-cb76-44da-94a1-9ed06fb88e51.png)
 
-    - Garçom
-      - Nome de usuário: garcom
-      - Senha: Teste@123
+- O monitoramento e verificações de integridade dos microserviços e da infraestrutura são feitos pela biblioteca ASP.NET Health Checks.
+- Os eventos de logs e diagnóstico são feitos para cada microserviço e disponibilizados em tempo real em ambientes elasticsearch + Kibana.
+- Os registros de todos os eventos são persistidos em um banco NoSQL EventStore para a implementação do padrão arquitetural Event Sourcing.
 
-    - Cozinheiro
-      - Nome de usuário: cozinha
-      - Senha: Teste@123
+### Principais padrões e tecnologias utilizadas no desenvolvimento da solução
 
-2.2. As APIs utilizam as credenciais abaixo para a autorização via token JWT:
-    
-    - Credenciais para autenticaçao de clientes e APIs
-      - Authority: "https://localhost:5001"
-      - ClientId: "715000d0c10040258c1be259c09e3b91"
-      - ClientSecret: "360ceac2e80545dca6083fef4f94d09f"
-      - Scopes: openid | profile | api_favo_mel
+- Domain Driven Design
+- CQRS com MediatR
+- TDD, BDD e Principios SOLID
+- Padrões Unit of Work, Repository, Factory
+- Docker e orquestração dom Docker-Compose
+- ASP.NET Core MVC 5
+- ASP.NET Health Checks
+- WEB API Core - Swagger UI
+- Entity Framework Core
+- Banco Relaciona MSSQL Server
+- Banco não relacional EventStore e ElasticSearch
+- Dapper
+- AutoMapper
+- Inversão de Controle com .NET Core Native DI
+- FluentValidation
+- Padrão EventBus com a implementação RabbitMQ
+- XUnit com testes de unidade e funcional com banco de dados em memória com EntityFramework Core
+- EventSourcing
+- Domain Events e Integration Events
+- Autenticação e Autorização OAuth2 e JWT
+- Carga de dados (Seed) em contâiner Docker com Migrations EntityFramework Core
 
-3. Swagger UI – API REST microserviço – Catálogo/Produto
-   - URL: https://localhost:5101
+### Como usar a aplicação
+#### 1. Pré-requisitos para utilização:
 
-    ![image](https://user-images.githubusercontent.com/19453244/129218403-fbe97d75-d50e-4627-8a0a-33554de83654.png)
+- Pré-requisitos para utilização:
+  - Docker https://docs.docker.com/docker-for-windows/install/
+  - .NET Core 5 https://dotnet.microsoft.com/download/dotnet/5.0 
+  - Visual Studio Code ou qualquer outro IDE compatível com .NET
 
+- Atenção: configure o Docker com (no mínimo) memória e CPU:
+  - Memory: 6 GB
+  - CPU: 2
 
-4. Swagger UI – API REST microserviço – Venda
-   - URL: https://localhost:5003
+![image](https://user-images.githubusercontent.com/19453244/130338740-3f2010b4-45de-4c9b-b49c-ad91e9342d10.png)
 
-    ![image](https://user-images.githubusercontent.com/19453244/129219798-b693cc0e-b5d5-4d90-8c37-8d0da7ab3456.png)
+- Não é necessário configurar o Docker manualmente se estiver usando  Docker Desktop WSL 2 backend 
 
-5. Banco de Dados
+#### 2 . Executar a aplicação com Docker Compose:
 
-   - Server: tcp:127.0.0.1,11433
-     - User: sa
-     - Password: Numsey#2021
+     - Clonar o código: 
+        git clone https://github.com/MaqBr/ewave-favo-de-mel-arquiteto.git
+        
+     - No diretório raiz executar os comandos:
+        docker-compose build
+        docker-compose up -d
+        
+#### 3 . Abrir a URL da API WebStatus
+     - http://host.docker.internal:5160
+ 
+Na primeira execução pode acontecer eventualmente uma falha de comunicação com os microserviços API Vendas e API Catalogo.  Caso aconteça a falha, aguarde aproximadamente 10 segundos até que todos os recursos fiquem disponíveis (cor verde).
 
-   ![image](https://user-images.githubusercontent.com/19453244/129221734-2a1bc9b8-b48d-4251-8efd-b1b9ebcb676f.png)
+![image](https://user-images.githubusercontent.com/19453244/130339052-671ec20b-7a20-4225-bb5f-382cf1f41dda.png)
 
+#### 4 . Abrir a URL da Aplicação MVC
+     - http://host.docker.internal:5130
 
-  - Strings de conexão:
-    - "VendaDbConnection": "Server=tcp:127.0.0.1,11433;Database=VendaDb;User Id=sa;Password=Numsey#2021"
-    - "CatalogoDbConnection": "Server=tcp:127.0.0.1,11433;Database=CatalogoDb;User Id=sa;Password=Numsey#2021"
+As informações de autenticação estão no rodapé da página:
 
-- Scripts para seed de dados:
-https://github.com/MaqBr/ewave-favo-de-mel-arquiteto/tree/master/src/Scripts
+![image](https://user-images.githubusercontent.com/19453244/130339185-0d56f131-235f-48f4-a58d-2e5ff2e31af8.png)
 
+A aplicação possue 2 perfis de usuários:
 
-6.  Visualização de logs com Elasticsearch e Kibana
+ - Perfil Garçom
+   - Usuário: garcom@teste.com
+   - Senha: Teste@123
+ 
+ - Perfil Cozinha
+   - Usuário: cozinha@teste.com
+   - Senha: Teste@123  
 
-    - URL Cluster Elastic: http://localhost:9200/
+#### 5 . URL API de Autenticação
+     - http://host.docker.internal:5000
 
-    ![image](https://user-images.githubusercontent.com/19453244/129223746-a902f10d-8e7e-471b-882b-ce4e3729cb8e.png)
+Para exemplificar a geração de token JWT, utilize uma das contas disponíveis descrito no item 4 deste documento. 
 
-    - URL Dashboard Kibana: http://localhost:5601
+A imagem a seguir ilustra o exemplo de uma requisição com o usuário garcom@teste.com.  Observe que a resposta veio com o token JWT e informações de claims do usuário.
+Não foi utilizado protocolo HTTPS por se tratar de um ambiente de desenvolvimendo.
+Todas as aplicações clientes recebem as credenciais através desta API.  
 
-    ![image](https://user-images.githubusercontent.com/19453244/129224025-3cf06da7-bc95-49e4-9307-7034542e8954.png)
+![image](https://user-images.githubusercontent.com/19453244/130338997-988622ec-5f40-4894-b872-dd7e2da59b9e.png)
 
-7. Message Broker RabbitMQ
+#### 6 . URL API de Venda
 
-    - URL: http://localhost:15672/
+A API de venda foi desenvolvida para consumo apenas com clientes autenticados via OAuth2.  A autenticação foi retirada por se tratar de um ambiente de desenvolvimento e devido a problemas de instalção de certificados HTTPS em contâiners docker local.
+Toda as funcionalidades de geranciamento de comandas, mesas e pedidos são geranciados por essa API.
 
-    ![image](https://user-images.githubusercontent.com/19453244/129299354-024bf817-641e-4884-a3dc-0e89d30e916d.png)
+![image](https://user-images.githubusercontent.com/19453244/130339241-2de6941a-f2c8-422a-854d-7946faa88859.png)
 
-8. Monitoramento dos microserviços com Healtchecks
+#### 7 . URL API de Catálogo
 
-    - URL: http://localhost:5013/
-    ![image](https://user-images.githubusercontent.com/19453244/129225181-60c83fbb-be2e-4d96-8371-fe6542a1b7dc.png)
+A API de catálogo foi desenvolvida para consumo de clientes sem a autenticação por se tratar de apenas leitura.  
+As informações de produtos, categorias, estoque e vouchers são gerenciados por essa API.
 
+#### 8 . URL RabbitMQ
+
+     - http://host.docker.internal:15672
+     - Username: guest
+     - Password: guest
+     - Exchange: favodemel_event_bus do tipo Direct durável
+     - Queue: favoDeMelQueue
+     
+A comunicação entre os microserviços ocorrem através da implementação de um EventBus para o RabbitMQ.  
+
+     
+ ![image](https://user-images.githubusercontent.com/19453244/130339542-2cba73f4-cc8f-4e9c-a851-fdb53073a5d2.png)
+
+#### 9 . Banco de Dados SQL Server
+
+     - host.docker.internal,5433
+     - Username: sa
+     - Password: P@ssw0rd
+     - String de conexão para o banco do microserviço de autenticação: Server=host.docker.internal,5433;Database=IdentityDb;User Id=sa;Password=P@ssw0rd
+     
+![image](https://user-images.githubusercontent.com/19453244/130339603-c41ec05e-258f-4c5b-bbb6-c545fdbd35f5.png)
+  
+     - String de conexão para o banco de microserviço de catálogo: Server=host.docker.internal,5433;Database=CatalogoDb;User Id=sa;Password=P@ssw0rd
+     
+![image](https://user-images.githubusercontent.com/19453244/130339621-37215e24-65fa-45d3-a9ad-4ca3ff733d6e.png)
+         
+     - String de conexão para o banco de microserviço de venda: Server=host.docker.internal,5433;Database=VendaDb;User Id=sa;Password=P@ssw0rd
+![image](https://user-images.githubusercontent.com/19453244/130339620-57320986-ba10-421e-9f16-f4f2d25f2240.png)
+
+#### 10 . URL de logs
+     - http://host.docker.internal:5601 
+     
+Disponível as informações de todos os logs de erros com o ElasticSearch + Kibana.
+
+### Explore o código e a aplicação
+Acesse o Wiki  para saber mais detalhes da arquitetura e uso da aplicação.
