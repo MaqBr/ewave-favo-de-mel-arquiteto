@@ -34,14 +34,13 @@ A justificativa da escolha da arquitetura de microserviços foi a de permitir a 
 
 - Domain Driven Design
 - CQRS com MediatR
-- TDD, BDD e Principios SOLID
-- Padrões Unit of Work, Repository, Factory
-- Docker e orquestração dom Docker-Compose
-- ASP.NET Core MVC 5
+- TDD, BDD e Princípios SOLID
+- Docker e orquestração com Docker-Compose
+- ASP.NET Core MVC
 - ASP.NET Health Checks
 - WEB API Core - Swagger UI
 - Entity Framework Core
-- Banco Relaciona MSSQL Server
+- Banco Relacional MSSQL Server
 - Banco não relacional EventStore e ElasticSearch
 - Dapper
 - AutoMapper
@@ -53,6 +52,7 @@ A justificativa da escolha da arquitetura de microserviços foi a de permitir a 
 - Domain Events e Integration Events
 - Autenticação e Autorização OAuth2 e JWT
 - Carga de dados (Seed) em contâiner Docker com Migrations EntityFramework Core
+- Polly para resiliência e maior estabilidade dos microserviços
 
 ### Explore o código da aplicação
 - Acesse o <a href="https://github.com/MaqBr/ewave-favo-de-mel-arquiteto/wiki/Vis%C3%A3o-geral-do-c%C3%B3digo-da-aplica%C3%A7%C3%A3o">Wiki</a> para detalhes da arquitetura da aplicação.
