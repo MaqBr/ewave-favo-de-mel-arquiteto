@@ -9,8 +9,8 @@ namespace FavoDeMel.Catalogo.Application.IntegrationEvents.EventHandling
         public Task Handle(ComandaProdutoAtualizadoEvent @event)
         {
             var comandaProdutoAtualizado = @event;
-            
-            //TODO: implementação após ACK
+
+            //TODO: implementar notificação em hub SignalR
             return Task.CompletedTask;
         }
     }

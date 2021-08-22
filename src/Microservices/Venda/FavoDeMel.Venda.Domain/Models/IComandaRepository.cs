@@ -10,6 +10,7 @@ namespace FavoDeMel.Venda.Domain.Models
         Task<Comanda> ObterPorId(Guid id);
         Task<IEnumerable<Comanda>> ObterListaPorMesaId(Guid mesaId);
         Task<IEnumerable<Comanda>> ObterListaPorStatus(ComandaStatus status);
+        Task<IEnumerable<Comanda>> ObterTodos();
         Task<Comanda> ObterComandaPorMesaId(Guid mesaId);
         void Adicionar(Comanda comanda);
         void Atualizar(Comanda comanda);

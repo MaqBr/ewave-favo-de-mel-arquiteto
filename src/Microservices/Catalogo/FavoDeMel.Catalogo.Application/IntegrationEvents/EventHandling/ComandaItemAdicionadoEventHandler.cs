@@ -10,7 +10,7 @@ namespace FavoDeMel.Catalogo.Application.IntegrationEvents.EventHandling
         {
             var itemAdicionado = @event;
 
-            //TODO: Atualizar entidade Produto -> EstoqueService -> DebitarItemEstoque(Guid produtoId, int quantidade)
+            //TODO: implementar notificação em hub SignalR
             return Task.CompletedTask;
         }
     }

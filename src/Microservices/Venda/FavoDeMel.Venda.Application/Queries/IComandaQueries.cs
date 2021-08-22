@@ -10,6 +10,7 @@ namespace FavoDeMel.Venda.Application.Queries
     {
         Task<ComandaViewModel> ObterComandaMesa(Guid mesaId);
         Task<IEnumerable<ComandaViewModel>> ObterComandasMesa(Guid mesaId);
+        Task<IEnumerable<ComandaViewModel>> ObterTodos();
         Task<IEnumerable<ComandaViewModel>> ObterComandaStatus(ComandaStatus status);
     }
 }

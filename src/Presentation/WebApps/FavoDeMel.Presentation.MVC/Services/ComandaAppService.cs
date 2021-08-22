@@ -195,5 +195,16 @@ namespace FavoDeMel.Presentation.MVC.Services
             return comandas;
         }
 
+        public async Task<IEnumerable<ComandaViewModel>> ObterTodos()
+        {
+            var uri = API.Comanda.ObterTodos(_remoteServiceBaseUrl);
+
+            var responseString = await _httpClient.GetStringAsync(uri);
+
+            var comandas = JsonConvert.DeserializeObject<IEnumerable<ComandaViewModel>>(responseString);
+
+            return comandas;
+        }
+
     }
 }

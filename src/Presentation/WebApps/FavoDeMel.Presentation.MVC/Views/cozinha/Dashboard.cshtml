@@ -25,8 +25,6 @@
                         <p style="text-align:left"><b>Código:</b> @comanda.Codigo</p>
                         <p><b>Situação:</b> @comanda.ComandaStatus</p>
                         <p><b>Mesa:</b> @comanda.Mesa.Numero</p>
-                        <p><b>Total itens:</b> @comanda.Items.Count</p>
-                        <p><b>Tempo</b> 1h</p>
                         <p style="text-align: center; font-size: 15pt">
                             <a asp-controller="Cozinha" asp-action="Index" asp-route-id="@comanda.Mesa.MesaId" class="btn btn-dark">
                                 <span class="glyphicon glyphicon-eye-open"></span> [VISUALIZAR COMANDA]

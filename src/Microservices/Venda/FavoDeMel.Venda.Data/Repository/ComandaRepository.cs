@@ -42,9 +42,26 @@ namespace FavoDeMel.Venda.Data.Repository
             return comandas;
         }
 
+        public async Task<IEnumerable<Comanda>> ObterTodos()
+        {
+            var comandas = await _context.Comandas.Where(p => p.ComandaStatus != ComandaStatus.Pago).ToListAsync();
+
+            foreach (var comanda in comandas)
+            {
+                if (comanda.MesaId != null)
+                {
+                    await _context.Entry(comanda)
+                        .Reference(i => i.Mesa).LoadAsync();
+                }
+            }
+
+            return comandas;
+        }
+
         public async Task<Comanda> ObterComandaPorMesaId(Guid mesaId)
         {
-            var comanda = await _context.Comandas.FirstOrDefaultAsync(p => p.MesaId == mesaId);
+            var comanda = await _context.Comandas.FirstOrDefaultAsync(p => p.MesaId == mesaId 
+            && (p.ComandaStatus != ComandaStatus.Pago));
 
             if (comanda == null) return null;
 

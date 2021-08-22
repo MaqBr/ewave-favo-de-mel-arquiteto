@@ -9,8 +9,8 @@ namespace FavoDeMel.Catalogo.Application.IntegrationEvents.EventHandling
         public Task Handle(ComandaProdutoRemovidoEvent @event)
         {
             var itemRemovido = @event;
-            
-            //TODO: implementação após ACK
+
+            //TODO: implementar notificação em hub SignalR
             return Task.CompletedTask;
         }
     }

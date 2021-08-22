@@ -4,20 +4,6 @@
     ViewData["Title"] = "Catálogo de produtos";
 }
 
-<section class="esh-catalog-filters">
-    <div class="container">
-        <form asp-action="Index" asp-controller="Vitrine" method="post">
-            <label class="esh-catalog-label" data-title="Tipo">
-                <select asp-for="@Model.FiltroTipo" asp-items="@Model.Tipos" class="esh-catalog-filter"></select>
-            </label>
-            <label class="esh-catalog-label" data-title="Categoria">
-                <select asp-for="@Model.FiltroMarca" asp-items="@Model.Marcas" class="esh-catalog-filter"></select>
-            </label>
-            <input class="esh-catalog-send" type="image" src="~/images/arrow-right.svg" />
-        </form>
-    </div>
-</section>
-
 <div class="container">
 
     <h3>@ViewData["Title"]</h3>

@@ -122,5 +122,36 @@ namespace FavoDeMel.Venda.Application.Queries
 
             return comandasView;
         }
+
+        public async Task<IEnumerable<ComandaViewModel>> ObterTodos()
+        {
+            var comandasView = new List<ComandaViewModel>();
+            var comandas = await _comandaRepository.ObterTodos();
+
+            comandas = comandas.OrderByDescending(p => p.Codigo);
+
+            if (!comandas.Any()) return comandasView;
+
+            foreach (var comanda in comandas)
+            {
+                comandasView.Add(new ComandaViewModel
+                {
+                    ComandaId = comanda.Id,
+                    ValorTotal = comanda.ValorTotal,
+                    ComandaStatus = comanda.ComandaStatus,
+                    Codigo = comanda.Codigo,
+                    DataCadastro = comanda.DataCadastro,
+                    Mesa = new MesaViewModel
+                    {
+                        MesaId = comanda.Mesa.Id,
+                        Numero = comanda.Mesa.Numero,
+                        DataCriacao = comanda.Mesa.DataCriacao,
+                        Situacao = comanda.Mesa.Situacao
+                    }
+                });
+            }
+
+            return comandasView;
+        }
     }
 }

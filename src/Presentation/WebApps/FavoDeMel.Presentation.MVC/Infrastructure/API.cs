@@ -53,6 +53,11 @@ namespace WebMVC.Infrastructure
                 return $"{baseUri}/api/comanda/status/{status}";
             }
 
+            public static string ObterTodos(string baseUri)
+            {
+                return $"{baseUri}/api/comanda/todos";
+            }
+
             public static string AdicionarComanda(string baseUri)
             {
                 return $"{baseUri}/api/comanda/adicionar";

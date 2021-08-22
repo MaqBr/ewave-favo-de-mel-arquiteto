@@ -70,8 +70,6 @@ namespace FavoDeMel.Venda.Application
             }
 
             comanda.AdicionarEvento(new ComandaItemAdicionadoEvent(comanda.MesaId.Value, comanda.Id, message.ProdutoId, message.Nome, message.ValorUnitario, message.Quantidade));
-
-            //Publica em RabbitMQ para integração - subscriber em contexto de catálogo -> atualizar o estoque
             _bus.Publish(new ComandaItemAdicionadoEvent(comanda.MesaId.Value, comanda.Id, message.ProdutoId, message.Nome, message.ValorUnitario, message.Quantidade));
 
             return await _comandaRepository.UnitOfWork.Commit();
@@ -100,7 +98,6 @@ namespace FavoDeMel.Venda.Application
             comanda.AtualizarUnidades(comandaItem, message.Quantidade);
             comanda.AtualizarItemStatus(comandaItem, message.ItemStatus);
             comanda.AdicionarEvento(new ComandaProdutoAtualizadoEvent(message.MesaId, comanda.Id, message.ProdutoId, message.Quantidade, message.ItemStatus));
-            //Publica em RabbitMQ para integração - subscriber em contexto de catálogo -> atualizar o estoque
             _bus.Publish(new ComandaProdutoAtualizadoEvent(message.MesaId, comanda.Id, message.ProdutoId, message.Quantidade, message.ItemStatus));
             _comandaRepository.AtualizarItem(comandaItem);
             _comandaRepository.Atualizar(comanda);
@@ -188,9 +185,6 @@ namespace FavoDeMel.Venda.Application
             var listaProdutosComanda = new ListaProdutosComanda { ComandaId = comanda.Id, Itens = itensList };
 
             comanda.AdicionarEvento(new ComandaIniciadaEvent(comanda.Id, comanda.MesaId.Value, listaProdutosComanda, comanda.ValorTotal));
-            //Publica em RabbitMQ para integração
-            //TODO: Adicionar subscriber em contexto de Vendas - notificação hub SignalR
-            //_bus.Publish(new ComandaIniciadaEvent(comanda.Id, comanda.MesaId.Value, listaProdutosComanda, comanda.ValorTotal));
             _comandaRepository.Atualizar(comanda);
             return await _comandaRepository.UnitOfWork.Commit();
         }
@@ -207,9 +201,6 @@ namespace FavoDeMel.Venda.Application
             var listaProdutosComanda = new ListaProdutosComanda { ComandaId = comanda.Id, Itens = itensList };
 
             comanda.AdicionarEvento(new ComandaEntregueEvent(comanda.Id, comanda.MesaId.Value, listaProdutosComanda, comanda.ValorTotal));
-            //Publica em RabbitMQ para integração
-            //TODO: Adicionar subscriber em contexto de Vendas - notificação hub SignalR
-            //_bus.Publish(new ComandaIniciadaEvent(comanda.Id, comanda.MesaId.Value, listaProdutosComanda, comanda.ValorTotal));
             _comandaRepository.Atualizar(comanda);
             return await _comandaRepository.UnitOfWork.Commit();
         }
@@ -225,9 +216,6 @@ namespace FavoDeMel.Venda.Application
                 _comandaRepository.AtualizarMesa(message.MesaId, SituacaoMesa.Ocupada);
 
                 comanda.AdicionarEvento(new ComandaAdicionadaEvent(message.ComandaId));
-               
-                //TODO: remover subscriber pois não é necessário notificar via SignarR
-                //_bus.Publish(new ComandaAdicionadaEvent(message.ComandaId));
                 return await _comandaRepository.UnitOfWork.Commit();
             }
             else
@@ -250,7 +238,6 @@ namespace FavoDeMel.Venda.Application
             _comandaRepository.AtualizarMesa(message.MesaId, SituacaoMesa.Livre);
 
             comanda.AdicionarEvento(new ComandaFinalizadaEvent(message.ComandaId));
-            //Publica em RabbitMQ para integraçãoA - dicionar subscriber em contexto de Vendas - notificação hub SignalR
             _bus.Publish(new ComandaFinalizadaEvent(message.ComandaId));
             return await _comandaRepository.UnitOfWork.Commit();
         }
@@ -269,7 +256,6 @@ namespace FavoDeMel.Venda.Application
             _comandaRepository.AtualizarMesa(message.MesaId, SituacaoMesa.Livre);
 
             comanda.AdicionarEvento(new ComandaCanceladaEvent(message.ComandaId));
-            //Publica em RabbitMQ para integração - Adicionar subscriber em contexto de Vendas - notificação hub SignalR
             _bus.Publish(new ComandaCanceladaEvent(message.ComandaId));
             return await _comandaRepository.UnitOfWork.Commit();
         }

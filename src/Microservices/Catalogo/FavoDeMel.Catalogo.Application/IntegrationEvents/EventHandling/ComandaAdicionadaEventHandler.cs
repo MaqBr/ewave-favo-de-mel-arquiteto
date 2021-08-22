@@ -10,7 +10,7 @@ namespace FavoDeMel.Catalogo.Application.IntegrationEvents.EventHandling
         {
             var comandaAdicionada = @event;
             
-            //TODO: implementação após ACK
+            //TODO: implementar notificação em hub SignalR
             return Task.CompletedTask;
         }
     }

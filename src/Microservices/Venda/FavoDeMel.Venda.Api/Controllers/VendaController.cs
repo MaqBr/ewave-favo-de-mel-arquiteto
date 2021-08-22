@@ -249,5 +249,22 @@ namespace FavoDeMel.Venda.Api.Controllers
 
         }
 
+        [HttpGet]
+        [Route("todos")]
+        public async Task<IEnumerable<ComandaViewModel>> ObterTodos()
+        {
+            try
+            {
+                var result = await _comandaQueries.ObterTodos();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Houve um erro ao obter os dados");
+                throw new Exception($"Houve um erro ao obter os dados: {ex.Message}");
+            }
+
+        }
+
     }
 }

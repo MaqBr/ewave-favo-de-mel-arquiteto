@@ -38,10 +38,10 @@ namespace FavoDeMel.Presentation.MVC.Controllers
         }
 
         [Route("vizualizar-comanda/atendimento/dashborad")]
-        public async Task<IActionResult> Dashboard(ComandaStatus status = ComandaStatus.Iniciado)
+        public async Task<IActionResult> Dashboard()
         {
-            var model = await _comandaAppService.ObterComandasPorStatus(status);
-            return View(new DashBoardComandaViewModel { Status = status, Data = model });
+            var model = await _comandaAppService.ObterTodos();
+            return View(new DashBoardComandaViewModel { Data = model });
         }
 
         [Route("vizualizar-comanda/mesa/{id}")]
