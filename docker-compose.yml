@@ -73,3 +73,9 @@ services:
     container_name: local-kibana
     depends_on: 
       - favodemel.elasticsearch
+
+  favodemel.eventstore:
+    container_name: local-eventstore
+    image: eventstore/eventstore:21.6.0-buster-slim
+    depends_on:
+      - favodemel.venda.api

@@ -49,6 +49,7 @@ namespace FavoDeMel.Venda.Api
                 c.Data = _appSettings.Data;
                 c.IdentityProvider = _appSettings.IdentityProvider;
                 c.Swagger = _appSettings.Swagger;
+                
             });
 
             services.AddCustomDbContext(_appSettings.Data);
@@ -60,6 +61,8 @@ namespace FavoDeMel.Venda.Api
                      .AddConsole()
                      .AddSerilog(logger, dispose: true);
                  });
+
+
             services.AddAutoMapper(typeof(DomainToViewModelMappingProfile), typeof(ViewModelToDomainMappingProfile));
             services.AddMediatR(typeof(Startup));
             services.AddEventBus(_appSettings.RabbitMqSettings);

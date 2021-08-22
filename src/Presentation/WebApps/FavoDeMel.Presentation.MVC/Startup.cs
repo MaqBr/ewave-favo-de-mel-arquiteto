@@ -41,12 +41,13 @@ namespace FavoDeMel.Presentation.MVC
                 .AddCookie(options => 
                     options.LoginPath = "/Usuario/Entrar");
             services.AddMediatR(typeof(Startup));
-            services.AddSingleton<IEventStoreService, EventStoreService>();
-            services.AddSingleton<IEventSourcingRepository, EventSourcingRepository>();
             services.AddScoped<IMediatorHandler, MediatorHandler>();
             services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<IUser, AspNetUser>();
+
+            services.AddSingleton<IEventStoreService, EventStoreService>();
+            services.AddSingleton<IEventSourcingRepository, EventSourcingRepository>();
 
         }
 

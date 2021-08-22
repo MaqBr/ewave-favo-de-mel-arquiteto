@@ -26,7 +26,6 @@ namespace FavoDeMel.Presentation.MVC.Controllers
             _mesaAppService = mesaAppService;
         }
 
-        [Route("")]
         [Route("listar")]
         public async Task<IActionResult> Index()
         {

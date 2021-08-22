@@ -27,11 +27,16 @@ namespace FavoDeMel.Presentation.MVC.Controllers
         }
 
         [HttpGet]
+        [Route("")]
+        [Route("entrar")]
         public IActionResult Entrar(string returnUrl)
         {
             if (_user.IsAuthenticated())
             {
-                return RedirectToAction("Index", "Mesa");
+                if (User.HasClaim(c => c.Type == "Atendimento"))
+                    return RedirectToAction("Index", "Mesa");
+
+                return RedirectToAction("Dashboard", "Cozinha");
             }
 
             ViewData["ReturnUrl"] = returnUrl;

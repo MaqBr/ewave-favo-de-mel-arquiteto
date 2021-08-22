@@ -6,6 +6,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://0.0.0.0:80
       - CatalogoDbConnection=Server=local-mssql;Database=CatalogoDb;User Id=sa;Password=P@ssw0rd
+      - EventStoreConnection=ConnectTo=tcp://admin:changeit@localhost:1113; HeartBeatTimeout=500
       - RABBITMQ__URL=local-rabbitmq
       - RABBITMQ__USUARIO=guest
       - RABBITMQ__SENHA=guest
@@ -25,6 +26,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://0.0.0.0:80
       - VendaDbConnection=Server=local-mssql;Database=VendaDb;User Id=sa;Password=P@ssw0rd
+      - EventStoreConnection=ConnectTo=tcp://admin:changeit@localhost:1113; HeartBeatTimeout=500
       - RABBITMQ__URL=local-rabbitmq
       - RABBITMQ__USUARIO=guest
       - RABBITMQ__SENHA=guest
@@ -46,6 +48,7 @@ services:
       - MICROSERVICES__VENDA_BASE_URI=http://venda-api
       - MICROSERVICES__CATALOGO_BASE_URI=http://catalogo-api
       - MICROSERVICES__IDENTITY_BASE_URI=http://identity-api
+      - EventStoreConnection=ConnectTo=tcp://admin:changeit@localhost:1113; HeartBeatTimeout=500
     ports:
       - "5130:80"
     volumes:
@@ -153,6 +156,30 @@ services:
     networks:
       - favodemel-network
 
+  favodemel.eventstore:
+    environment:
+      - EVENTSTORE_CLUSTER_SIZE=1
+      - EVENTSTORE_RUN_PROJECTIONS=All
+      - EVENTSTORE_START_STANDARD_PROJECTIONS=true
+      - EVENTSTORE_EXT_TCP_PORT=1113
+      - EVENTSTORE_HTTP_PORT=2113
+      - EVENTSTORE_INSECURE=true
+      - EVENTSTORE_ENABLE_EXTERNAL_TCP=true
+      - EVENTSTORE_ENABLE_ATOM_PUB_OVER_HTTP=true
+    ports:
+      - "1113:1113"
+      - "2113:2113"
+    volumes:
+    - type: volume
+      source: eventstore-volume-data
+      target: /var/lib/eventstore
+    - type: volume
+      source: eventstore-volume-logs
+      target: /var/log/eventstore
+
+    networks:
+      - favodemel-network
+
 networks:
   favodemel-network:
     driver: bridge    
@@ -160,3 +187,5 @@ networks:
 volumes:
   mssql-data:
   elasticsearch-data:
+  eventstore-volume-data:
+  eventstore-volume-logs:

@@ -26,7 +26,7 @@ namespace FavoDeMel.WebStatus.Extensions
                     await connection.OpenAsync(cancellationToken);
 
                     var command = connection.CreateCommand();
-                    command.CommandText = "select count(*) from Comandas";
+                    command.CommandText = "select count(*) from Mesas";
 
                     return Convert.ToInt32(await command.ExecuteScalarAsync(cancellationToken)) > 0 
                         ? HealthCheckResult.Healthy() 

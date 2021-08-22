@@ -33,14 +33,14 @@ namespace FavoDeMel.Presentation.MVC.Controllers
             _comandaAppService = comandaAppService;
         }
 
-        [Route("dashborad")]
+        [Route("comanda-cozinha/dashborad")]
         public async Task<IActionResult> Dashboard(ComandaStatus status = ComandaStatus.Iniciado)
         {
             var model = await _comandaAppService.ObterComandasPorStatus(status);
             return View(new DashBoardComandaViewModel { Status = status, Data = model });
         }
 
-        [Route("vizualizar/mesa/{id}")]
+        [Route("comanda-cozinha/vizualizar/mesa/{id}")]
         public async Task<IActionResult> Index(Guid id)
         {
             var model = await _comandaAppService.ObterComandaMesa(id);
@@ -51,7 +51,7 @@ namespace FavoDeMel.Presentation.MVC.Controllers
         }
 
         [HttpPost]
-        [Route("comanda/item/atualizar")]
+        [Route("comanda-cozinha/item/atualizar")]
         public async Task<IActionResult> AtualizarItem(Guid id, Guid mesaId, int quantidade, ItemStatus itemStatus)
         {
             var produto = await _produtoAppService.ObterPorId(id);
@@ -75,14 +75,14 @@ namespace FavoDeMel.Presentation.MVC.Controllers
         }
 
 
-        [Route("comanda/cancelar/confirmar")]
+        [Route("comanda-cozinha/cancelar/confirmar")]
         public async Task<IActionResult> ResumoDaCompraCancelar(Guid mesaId)
         {
             var model = await _comandaAppService.ObterComandaMesa(mesaId);
             return View(model);
         }
 
-        [Route("comanda/cancelar")]
+        [Route("comanda-cozinha/cancelar")]
         public async Task<IActionResult> CancelarComanda(Guid mesaId)
         {
             var comanda = await _comandaAppService.ObterComandaMesa(mesaId);
@@ -102,7 +102,7 @@ namespace FavoDeMel.Presentation.MVC.Controllers
             return View("ResumoDaCompraCancelar", await _comandaAppService.ObterComandaMesa(mesaId));
         }
 
-        [Route("comanda/entregar")]
+        [Route("comanda-cozinha/entregar")]
         public async Task<IActionResult> EntregarComanda(Guid mesaId)
         {
             var comanda = await _comandaAppService.ObterComandaMesa(mesaId);
