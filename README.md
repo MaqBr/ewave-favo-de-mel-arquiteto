@@ -66,10 +66,10 @@ A justificativa da escolha da arquitetura de microserviços foi a de permitir a 
   - Visual Studio Code ou qualquer outro IDE compatível com .NET
 
 - Atenção: configure o Docker com (no mínimo) memória e CPU:
-  - Memory: 6 GB
+  - Memory: 7 GB
   - CPU: 2
 
-![image](https://user-images.githubusercontent.com/19453244/130338740-3f2010b4-45de-4c9b-b49c-ad91e9342d10.png)
+![image](https://user-images.githubusercontent.com/19453244/130369368-bbab477f-9f1e-46a2-9fcc-44abb6c26b45.png)
 
 - Não é necessário configurar o Docker manualmente se estiver usando  Docker Desktop WSL 2 backend 
 
