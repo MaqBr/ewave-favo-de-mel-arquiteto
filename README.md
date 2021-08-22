@@ -108,7 +108,7 @@ A aplicação possue 2 perfis de usuários:
  - Perfil Cozinha
    - Usuário: cozinha@teste.com
    - Senha: Teste@123  
-   - 
+
 ### Detalhes de uso da aplicação
 - Acesse o <a href="https://github.com/MaqBr/ewave-favo-de-mel-arquiteto/wiki/O-uso-da-aplica%C3%A7%C3%A3o-ASP.NET-MVC-Core">Wiki</a> para detalhes do uso da aplicação.
 
