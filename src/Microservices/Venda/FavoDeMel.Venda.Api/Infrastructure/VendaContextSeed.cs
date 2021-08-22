@@ -28,7 +28,7 @@ namespace FavoDeMel.Venda.Api.Infrastructure
             });
         }
 
-        private AsyncRetryPolicy CreatePolicy(ILogger<VendaContextSeed> logger, string prefix, int retries = 3)
+        private AsyncRetryPolicy CreatePolicy(ILogger<VendaContextSeed> logger, string prefix, int retries = 10)
         {
             return Policy.Handle<SqlException>().
                 WaitAndRetryAsync(

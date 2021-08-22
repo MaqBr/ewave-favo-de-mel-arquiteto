@@ -46,9 +46,7 @@ namespace Microsoft.AspNetCore.Hosting
         private static void InvokeSeeder<TContext>(Action<TContext, IServiceProvider> seeder, TContext context, IServiceProvider services)
             where TContext : DbContext
         {
-            if (!context.Database.GetService<IRelationalDatabaseCreator>().Exists())
-                context.Database.Migrate();
-
+            context.Database.Migrate();
             seeder(context, services);
         }
     }

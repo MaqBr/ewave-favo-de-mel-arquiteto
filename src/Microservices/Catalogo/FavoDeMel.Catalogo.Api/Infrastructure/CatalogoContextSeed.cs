@@ -31,7 +31,7 @@ namespace FavoDeMel.Catalogo.Api.Infrastructure
             });
         }
 
-        private AsyncRetryPolicy CreatePolicy(ILogger<CatalogoContextSeed> logger, string prefix, int retries = 3)
+        private AsyncRetryPolicy CreatePolicy(ILogger<CatalogoContextSeed> logger, string prefix, int retries = 10)
         {
             return Policy.Handle<SqlException>().
                 WaitAndRetryAsync(

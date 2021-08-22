@@ -10,6 +10,7 @@ services:
     depends_on:
       - favodemel.sqlserver
       - favodemel.rabbitmq
+      - favodemel.identity
 
   favodemel.venda.api:
     image: ${DOCKER_REGISTRY-}favodemelvendaapi
@@ -20,6 +21,7 @@ services:
     depends_on:
       - favodemel.sqlserver
       - favodemel.rabbitmq
+      - favodemel.identity
 
   favodemel.presentation.mvc:
     image: ${DOCKER_REGISTRY-}favodemelpresentationmvc

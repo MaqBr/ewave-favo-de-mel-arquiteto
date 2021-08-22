@@ -70,25 +70,32 @@ namespace FavoDeMel.Presentation.MVC.Controllers
 
         [HttpPost]
         [Route("comanda/adicionar")]
-        public async Task<IActionResult> AdicionarComanda(Guid id, string codigo)
+        public async Task<IActionResult> AdicionarComanda(NovaComandaViewModel comanda)
         {
-
-            if (codigo == null) return BadRequest();
-
-            await _comandaAppService.AdicionarComanda(new AdicionarComandaDTO { 
-            
-                MesaId = id,
-                Codigo = codigo
-            
-            });
-
-            if (OperacaoValida())
+            if (ModelState.IsValid)
             {
+                await _comandaAppService.AdicionarComanda(new AdicionarComandaDTO
+                {
+
+                    MesaId = comanda.Id,
+                    Codigo = comanda.Codigo
+
+                });
+
+                if (OperacaoValida())
+                {
+                    return RedirectToAction("Index", "Mesa");
+                }
+
+                TempData["Erros"] = ObterMensagensErro();
                 return RedirectToAction("Index", "Mesa");
             }
-
-            TempData["Erros"] = ObterMensagensErro();
-            return RedirectToAction("Index", "Mesa");
+            else
+            {
+                ModelState.AddModelError("", "Os dados informados são inválidos");
+            }
+            comanda.MesaId = comanda.Id;
+            return View("NovaComanda", comanda);
         }
 
         [HttpPost]

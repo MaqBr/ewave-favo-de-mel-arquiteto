@@ -30,7 +30,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\BuildingBlocks\EventBusRabbitMQ\EventBusRabbitMQ.csproj" />
-    <ProjectReference Include="..\..\..\BuildingBlocks\EventSourcing\EventSourcing.csproj" />
     <ProjectReference Include="..\..\..\BuildingBlocks\WebHostCustomization\WebHostCustomization.csproj" />
     <ProjectReference Include="..\..\Core\FavoDeMel.Domain.Core\FavoDeMel.Domain.Core.csproj" />
     <ProjectReference Include="..\..\Infrastructure\FavoDeMel.Infra.IoC\FavoDeMel.Infra.IoC.csproj" />

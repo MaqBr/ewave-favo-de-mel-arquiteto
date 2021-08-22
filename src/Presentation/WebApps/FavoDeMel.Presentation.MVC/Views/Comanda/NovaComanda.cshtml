@@ -16,8 +16,10 @@
     <form method="post" asp-controller="Comanda" asp-action="AdicionarComanda">
         <div class="form-group">
             <input type="hidden" id="Id" name="Id" value="@Model.MesaId" />
-            <label for="Codigo">Digite o número da comanda a ser adicionada à mesa:</label>
+            <input type="hidden" id="Numero" name="Numero" value="@Model.Numero" />
+            <label for="Codigo">Digite o código da comanda (número ou nome do cliente) a ser adicionada à mesa:</label>
             <input type="text" class="form-control" id="Codigo" name="Codigo">
+            <span asp-validation-for="Codigo" class="text-danger"></span>
         </div>
         <a asp-controller="Mesa" asp-action="Index" class="btn btn-dark">
             <span class="glyphicon glyphicon-circle-arrow-left"></span> VOLTAR
